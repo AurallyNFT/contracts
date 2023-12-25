@@ -1,0 +1,233 @@
+{
+    "name": "Aurally_NFT",
+    "methods": [
+        {
+            "name": "create_aura_tokens",
+            "args": [],
+            "returns": {
+                "type": "(uint64,string,uint64)"
+            }
+        },
+        {
+            "name": "register_creator",
+            "args": [
+                {
+                    "type": "txn",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "fullname"
+                },
+                {
+                    "type": "string",
+                    "name": "username"
+                }
+            ],
+            "returns": {
+                "type": "(bool,bool,uint64,string,string,uint64)"
+            }
+        },
+        {
+            "name": "create_sound_nft",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "nft_name"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_key"
+                },
+                {
+                    "type": "string",
+                    "name": "title"
+                },
+                {
+                    "type": "string",
+                    "name": "label"
+                },
+                {
+                    "type": "string",
+                    "name": "artist"
+                },
+                {
+                    "type": "uint64",
+                    "name": "release_date"
+                },
+                {
+                    "type": "string",
+                    "name": "genre"
+                },
+                {
+                    "type": "uint64",
+                    "name": "price"
+                },
+                {
+                    "type": "string",
+                    "name": "cover_image_ipfs"
+                },
+                {
+                    "type": "string",
+                    "name": "audio_sample_ipfs"
+                },
+                {
+                    "type": "string",
+                    "name": "full_track_ipfs"
+                },
+                {
+                    "type": "uint64",
+                    "name": "supply"
+                },
+                {
+                    "type": "asset",
+                    "name": "aura"
+                },
+                {
+                    "type": "account",
+                    "name": "creator"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+            }
+        },
+        {
+            "name": "claim_created_sound",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_key"
+                },
+                {
+                    "type": "account",
+                    "name": "reciever"
+                },
+                {
+                    "type": "asset",
+                    "name": "asset"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+            }
+        },
+        {
+            "name": "create_art_nft",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_key"
+                },
+                {
+                    "type": "string",
+                    "name": "nft_name"
+                },
+                {
+                    "type": "string",
+                    "name": "title"
+                },
+                {
+                    "type": "string",
+                    "name": "name"
+                },
+                {
+                    "type": "string",
+                    "name": "description"
+                },
+                {
+                    "type": "string",
+                    "name": "ipfs_location"
+                },
+                {
+                    "type": "uint64",
+                    "name": "price"
+                },
+                {
+                    "type": "asset",
+                    "name": "aura"
+                },
+                {
+                    "type": "account",
+                    "name": "creator"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+            }
+        },
+        {
+            "name": "claim_created_art",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_key"
+                },
+                {
+                    "type": "account",
+                    "name": "reciever"
+                },
+                {
+                    "type": "asset",
+                    "name": "asset"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+            }
+        },
+        {
+            "name": "create_art_auction",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "auction_key"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_key"
+                },
+                {
+                    "type": "uint64",
+                    "name": "min_bid"
+                },
+                {
+                    "type": "uint64",
+                    "name": "starts_at"
+                },
+                {
+                    "type": "uint64",
+                    "name": "ends_at"
+                },
+                {
+                    "type": "string",
+                    "name": "description"
+                }
+            ],
+            "returns": {
+                "type": "(address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
+            }
+        }
+    ],
+    "networks": {}
+}

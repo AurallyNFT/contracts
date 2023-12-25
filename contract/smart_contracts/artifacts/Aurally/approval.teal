@@ -1,0 +1,5279 @@
+#pragma version 8
+intcblock 0 1 65536 32 784 785 640 641
+bytecblock 0x 0x151f7c75 0x00 0x6163746976655f70726f706f73616c 0x617274 0x4e6f6e65 0x736f756e64 0x61757261 0x068101 0x000461757261
+txn NumAppArgs
+intc_0 // 0
+==
+bnz main_l44
+txna ApplicationArgs 0
+pushbytes 0x087ff55a // "promote_to_admin(pay,account)string"
+==
+bnz main_l43
+txna ApplicationArgs 0
+pushbytes 0x6433ce4d // "demote_from_admin(pay,account)string"
+==
+bnz main_l42
+txna ApplicationArgs 0
+pushbytes 0x2e4c9f45 // "register_creator(txn,string,string)(bool,bool,uint64,string,string,uint64)"
+==
+bnz main_l41
+txna ApplicationArgs 0
+pushbytes 0x416c14b8 // "get_registered_creative(address)(bool,bool,uint64,string,string,uint64)"
+==
+bnz main_l40
+txna ApplicationArgs 0
+pushbytes 0xe2e39e2f // "create_sound_nft(txn,string,string,string,string,string,uint64,string,uint64,string,string,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+==
+bnz main_l39
+txna ApplicationArgs 0
+pushbytes 0xc81396d3 // "create_art_nft(pay,string,string,string,string,string,string,uint64,asset,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+==
+bnz main_l38
+txna ApplicationArgs 0
+pushbytes 0xa7dcda7b // "claim_created_art(axfer,string)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+==
+bnz main_l37
+txna ApplicationArgs 0
+pushbytes 0x2b6e251f // "create_art_auction(pay,string,string,uint64,uint64,uint64)(address,string,string,uint64,uint64,uint64,uint64,address)"
+==
+bnz main_l36
+txna ApplicationArgs 0
+pushbytes 0x9aff6177 // "bid_on_art_auction(pay,string,uint64)(address,string,string,uint64,uint64,uint64,uint64,address)"
+==
+bnz main_l35
+txna ApplicationArgs 0
+pushbytes 0x51a86cfb // "complete_art_auction(pay,string)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+==
+bnz main_l34
+txna ApplicationArgs 0
+pushbytes 0x683a9914 // "place_nft_on_sale(pay,string,string,asset)void"
+==
+bnz main_l33
+txna ApplicationArgs 0
+pushbytes 0x39479d4f // "purchase_nft(pay,axfer,string,string,account,asset,asset,axfer,account)void"
+==
+bnz main_l32
+txna ApplicationArgs 0
+pushbytes 0x07536ce3 // "transfer_nft(pay,address,string,string)void"
+==
+bnz main_l31
+txna ApplicationArgs 0
+pushbytes 0x58de49a6 // "create_proposal(pay,string,string,string,uint64)(string,string,uint64,uint64,string,uint64)"
+==
+bnz main_l30
+txna ApplicationArgs 0
+pushbytes 0x512e5053 // "vote_on_proposal(pay,bool,asset,account,string)(string,string,uint64,uint64,string,uint64)"
+==
+bnz main_l29
+txna ApplicationArgs 0
+pushbytes 0x3ecec19a // "end_proposal_voting(pay,string)(string,string,uint64,uint64,string,uint64)"
+==
+bnz main_l28
+txna ApplicationArgs 0
+pushbytes 0xcdffa7b3 // "unfreeze_auras(pay,asset,account)void"
+==
+bnz main_l27
+txna ApplicationArgs 0
+pushbytes 0x5e53f297 // "create_aura_tokens()(uint64,string,uint64)"
+==
+bnz main_l26
+txna ApplicationArgs 0
+pushbytes 0xa2063966 // "create_event(pay,string,string,uint64,uint64,string,uint64)(uint64,string,string,uint64,uint64,string,uint64,address)"
+==
+bnz main_l25
+txna ApplicationArgs 0
+pushbytes 0xfce6b1f1 // "purchase_event_ticket(pay,string,string,account)(uint64,string,string,uint64,address)"
+==
+bnz main_l24
+txna ApplicationArgs 0
+pushbytes 0x02bece11 // "hello(string)string"
+==
+bnz main_l23
+err
+main_l23:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub hellocaster_76
+intc_1 // 1
+return
+main_l24:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub purchaseeventticketcaster_75
+intc_1 // 1
+return
+main_l25:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createeventcaster_74
+intc_1 // 1
+return
+main_l26:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createauratokenscaster_73
+intc_1 // 1
+return
+main_l27:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub unfreezeaurascaster_72
+intc_1 // 1
+return
+main_l28:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub endproposalvotingcaster_71
+intc_1 // 1
+return
+main_l29:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub voteonproposalcaster_70
+intc_1 // 1
+return
+main_l30:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createproposalcaster_69
+intc_1 // 1
+return
+main_l31:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub transfernftcaster_68
+intc_1 // 1
+return
+main_l32:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub purchasenftcaster_67
+intc_1 // 1
+return
+main_l33:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub placenftonsalecaster_66
+intc_1 // 1
+return
+main_l34:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub completeartauctioncaster_65
+intc_1 // 1
+return
+main_l35:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub bidonartauctioncaster_64
+intc_1 // 1
+return
+main_l36:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createartauctioncaster_63
+intc_1 // 1
+return
+main_l37:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub claimcreatedartcaster_62
+intc_1 // 1
+return
+main_l38:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createartnftcaster_61
+intc_1 // 1
+return
+main_l39:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createsoundnftcaster_60
+intc_1 // 1
+return
+main_l40:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub getregisteredcreativecaster_55
+intc_1 // 1
+return
+main_l41:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub registercreatorcaster_54
+intc_1 // 1
+return
+main_l42:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub demotefromadmincaster_37
+intc_1 // 1
+return
+main_l43:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub promotetoadmincaster_36
+intc_1 // 1
+return
+main_l44:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l50
+txn OnCompletion
+pushint 4 // UpdateApplication
+==
+bnz main_l49
+txn OnCompletion
+pushint 5 // DeleteApplication
+==
+bnz main_l48
+err
+main_l48:
+txn ApplicationID
+intc_0 // 0
+!=
+assert
+callsub delete_2
+intc_1 // 1
+return
+main_l49:
+txn ApplicationID
+intc_0 // 0
+!=
+assert
+callsub update_1
+intc_1 // 1
+return
+main_l50:
+txn ApplicationID
+intc_0 // 0
+==
+assert
+callsub create_0
+intc_1 // 1
+return
+
+// create
+create_0:
+proto 0 0
+bytec_3 // "active_proposal"
+bytec 5 // "None"
+app_global_put
+retsub
+
+// update
+update_1:
+proto 0 0
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
+intc_1 // 1
+return
+
+// delete
+delete_2:
+proto 0 0
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
+intc_1 // 1
+return
+
+// promote_to_admin
+promotetoadmin_3:
+proto 2 1
+bytec_0 // ""
+dup
+frame_dig -2
+callsub ensurezeropayment_24
+frame_dig -2
+callsub ensuresenderisappcreator_30
+frame_dig -1
+txnas Accounts
+box_len
+store 1
+store 0
+load 1
+!
+assert
+pushbytes 0x000454727565 // 0x000454727565
+frame_bury 1
+frame_dig -1
+txnas Accounts
+box_del
+pop
+frame_dig -1
+txnas Accounts
+frame_dig 1
+box_put
+frame_dig -1
+txnas Accounts
+box_get
+store 3
+store 2
+load 3
+assert
+load 2
+frame_bury 0
+retsub
+
+// demote_from_admin
+demotefromadmin_4:
+proto 2 1
+bytec_0 // ""
+dup
+frame_dig -2
+callsub ensurezeropayment_24
+frame_dig -2
+callsub ensuresenderisappcreator_30
+frame_dig -1
+txnas Accounts
+box_len
+store 5
+store 4
+load 5
+assert
+pushbytes 0x000546616c7365 // 0x000546616c7365
+frame_bury 1
+frame_dig -1
+txnas Accounts
+box_del
+pop
+frame_dig -1
+txnas Accounts
+frame_dig 1
+box_put
+frame_dig -1
+txnas Accounts
+box_get
+store 7
+store 6
+load 7
+assert
+load 6
+frame_bury 0
+retsub
+
+// register_creator
+registercreator_5:
+proto 3 1
+bytec_0 // ""
+frame_dig -3
+gtxns Sender
+box_len
+store 9
+store 8
+load 9
+!
+bz registercreator_5_l2
+frame_dig -3
+frame_dig -2
+frame_dig -1
+callsub createnftowner_38
+registercreator_5_l2:
+frame_dig -3
+gtxns Sender
+box_get
+store 11
+store 10
+load 11
+assert
+load 10
+frame_bury 0
+retsub
+
+// get_registered_creative
+getregisteredcreative_6:
+proto 1 1
+bytec_0 // ""
+frame_dig -1
+box_len
+store 13
+store 12
+load 13
+// This account is not a registred creative
+assert
+frame_dig -1
+box_get
+store 15
+store 14
+load 15
+assert
+load 14
+frame_bury 0
+retsub
+
+// create_sound_nft
+createsoundnft_7:
+proto 15 1
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+intc_0 // 0
+intc_0 // 0
+store 16
+createsoundnft_7_l1:
+load 16
+pushint 1000 // 1000
+global MinTxnFee
+/
+<
+bz createsoundnft_7_l3
+itxn_begin
+pushint 6 // appl
+itxn_field TypeEnum
+pushint 5 // DeleteApplication
+itxn_field OnCompletion
+bytec 8 // 0x068101
+itxn_field ApprovalProgram
+bytec 8 // 0x068101
+itxn_field ClearStateProgram
+itxn_submit
+load 16
+intc_1 // 1
++
+store 16
+b createsoundnft_7_l1
+createsoundnft_7_l3:
+pushbytes 0x00056d75736963 // 0x00056d75736963
+frame_bury 1
+frame_dig -15
+frame_dig 1
+callsub ensureregisteredcreative_35
+frame_dig -13
+extract 2 0
+box_len
+store 18
+store 17
+load 18
+!
+// An asset with this key already exists
+assert
+frame_dig -15
+gtxns Sender
+frame_bury 2
+frame_dig 2
+len
+intc_3 // 32
+==
+assert
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+frame_dig -14
+extract 2 0
+itxn_field ConfigAssetName
+frame_dig -3
+itxn_field ConfigAssetTotal
+frame_dig -4
+extract 2 0
+itxn_field ConfigAssetURL
+frame_dig 2
+itxn_field ConfigAssetManager
+itxn_submit
+itxn CreatedAssetID
+frame_bury 3
+intc_1 // 1
+frame_bury 4
+intc_0 // 0
+frame_bury 5
+frame_dig 3
+itob
+frame_dig -13
+frame_bury 10
+frame_dig 10
+frame_bury 9
+pushint 81 // 81
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -3
+itob
+concat
+frame_dig -12
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -11
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -10
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -9
+itob
+concat
+frame_dig -8
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -7
+itob
+concat
+frame_dig -6
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -5
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig -4
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig 2
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 4
+setbit
+intc_1 // 1
+frame_dig 5
+setbit
+concat
+frame_dig 9
+concat
+frame_bury 6
+frame_dig -13
+extract 2 0
+box_del
+pop
+frame_dig -13
+extract 2 0
+frame_dig 6
+box_put
+frame_dig 2
+callsub incrementcreatornftcount_39
+intc_1 // 1
+frame_bury 11
+frame_dig 2
+frame_dig 11
+callsub sendauratoken_57
+frame_dig -13
+extract 2 0
+box_get
+store 20
+store 19
+load 20
+assert
+load 19
+frame_bury 0
+retsub
+
+// create_art_nft
+createartnft_8:
+proto 10 1
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+intc_0 // 0
+frame_dig -10
+callsub ensurezeropayment_24
+frame_dig -9
+extract 2 0
+box_len
+store 32
+store 31
+load 32
+!
+// An art NFT with this key already exists
+assert
+pushbytes 0x0003617274 // 0x0003617274
+frame_bury 1
+frame_dig -10
+frame_dig 1
+callsub ensureregisteredcreative_35
+frame_dig -10
+gtxns Sender
+frame_bury 2
+frame_dig 2
+len
+intc_3 // 32
+==
+assert
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+frame_dig -8
+extract 2 0
+itxn_field ConfigAssetName
+intc_0 // 0
+itxn_field ConfigAssetTotal
+frame_dig -4
+extract 2 0
+itxn_field ConfigAssetURL
+frame_dig 2
+itxn_field ConfigAssetManager
+itxn_submit
+itxn CreatedAssetID
+frame_bury 3
+intc_0 // 0
+frame_bury 4
+intc_1 // 1
+frame_bury 5
+global CurrentApplicationAddress
+frame_bury 6
+frame_dig 6
+len
+intc_3 // 32
+==
+assert
+intc_0 // 0
+frame_bury 7
+frame_dig 3
+itob
+frame_dig -9
+frame_bury 12
+frame_dig 12
+frame_bury 11
+pushint 99 // 99
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig -7
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig -6
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig -5
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig -4
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig -3
+itob
+concat
+frame_dig 4
+itob
+concat
+frame_dig 6
+concat
+frame_dig 2
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 5
+setbit
+intc_1 // 1
+frame_dig 7
+setbit
+concat
+frame_dig 11
+concat
+frame_bury 8
+frame_dig -9
+extract 2 0
+box_del
+pop
+frame_dig -9
+extract 2 0
+frame_dig 8
+box_put
+frame_dig 2
+callsub incrementcreatornftcount_39
+intc_1 // 1
+frame_bury 13
+frame_dig 2
+frame_dig 13
+callsub sendauratoken_57
+frame_dig -9
+extract 2 0
+box_get
+store 34
+store 33
+load 34
+assert
+load 33
+frame_bury 0
+retsub
+
+// claim_created_art
+claimcreatedart_9:
+proto 2 1
+bytec_0 // ""
+dup
+intc_0 // 0
+bytec_0 // ""
+dupn 4
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 4
+bytec_0 // ""
+dup
+frame_dig -1
+callsub ensureartnftexists_34
+frame_dig -1
+extract 2 0
+box_get
+store 36
+store 35
+load 36
+assert
+load 35
+frame_bury 1
+frame_dig 1
+intc_0 // 0
+extract_uint64
+frame_bury 2
+frame_dig 1
+frame_dig 1
+pushint 8 // 8
+extract_uint16
+frame_dig 1
+pushint 10 // 10
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 1
+frame_dig 1
+pushint 10 // 10
+extract_uint16
+frame_dig 1
+pushint 12 // 12
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 1
+frame_dig 1
+pushint 12 // 12
+extract_uint16
+frame_dig 1
+pushint 14 // 14
+extract_uint16
+substring3
+frame_bury 5
+frame_dig 1
+frame_dig 1
+pushint 14 // 14
+extract_uint16
+frame_dig 1
+pushint 16 // 16
+extract_uint16
+substring3
+frame_bury 6
+frame_dig 1
+frame_dig 1
+pushint 16 // 16
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 7
+frame_dig 1
+pushint 18 // 18
+extract_uint64
+frame_bury 8
+frame_dig 1
+pushint 26 // 26
+extract_uint64
+frame_bury 9
+frame_dig 1
+extract 34 32
+frame_bury 10
+frame_dig 1
+extract 66 32
+frame_bury 11
+frame_dig 1
+intc 4 // 784
+getbit
+frame_bury 12
+frame_dig 1
+intc 5 // 785
+getbit
+frame_bury 13
+frame_dig 13
+!
+// This art nft has already been claimed
+assert
+frame_dig 10
+frame_dig -2
+gtxns Sender
+==
+// This address is not the nft creator
+assert
+intc_1 // 1
+frame_bury 14
+frame_dig 2
+frame_dig 14
+frame_dig 10
+callsub transferassetfromcontract_56
+frame_dig -2
+gtxns Sender
+frame_bury 11
+frame_dig 11
+len
+intc_3 // 32
+==
+assert
+intc_1 // 1
+frame_bury 13
+frame_dig 2
+itob
+frame_dig 3
+frame_bury 18
+frame_dig 18
+frame_bury 17
+pushint 99 // 99
+frame_bury 15
+frame_dig 15
+frame_dig 18
+len
++
+frame_bury 16
+frame_dig 16
+intc_2 // 65536
+<
+assert
+frame_dig 15
+itob
+extract 6 0
+concat
+frame_dig 4
+frame_bury 18
+frame_dig 17
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
+len
++
+frame_bury 16
+frame_dig 16
+intc_2 // 65536
+<
+assert
+frame_dig 15
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 18
+frame_dig 17
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
+len
++
+frame_bury 16
+frame_dig 16
+intc_2 // 65536
+<
+assert
+frame_dig 15
+itob
+extract 6 0
+concat
+frame_dig 6
+frame_bury 18
+frame_dig 17
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
+len
++
+frame_bury 16
+frame_dig 16
+intc_2 // 65536
+<
+assert
+frame_dig 15
+itob
+extract 6 0
+concat
+frame_dig 7
+frame_bury 18
+frame_dig 17
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+itob
+extract 6 0
+concat
+frame_dig 8
+itob
+concat
+frame_dig 9
+itob
+concat
+frame_dig 10
+concat
+frame_dig 11
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 12
+setbit
+intc_1 // 1
+frame_dig 13
+setbit
+concat
+frame_dig 17
+concat
+frame_bury 1
+frame_dig 3
+extract 2 0
+box_del
+pop
+frame_dig 3
+extract 2 0
+frame_dig 1
+box_put
+frame_dig 3
+extract 2 0
+box_get
+store 38
+store 37
+load 38
+assert
+load 37
+frame_bury 0
+retsub
+
+// create_art_auction
+createartauction_10:
+proto 6 1
+bytec_0 // ""
+dupn 3
+frame_dig -5
+extract 2 0
+box_len
+store 42
+store 41
+load 42
+!
+// An auction with this key already exists
+assert
+frame_dig -6
+callsub ensurezeropayment_24
+frame_dig -2
+frame_dig -1
+<
+// End date must be greater that start date
+assert
+frame_dig -4
+extract 2 0
+box_len
+store 44
+store 43
+load 44
+// Art NFT with this key was not found
+assert
+frame_dig -4
+extract 2 0
+box_get
+store 46
+store 45
+load 46
+assert
+load 45
+frame_bury 1
+frame_dig 1
+extract 66 32
+frame_bury 2
+frame_dig 1
+frame_dig 1
+pushint 12 // 12
+extract_uint16
+frame_dig 1
+pushint 14 // 14
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 2
+frame_dig -6
+gtxns Sender
+==
+// Only the owner of this NFT can auction it
+assert
+frame_dig -6
+frame_dig -5
+frame_dig -4
+frame_dig 3
+frame_dig -3
+frame_dig -2
+frame_dig -1
+callsub createartauction_40
+frame_dig -5
+extract 2 0
+box_get
+store 48
+store 47
+load 48
+assert
+load 47
+frame_bury 0
+retsub
+
+// bid_on_art_auction
+bidonartauction_11:
+proto 3 1
+bytec_0 // ""
+frame_dig -3
+callsub ensurezeropayment_24
+frame_dig -2
+extract 2 0
+box_len
+store 52
+store 51
+load 52
+// art auction with the specified key does not exist
+assert
+frame_dig -3
+frame_dig -2
+frame_dig -1
+callsub performauctionbid_41
+frame_dig -2
+extract 2 0
+box_get
+store 54
+store 53
+load 54
+assert
+load 53
+frame_bury 0
+retsub
+
+// complete_art_auction
+completeartauction_12:
+proto 2 1
+bytec_0 // ""
+dupn 3
+frame_dig -2
+callsub ensurezeropayment_24
+frame_dig -1
+extract 2 0
+box_len
+store 58
+store 57
+load 58
+// art auction with the specified key does not exist
+assert
+frame_dig -1
+extract 2 0
+box_get
+store 60
+store 59
+load 60
+assert
+load 59
+frame_bury 1
+frame_dig 1
+frame_dig 1
+intc_3 // 32
+extract_uint16
+frame_dig 1
+pushint 34 // 34
+extract_uint16
+substring3
+frame_bury 2
+frame_dig 1
+extract 0 32
+frame_bury 3
+frame_dig 3
+frame_dig -2
+gtxns Sender
+==
+assert
+frame_dig -1
+callsub transferartauctionitemtohighestbidder_42
+frame_dig 2
+extract 2 0
+box_get
+store 62
+store 61
+load 62
+assert
+load 61
+frame_bury 0
+retsub
+
+// place_nft_on_sale
+placenftonsale_13:
+proto 4 0
+intc_0 // 0
+frame_dig -4
+callsub ensurezeropayment_24
+frame_dig -2
+extract 2 0
+bytec 4 // "art"
+==
+frame_dig -2
+extract 2 0
+bytec 6 // "sound"
+==
+||
+// nft_type can only be `art` or `sound`
+assert
+intc_1 // 1
+frame_bury 0
+frame_dig -2
+extract 2 0
+bytec 6 // "sound"
+==
+bnz placenftonsale_13_l2
+frame_dig -4
+frame_dig -3
+callsub validateartnftowner_48
+frame_dig -3
+frame_dig 0
+callsub updateartnftsale_51
+b placenftonsale_13_l3
+placenftonsale_13_l2:
+frame_dig -4
+frame_dig -3
+callsub validatesoundnftowner_47
+frame_dig -3
+frame_dig 0
+callsub updatesoundnftsale_50
+placenftonsale_13_l3:
+retsub
+
+// purchase_nft
+purchasenft_14:
+proto 9 0
+frame_dig -6
+extract 2 0
+bytec 6 // "sound"
+==
+frame_dig -6
+extract 2 0
+bytec 4 // "art"
+==
+||
+assert
+frame_dig -6
+extract 2 0
+bytec 6 // "sound"
+==
+bnz purchasenft_14_l2
+frame_dig -9
+frame_dig -7
+callsub performartnftsale_46
+b purchasenft_14_l3
+purchasenft_14_l2:
+frame_dig -9
+frame_dig -7
+callsub performsoundnftsale_45
+purchasenft_14_l3:
+retsub
+
+// transfer_nft
+transfernft_15:
+proto 4 0
+frame_dig -4
+gtxns Amount
+intc_0 // 0
+==
+assert
+frame_dig -1
+extract 2 0
+pushbytes 0x7469636b6574 // "ticket"
+==
+frame_dig -1
+extract 2 0
+bytec 4 // "art"
+==
+||
+assert
+frame_dig -1
+extract 2 0
+bytec 4 // "art"
+==
+bz transfernft_15_l2
+frame_dig -4
+frame_dig -2
+callsub validateartnftowner_48
+frame_dig -2
+frame_dig -3
+callsub updateartnftowner_43
+transfernft_15_l2:
+retsub
+
+// create_proposal
+createproposal_16:
+proto 5 1
+bytec_0 // ""
+dup
+intc_0 // 0
+dup
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -5
+gtxns Sender
+frame_bury 1
+frame_dig 1
+len
+intc_3 // 32
+==
+assert
+frame_dig 1
+callsub ensureisadminorappcreator_31
+frame_dig -5
+callsub ensurezeropayment_24
+frame_dig -5
+callsub ensurenftownerexistsfromtxn_28
+bytec_3 // "active_proposal"
+app_global_get
+bytec 5 // "None"
+==
+// There's already an active proposal
+assert
+frame_dig -3
+extract 2 0
+box_len
+store 84
+store 83
+load 84
+!
+// Proposal with this key already exists
+assert
+intc_0 // 0
+frame_bury 2
+intc_0 // 0
+frame_bury 3
+frame_dig -3
+frame_bury 8
+frame_dig 8
+frame_bury 7
+pushint 30 // 30
+frame_bury 5
+frame_dig 5
+frame_dig 8
+len
++
+frame_bury 6
+frame_dig 6
+intc_2 // 65536
+<
+assert
+frame_dig 5
+itob
+extract 6 0
+frame_dig -4
+frame_bury 8
+frame_dig 7
+frame_dig 8
+concat
+frame_bury 7
+frame_dig 6
+frame_bury 5
+frame_dig 5
+frame_dig 8
+len
++
+frame_bury 6
+frame_dig 6
+intc_2 // 65536
+<
+assert
+frame_dig 5
+itob
+extract 6 0
+concat
+frame_dig 2
+itob
+concat
+frame_dig 3
+itob
+concat
+frame_dig -2
+frame_bury 8
+frame_dig 7
+frame_dig 8
+concat
+frame_bury 7
+frame_dig 6
+frame_bury 5
+frame_dig 5
+itob
+extract 6 0
+concat
+frame_dig -1
+itob
+concat
+frame_dig 7
+concat
+frame_bury 4
+frame_dig -3
+extract 2 0
+box_del
+pop
+frame_dig -3
+extract 2 0
+frame_dig 4
+box_put
+bytec_3 // "active_proposal"
+frame_dig -3
+extract 2 0
+app_global_put
+frame_dig -3
+extract 2 0
+box_get
+store 86
+store 85
+load 86
+assert
+load 85
+frame_bury 0
+retsub
+
+// vote_on_proposal
+voteonproposal_17:
+proto 5 1
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+dup
+bytec_0 // ""
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dupn 2
+frame_dig -5
+callsub ensurenftownerexistsfromtxn_28
+frame_dig -5
+callsub ensurezeropayment_24
+frame_dig -1
+callsub ensureproposalexists_29
+frame_dig -1
+extract 2 0
+bytec_3 // "active_proposal"
+app_global_get
+==
+// This proposal is currenlty not active
+assert
+frame_dig -5
+callsub ensurehasauras_26
+intc_0 // 0
+frame_bury 1
+frame_dig -5
+frame_dig 1
+callsub ensureaurasfrozenstatus_27
+frame_dig -1
+extract 2 0
+box_get
+store 92
+store 91
+load 92
+assert
+load 91
+frame_bury 2
+frame_dig 2
+frame_dig 2
+intc_0 // 0
+extract_uint16
+frame_dig 2
+pushint 2 // 2
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 2
+frame_dig 2
+pushint 2 // 2
+extract_uint16
+frame_dig 2
+pushint 20 // 20
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 2
+pushint 4 // 4
+extract_uint64
+frame_bury 5
+frame_dig 2
+pushint 12 // 12
+extract_uint64
+frame_bury 6
+frame_dig 2
+frame_dig 2
+pushint 20 // 20
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 7
+frame_dig 2
+pushint 22 // 22
+extract_uint64
+frame_bury 8
+frame_dig -4
+bnz voteonproposal_17_l2
+frame_dig 6
+intc_1 // 1
++
+frame_bury 6
+b voteonproposal_17_l3
+voteonproposal_17_l2:
+frame_dig 5
+intc_1 // 1
++
+frame_bury 5
+voteonproposal_17_l3:
+frame_dig 3
+frame_bury 12
+frame_dig 12
+frame_bury 11
+pushint 30 // 30
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+frame_dig 4
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig 5
+itob
+concat
+frame_dig 6
+itob
+concat
+frame_dig 7
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig 8
+itob
+concat
+frame_dig 11
+concat
+frame_bury 2
+frame_dig -1
+extract 2 0
+box_del
+pop
+frame_dig -1
+extract 2 0
+frame_dig 2
+box_put
+intc_1 // 1
+frame_bury 1
+frame_dig -5
+gtxns Sender
+frame_bury 13
+frame_dig 13
+len
+intc_3 // 32
+==
+assert
+frame_dig 13
+frame_dig 1
+callsub setaurafrozen_58
+frame_dig -5
+frame_dig 1
+callsub ensureaurasfrozenstatus_27
+frame_dig -1
+extract 2 0
+box_get
+store 94
+store 93
+load 94
+assert
+load 93
+frame_bury 0
+retsub
+
+// end_proposal_voting
+endproposalvoting_18:
+proto 2 1
+bytec_0 // ""
+dup
+frame_dig -2
+callsub ensurezeropayment_24
+frame_dig -2
+gtxns Sender
+frame_bury 1
+frame_dig 1
+len
+intc_3 // 32
+==
+assert
+frame_dig 1
+callsub ensureisadminorappcreator_31
+frame_dig -1
+callsub ensureproposalexists_29
+bytec_3 // "active_proposal"
+app_global_get
+frame_dig -1
+extract 2 0
+==
+assert
+bytec_3 // "active_proposal"
+bytec 5 // "None"
+app_global_put
+frame_dig -1
+extract 2 0
+box_get
+store 107
+store 106
+load 107
+assert
+load 106
+frame_bury 0
+retsub
+
+// unfreeze_auras
+unfreezeauras_19:
+proto 3 0
+intc_0 // 0
+bytec_0 // ""
+frame_dig -3
+callsub ensurezeropayment_24
+bytec_3 // "active_proposal"
+app_global_get
+bytec 5 // "None"
+==
+// Cannot unfreeze while a proposal is still active
+assert
+intc_0 // 0
+frame_bury 0
+frame_dig -3
+gtxns Sender
+frame_bury 1
+frame_dig 1
+len
+intc_3 // 32
+==
+assert
+frame_dig 1
+frame_dig 0
+callsub setaurafrozen_58
+frame_dig -3
+frame_dig 0
+callsub ensureaurasfrozenstatus_27
+retsub
+
+// create_aura_tokens
+createauratokens_20:
+proto 0 1
+bytec_0 // ""
+dupn 3
+intc_0 // 0
+bytec 9 // 0x000461757261
+frame_bury 1
+pushbytes 0x0003415552 // 0x0003415552
+frame_bury 2
+pushbytes 0x005268747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f6465762d6d656469612f696d6167652f75706c6f61642f76313730333039313731302f417572616c6c795f415f703176326f622e706e67 // 0x005268747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f6465762d6d656469612f696d6167652f75706c6f61642f76313730333039313731302f417572616c6c795f415f703176326f622e706e67
+frame_bury 3
+frame_dig 1
+extract 2 0
+box_len
+store 109
+store 108
+load 109
+!
+bz createauratokens_20_l2
+pushint 1000000000000 // 1000000000000
+frame_bury 4
+frame_dig 1
+frame_dig 4
+frame_dig 2
+frame_dig 3
+callsub bootstraptoken_49
+frame_dig 1
+extract 2 0
+box_len
+store 111
+store 110
+load 111
+assert
+createauratokens_20_l2:
+frame_dig 1
+extract 2 0
+box_get
+store 113
+store 112
+load 113
+assert
+load 112
+frame_bury 0
+retsub
+
+// create_event
+createevent_21:
+proto 7 1
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -7
+callsub ensurezeropayment_24
+frame_dig -6
+extract 2 0
+box_len
+store 117
+store 116
+load 117
+!
+assert
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+frame_dig -5
+extract 2 0
+itxn_field ConfigAssetName
+intc_1 // 1
+itxn_field ConfigAssetTotal
+frame_dig -2
+extract 2 0
+itxn_field ConfigAssetURL
+frame_dig -7
+gtxns Sender
+itxn_field ConfigAssetManager
+itxn_submit
+itxn CreatedAssetID
+frame_bury 1
+frame_dig -7
+gtxns Sender
+frame_bury 2
+frame_dig 2
+len
+intc_3 // 32
+==
+assert
+frame_dig 1
+itob
+frame_dig -6
+frame_bury 7
+frame_dig 7
+frame_bury 6
+pushint 70 // 70
+frame_bury 4
+frame_dig 4
+frame_dig 7
+len
++
+frame_bury 5
+frame_dig 5
+intc_2 // 65536
+<
+assert
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig -5
+frame_bury 7
+frame_dig 6
+frame_dig 7
+concat
+frame_bury 6
+frame_dig 5
+frame_bury 4
+frame_dig 4
+frame_dig 7
+len
++
+frame_bury 5
+frame_dig 5
+intc_2 // 65536
+<
+assert
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig -4
+itob
+concat
+frame_dig -3
+itob
+concat
+frame_dig -2
+frame_bury 7
+frame_dig 6
+frame_dig 7
+concat
+frame_bury 6
+frame_dig 5
+frame_bury 4
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig -1
+itob
+concat
+frame_dig 2
+concat
+frame_dig 6
+concat
+frame_bury 3
+frame_dig -6
+extract 2 0
+box_del
+pop
+frame_dig -6
+extract 2 0
+frame_dig 3
+box_put
+frame_dig -6
+extract 2 0
+box_get
+store 119
+store 118
+load 119
+assert
+load 118
+frame_bury 0
+retsub
+
+// purchase_event_ticket
+purchaseeventticket_22:
+proto 4 1
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -2
+extract 2 0
+box_len
+store 121
+store 120
+load 121
+!
+// A ticket with this key already exists
+assert
+frame_dig -3
+callsub ensureeventexists_32
+frame_dig -3
+extract 2 0
+box_get
+store 123
+store 122
+load 123
+assert
+load 122
+frame_bury 1
+frame_dig 1
+extract 38 32
+frame_bury 2
+frame_dig 1
+pushint 30 // 30
+extract_uint64
+frame_bury 3
+frame_dig 1
+frame_dig 1
+pushint 10 // 10
+extract_uint16
+frame_dig 1
+pushint 28 // 28
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 1
+frame_dig 1
+pushint 28 // 28
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 5
+frame_dig -4
+frame_dig 3
+frame_dig 2
+callsub pay95percent_59
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+frame_dig 4
+extract 2 0
+pushbytes 0x205469636b6574 // " Ticket"
+concat
+itxn_field ConfigAssetName
+intc_1 // 1
+itxn_field ConfigAssetTotal
+frame_dig 5
+extract 2 0
+itxn_field ConfigAssetURL
+frame_dig -4
+gtxns Sender
+itxn_field ConfigAssetManager
+itxn_submit
+itxn CreatedAssetID
+frame_bury 6
+frame_dig -4
+gtxns Sender
+frame_bury 7
+frame_dig 7
+len
+intc_3 // 32
+==
+assert
+frame_dig 6
+itob
+frame_dig -2
+frame_bury 12
+frame_dig 12
+frame_bury 11
+pushint 52 // 52
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig -3
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig 3
+itob
+concat
+frame_dig 7
+concat
+frame_dig 11
+concat
+frame_bury 8
+frame_dig -2
+extract 2 0
+box_del
+pop
+frame_dig -2
+extract 2 0
+frame_dig 8
+box_put
+frame_dig -2
+extract 2 0
+box_get
+store 125
+store 124
+load 125
+assert
+load 124
+frame_bury 0
+retsub
+
+// hello
+hello_23:
+proto 1 1
+bytec_0 // ""
+frame_dig -1
+extract 2 0
+pushbytes 0x20576f726c64 // " World"
+concat
+frame_bury 0
+frame_dig 0
+len
+itob
+extract 6 0
+frame_dig 0
+concat
+frame_bury 0
+retsub
+
+// ensure_zero_payment
+ensurezeropayment_24:
+proto 1 0
+frame_dig -1
+gtxns Amount
+intc_0 // 0
+==
+// Payment amount must be 0
+assert
+retsub
+
+// ensure_auras_exist
+ensureaurasexist_25:
+proto 0 0
+bytec 7 // "aura"
+box_len
+store 30
+store 29
+load 30
+// aura tokens have not been created yet
+assert
+retsub
+
+// ensure_has_auras
+ensurehasauras_26:
+proto 1 0
+bytec_0 // ""
+intc_0 // 0
+callsub ensureaurasexist_25
+bytec 7 // "aura"
+box_get
+store 96
+store 95
+load 96
+assert
+load 95
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig -1
+gtxns Sender
+frame_dig 1
+asset_holding_get AssetBalance
+store 97
+intc_0 // 0
+>
+// User must have at least one aura token
+assert
+retsub
+
+// ensure_auras_frozen_status
+ensureaurasfrozenstatus_27:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+callsub ensureaurasexist_25
+bytec 7 // "aura"
+box_get
+store 99
+store 98
+load 99
+assert
+load 98
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig -2
+gtxns Sender
+frame_dig 1
+asset_holding_get AssetFrozen
+store 101
+store 100
+frame_dig -1
+bnz ensureaurasfrozenstatus_27_l2
+load 100
+!
+// auras should not be frozen
+assert
+b ensureaurasfrozenstatus_27_l3
+ensureaurasfrozenstatus_27_l2:
+load 100
+// auras should be frozen
+assert
+ensureaurasfrozenstatus_27_l3:
+retsub
+
+// ensure_nft_owner_exists_from_txn
+ensurenftownerexistsfromtxn_28:
+proto 1 0
+frame_dig -1
+gtxns Sender
+box_len
+store 88
+store 87
+load 88
+// User is not an NFT owner
+assert
+retsub
+
+// ensure_proposal_exists
+ensureproposalexists_29:
+proto 1 0
+frame_dig -1
+extract 2 0
+box_len
+store 103
+store 102
+load 103
+// Proposal with specified key was not found
+assert
+retsub
+
+// ensure_sender_is_app_creator
+ensuresenderisappcreator_30:
+proto 1 0
+frame_dig -1
+gtxns Sender
+global CreatorAddress
+==
+// Not app creator: You are not authorised to perform this action
+assert
+retsub
+
+// ensure_is_admin_or_app_creator
+ensureisadminorappcreator_31:
+proto 1 0
+frame_dig -1
+global CreatorAddress
+==
+frame_dig -1
+box_len
+store 90
+store 89
+load 90
+||
+// Not admin: You are not authorised to perform this action
+assert
+retsub
+
+// ensure_event_exists
+ensureeventexists_32:
+proto 1 0
+frame_dig -1
+extract 2 0
+box_len
+store 127
+store 126
+load 127
+// Event with specified key does not exist
+assert
+retsub
+
+// ensure_sound_nft_exists
+ensuresoundnftexists_33:
+proto 1 0
+frame_dig -1
+extract 2 0
+box_len
+store 70
+store 69
+load 70
+// SoundNFT with specified key does not exist
+assert
+retsub
+
+// ensure_art_nft_exists
+ensureartnftexists_34:
+proto 1 0
+frame_dig -1
+extract 2 0
+box_len
+store 40
+store 39
+load 40
+// ArtNFT with specified key does not exist
+assert
+retsub
+
+// ensure_registered_creative
+ensureregisteredcreative_35:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dup
+frame_dig -2
+gtxns Sender
+box_len
+store 22
+store 21
+load 22
+// Account is not a registered creative
+assert
+frame_dig -2
+gtxns Sender
+box_get
+store 24
+store 23
+load 24
+assert
+load 23
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+getbit
+frame_bury 1
+frame_dig 0
+intc_1 // 1
+getbit
+frame_bury 2
+frame_dig 0
+intc_1 // 1
+extract_uint64
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 9 // 9
+extract_uint16
+frame_dig 0
+pushint 11 // 11
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
+pushint 11 // 11
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 5
+frame_dig 0
+pushint 13 // 13
+extract_uint64
+frame_bury 6
+frame_dig -1
+extract 2 0
+pushbytes 0x6d75736963 // "music"
+==
+bnz ensureregisteredcreative_35_l3
+ensureregisteredcreative_35_l1:
+frame_dig -1
+extract 2 0
+bytec 4 // "art"
+==
+bz ensureregisteredcreative_35_l4
+intc_1 // 1
+frame_bury 1
+b ensureregisteredcreative_35_l4
+ensureregisteredcreative_35_l3:
+intc_1 // 1
+frame_bury 1
+b ensureregisteredcreative_35_l1
+ensureregisteredcreative_35_l4:
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 1
+setbit
+intc_1 // 1
+frame_dig 2
+setbit
+frame_dig 3
+itob
+concat
+frame_dig 4
+frame_bury 10
+frame_dig 10
+frame_bury 9
+pushint 21 // 21
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig 6
+itob
+concat
+frame_dig 9
+concat
+frame_bury 0
+frame_dig -2
+gtxns Sender
+box_del
+pop
+frame_dig -2
+gtxns Sender
+frame_dig 0
+box_put
+retsub
+
+// promote_to_admin_caster
+promotetoadmincaster_36:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+dup
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 2
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+callsub promotetoadmin_3
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// demote_from_admin_caster
+demotefromadmincaster_37:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+dup
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 2
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+callsub demotefromadmin_4
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// create_nft_owner
+createnftowner_38:
+proto 3 0
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+frame_dig -3
+gtxns Sender
+itxn_field ConfigAssetName
+global CurrentApplicationAddress
+itxn_field ConfigAssetManager
+intc_1 // 1
+itxn_field ConfigAssetTotal
+itxn_submit
+itxn CreatedAssetID
+frame_bury 0
+intc_0 // 0
+frame_bury 1
+intc_0 // 0
+frame_bury 2
+intc_0 // 0
+frame_bury 3
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 1
+setbit
+intc_1 // 1
+frame_dig 2
+setbit
+frame_dig 3
+itob
+concat
+frame_dig -2
+frame_bury 8
+frame_dig 8
+frame_bury 7
+pushint 21 // 21
+frame_bury 5
+frame_dig 5
+frame_dig 8
+len
++
+frame_bury 6
+frame_dig 6
+intc_2 // 65536
+<
+assert
+frame_dig 5
+itob
+extract 6 0
+concat
+frame_dig -1
+frame_bury 8
+frame_dig 7
+frame_dig 8
+concat
+frame_bury 7
+frame_dig 6
+frame_bury 5
+frame_dig 5
+itob
+extract 6 0
+concat
+frame_dig 0
+itob
+concat
+frame_dig 7
+concat
+frame_bury 4
+frame_dig -3
+gtxns Sender
+box_del
+pop
+frame_dig -3
+gtxns Sender
+frame_dig 4
+box_put
+retsub
+
+// increment_creator_nft_count
+incrementcreatornftcount_39:
+proto 1 0
+bytec_0 // ""
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dup
+frame_dig -1
+box_get
+store 26
+store 25
+load 26
+assert
+load 25
+frame_bury 0
+frame_dig 0
+intc_1 // 1
+extract_uint64
+frame_bury 1
+frame_dig 1
+intc_1 // 1
++
+frame_bury 1
+frame_dig 0
+intc_0 // 0
+getbit
+frame_bury 2
+frame_dig 0
+intc_1 // 1
+getbit
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 9 // 9
+extract_uint16
+frame_dig 0
+pushint 11 // 11
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
+pushint 11 // 11
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 5
+frame_dig 0
+pushint 13 // 13
+extract_uint64
+frame_bury 6
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 2
+setbit
+intc_1 // 1
+frame_dig 3
+setbit
+frame_dig 1
+itob
+concat
+frame_dig 4
+frame_bury 10
+frame_dig 10
+frame_bury 9
+pushint 21 // 21
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+itob
+extract 6 0
+concat
+frame_dig 6
+itob
+concat
+frame_dig 9
+concat
+frame_bury 0
+frame_dig -1
+box_del
+pop
+frame_dig -1
+frame_dig 0
+box_put
+retsub
+
+// create_art_auction
+createartauction_40:
+proto 7 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -6
+extract 2 0
+box_len
+store 50
+store 49
+load 50
+!
+// an art auction with this key already exists
+assert
+frame_dig -7
+gtxns Sender
+frame_bury 0
+frame_dig 0
+len
+intc_3 // 32
+==
+assert
+intc_0 // 0
+frame_bury 1
+global CurrentApplicationAddress
+frame_bury 2
+frame_dig 2
+len
+intc_3 // 32
+==
+assert
+frame_dig 0
+frame_dig -5
+frame_bury 7
+frame_dig 7
+frame_bury 6
+pushint 100 // 100
+frame_bury 4
+frame_dig 4
+frame_dig 7
+len
++
+frame_bury 5
+frame_dig 5
+intc_2 // 65536
+<
+assert
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig -4
+frame_bury 7
+frame_dig 6
+frame_dig 7
+concat
+frame_bury 6
+frame_dig 5
+frame_bury 4
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig -3
+itob
+concat
+frame_dig -2
+itob
+concat
+frame_dig -1
+itob
+concat
+frame_dig 1
+itob
+concat
+frame_dig 2
+concat
+frame_dig 6
+concat
+frame_bury 3
+frame_dig -6
+extract 2 0
+box_del
+pop
+frame_dig -6
+extract 2 0
+frame_dig 3
+box_put
+retsub
+
+// perform_auction_bid
+performauctionbid_41:
+proto 3 0
+bytec_0 // ""
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+dupn 3
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -2
+extract 2 0
+box_get
+store 56
+store 55
+load 56
+assert
+load 55
+frame_bury 0
+frame_dig 0
+pushint 60 // 60
+extract_uint64
+frame_bury 1
+frame_dig 0
+pushint 36 // 36
+extract_uint64
+frame_bury 2
+frame_dig 0
+pushint 44 // 44
+extract_uint64
+frame_bury 3
+frame_dig 0
+pushint 52 // 52
+extract_uint64
+frame_bury 4
+frame_dig -1
+frame_dig 1
+>
+// The new bid must be larger than the current highest bid
+assert
+frame_dig -1
+frame_dig 2
+>
+// The new bid must be greater that the minimum bid price
+assert
+frame_dig 0
+extract 0 32
+frame_bury 5
+frame_dig 0
+frame_dig 0
+intc_3 // 32
+extract_uint16
+frame_dig 0
+pushint 34 // 34
+extract_uint16
+substring3
+frame_bury 6
+frame_dig 0
+frame_dig 0
+pushint 34 // 34
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 7
+frame_dig -3
+gtxns Sender
+frame_bury 8
+frame_dig 8
+len
+intc_3 // 32
+==
+assert
+frame_dig 5
+frame_dig 6
+frame_bury 12
+frame_dig 12
+frame_bury 11
+pushint 100 // 100
+frame_bury 9
+frame_dig 9
+frame_dig 12
+len
++
+frame_bury 10
+frame_dig 10
+intc_2 // 65536
+<
+assert
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig 7
+frame_bury 12
+frame_dig 11
+frame_dig 12
+concat
+frame_bury 11
+frame_dig 10
+frame_bury 9
+frame_dig 9
+itob
+extract 6 0
+concat
+frame_dig 2
+itob
+concat
+frame_dig 3
+itob
+concat
+frame_dig 4
+itob
+concat
+frame_dig -1
+itob
+concat
+frame_dig 8
+concat
+frame_dig 11
+concat
+frame_bury 0
+frame_dig -2
+extract 2 0
+box_del
+pop
+frame_dig -2
+extract 2 0
+frame_dig 0
+box_put
+retsub
+
+// transfer_art_auction_item_to_highest_bidder
+transferartauctionitemtohighestbidder_42:
+proto 1 0
+bytec_0 // ""
+dupn 2
+frame_dig -1
+extract 2 0
+box_get
+store 64
+store 63
+load 64
+assert
+load 63
+frame_bury 0
+frame_dig 0
+extract 68 32
+frame_bury 1
+frame_dig 0
+frame_dig 0
+intc_3 // 32
+extract_uint16
+frame_dig 0
+pushint 34 // 34
+extract_uint16
+substring3
+frame_bury 2
+frame_dig 2
+frame_dig 1
+callsub updateartnftowner_43
+retsub
+
+// update_art_nft_owner
+updateartnftowner_43:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 3
+intc_0 // 0
+dup
+bytec_0 // ""
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+dup
+frame_dig -2
+extract 2 0
+box_get
+store 66
+store 65
+load 66
+assert
+load 65
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig 0
+frame_dig 0
+pushint 10 // 10
+extract_uint16
+frame_dig 0
+pushint 12 // 12
+extract_uint16
+substring3
+frame_bury 2
+frame_dig 0
+frame_dig 0
+pushint 12 // 12
+extract_uint16
+frame_dig 0
+pushint 14 // 14
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 14 // 14
+extract_uint16
+frame_dig 0
+pushint 16 // 16
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
+pushint 16 // 16
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 5
+frame_dig 0
+pushint 18 // 18
+extract_uint64
+frame_bury 6
+frame_dig 0
+pushint 26 // 26
+extract_uint64
+frame_bury 7
+frame_dig 0
+extract 34 32
+frame_bury 8
+frame_dig 0
+intc 4 // 784
+getbit
+frame_bury 9
+frame_dig 0
+intc 5 // 785
+getbit
+frame_bury 10
+frame_dig 1
+itob
+frame_dig -2
+frame_bury 14
+frame_dig 14
+frame_bury 13
+pushint 99 // 99
+frame_bury 11
+frame_dig 11
+frame_dig 14
+len
++
+frame_bury 12
+frame_dig 12
+intc_2 // 65536
+<
+assert
+frame_dig 11
+itob
+extract 6 0
+concat
+frame_dig 2
+frame_bury 14
+frame_dig 13
+frame_dig 14
+concat
+frame_bury 13
+frame_dig 12
+frame_bury 11
+frame_dig 11
+frame_dig 14
+len
++
+frame_bury 12
+frame_dig 12
+intc_2 // 65536
+<
+assert
+frame_dig 11
+itob
+extract 6 0
+concat
+frame_dig 3
+frame_bury 14
+frame_dig 13
+frame_dig 14
+concat
+frame_bury 13
+frame_dig 12
+frame_bury 11
+frame_dig 11
+frame_dig 14
+len
++
+frame_bury 12
+frame_dig 12
+intc_2 // 65536
+<
+assert
+frame_dig 11
+itob
+extract 6 0
+concat
+frame_dig 4
+frame_bury 14
+frame_dig 13
+frame_dig 14
+concat
+frame_bury 13
+frame_dig 12
+frame_bury 11
+frame_dig 11
+frame_dig 14
+len
++
+frame_bury 12
+frame_dig 12
+intc_2 // 65536
+<
+assert
+frame_dig 11
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 14
+frame_dig 13
+frame_dig 14
+concat
+frame_bury 13
+frame_dig 12
+frame_bury 11
+frame_dig 11
+itob
+extract 6 0
+concat
+frame_dig 6
+itob
+concat
+frame_dig 7
+itob
+concat
+frame_dig 8
+concat
+frame_dig -1
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 9
+setbit
+intc_1 // 1
+frame_dig 10
+setbit
+concat
+frame_dig 13
+concat
+frame_bury 0
+frame_dig -2
+extract 2 0
+box_del
+pop
+frame_dig -2
+extract 2 0
+frame_dig 0
+box_put
+retsub
+
+// update_sound_nft_owner
+updatesoundnftowner_44:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+dup
+frame_dig -2
+extract 2 0
+box_get
+store 80
+store 79
+load 80
+assert
+load 79
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig 0
+pushint 10 // 10
+extract_uint64
+frame_bury 2
+frame_dig 0
+frame_dig 0
+pushint 18 // 18
+extract_uint16
+frame_dig 0
+pushint 20 // 20
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 20 // 20
+extract_uint16
+frame_dig 0
+pushint 22 // 22
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
+pushint 22 // 22
+extract_uint16
+frame_dig 0
+intc_3 // 32
+extract_uint16
+substring3
+frame_bury 5
+frame_dig 0
+pushint 24 // 24
+extract_uint64
+frame_bury 6
+frame_dig 0
+frame_dig 0
+intc_3 // 32
+extract_uint16
+frame_dig 0
+pushint 42 // 42
+extract_uint16
+substring3
+frame_bury 7
+frame_dig 0
+pushint 34 // 34
+extract_uint64
+frame_bury 8
+frame_dig 0
+frame_dig 0
+pushint 42 // 42
+extract_uint16
+frame_dig 0
+pushint 44 // 44
+extract_uint16
+substring3
+frame_bury 9
+frame_dig 0
+frame_dig 0
+pushint 44 // 44
+extract_uint16
+frame_dig 0
+pushint 46 // 46
+extract_uint16
+substring3
+frame_bury 10
+frame_dig 0
+frame_dig 0
+pushint 46 // 46
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 11
+frame_dig 0
+intc 6 // 640
+getbit
+frame_bury 12
+frame_dig 0
+intc 7 // 641
+getbit
+frame_bury 13
+frame_dig 1
+itob
+frame_dig -2
+frame_bury 17
+frame_dig 17
+frame_bury 16
+pushint 81 // 81
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 2
+itob
+concat
+frame_dig 3
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 4
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 6
+itob
+concat
+frame_dig 7
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 8
+itob
+concat
+frame_dig 9
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 10
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 11
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig -1
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig 12
+setbit
+intc_1 // 1
+frame_dig 13
+setbit
+concat
+frame_dig 16
+concat
+frame_bury 0
+retsub
+
+// perform_sound_nft_sale
+performsoundnftsale_45:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 3
+frame_dig -1
+extract 2 0
+box_get
+store 78
+store 77
+load 78
+assert
+load 77
+frame_bury 0
+frame_dig 0
+pushint 34 // 34
+extract_uint64
+frame_bury 1
+frame_dig 0
+extract 48 32
+frame_bury 2
+frame_dig -2
+gtxns Sender
+frame_bury 3
+frame_dig 3
+len
+intc_3 // 32
+==
+assert
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 4
+intc_1 // 1
+frame_bury 5
+frame_dig 0
+intc 6 // 640
+getbit
+frame_bury 6
+frame_dig 6
+// This asset is not currently for sale
+assert
+frame_dig -2
+frame_dig 1
+frame_dig 2
+callsub pay95percent_59
+frame_dig 4
+frame_dig 3
+frame_dig 5
+callsub performassettransfer_53
+frame_dig -1
+frame_dig 3
+callsub updatesoundnftowner_44
+intc_1 // 1
+frame_bury 7
+frame_dig 3
+frame_dig 7
+callsub sendauratoken_57
+intc_1 // 1
+return
+
+// perform_art_nft_sale
+performartnftsale_46:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 3
+frame_dig -1
+extract 2 0
+box_get
+store 82
+store 81
+load 82
+assert
+load 81
+frame_bury 0
+frame_dig 0
+pushint 18 // 18
+extract_uint64
+frame_bury 1
+frame_dig 0
+extract 34 32
+frame_bury 2
+frame_dig -2
+gtxns Sender
+frame_bury 3
+frame_dig 3
+len
+intc_3 // 32
+==
+assert
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 4
+intc_1 // 1
+frame_bury 5
+frame_dig 0
+intc 4 // 784
+getbit
+frame_bury 6
+frame_dig 6
+// This asset is not currently for sale
+assert
+frame_dig -2
+frame_dig 1
+frame_dig 2
+callsub pay95percent_59
+frame_dig 4
+frame_dig 3
+frame_dig 5
+callsub performassettransfer_53
+frame_dig -1
+frame_dig 3
+callsub updateartnftowner_43
+intc_1 // 1
+frame_bury 7
+frame_dig 3
+frame_dig 7
+callsub sendauratoken_57
+intc_1 // 1
+return
+
+// validate_sound_nft_owner
+validatesoundnftowner_47:
+proto 2 0
+bytec_0 // ""
+dup
+frame_dig -1
+callsub ensuresoundnftexists_33
+frame_dig -1
+extract 2 0
+box_get
+store 68
+store 67
+load 68
+assert
+load 67
+frame_bury 0
+frame_dig 0
+extract 48 32
+frame_bury 1
+frame_dig 1
+frame_dig -2
+gtxns Sender
+==
+// The transaction sender is not the owner of the nft
+assert
+retsub
+
+// validate_art_nft_owner
+validateartnftowner_48:
+proto 2 0
+bytec_0 // ""
+dup
+frame_dig -1
+callsub ensureartnftexists_34
+frame_dig -1
+extract 2 0
+box_get
+store 72
+store 71
+load 72
+assert
+load 71
+frame_bury 0
+frame_dig 0
+extract 34 32
+frame_bury 1
+frame_dig 1
+frame_dig -2
+gtxns Sender
+==
+// The transaction sender is not the owner of the art nft
+assert
+retsub
+
+// bootstrap_token
+bootstraptoken_49:
+proto 4 0
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -4
+extract 2 0
+box_len
+store 115
+store 114
+load 115
+!
+// Aura tokens already exist
+assert
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+frame_dig -3
+itxn_field ConfigAssetTotal
+frame_dig -4
+extract 2 0
+itxn_field ConfigAssetName
+frame_dig -2
+extract 2 0
+itxn_field ConfigAssetUnitName
+frame_dig -1
+extract 2 0
+itxn_field ConfigAssetURL
+global CurrentApplicationAddress
+itxn_field ConfigAssetFreeze
+global CurrentApplicationAddress
+itxn_field ConfigAssetManager
+global CurrentApplicationAddress
+itxn_field ConfigAssetReserve
+global CurrentApplicationAddress
+itxn_field ConfigAssetClawback
+itxn_submit
+itxn CreatedAssetID
+frame_bury 0
+frame_dig 0
+itob
+log
+frame_dig 0
+itob
+frame_dig -4
+frame_bury 5
+frame_dig 5
+frame_bury 4
+pushint 18 // 18
+frame_bury 2
+frame_dig 2
+itob
+extract 6 0
+concat
+frame_dig -3
+itob
+concat
+frame_dig 4
+concat
+frame_bury 1
+frame_dig -4
+extract 2 0
+box_del
+pop
+frame_dig -4
+extract 2 0
+frame_dig 1
+box_put
+retsub
+
+// update_sound_nft_sale
+updatesoundnftsale_50:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 3
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dup
+frame_dig -2
+callsub ensuresoundnftexists_33
+frame_dig -2
+extract 2 0
+box_get
+store 74
+store 73
+load 74
+assert
+load 73
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig 0
+pushint 10 // 10
+extract_uint64
+frame_bury 2
+frame_dig 0
+frame_dig 0
+pushint 18 // 18
+extract_uint16
+frame_dig 0
+pushint 20 // 20
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 20 // 20
+extract_uint16
+frame_dig 0
+pushint 22 // 22
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
+pushint 22 // 22
+extract_uint16
+frame_dig 0
+intc_3 // 32
+extract_uint16
+substring3
+frame_bury 5
+frame_dig 0
+pushint 24 // 24
+extract_uint64
+frame_bury 6
+frame_dig 0
+frame_dig 0
+intc_3 // 32
+extract_uint16
+frame_dig 0
+pushint 42 // 42
+extract_uint16
+substring3
+frame_bury 7
+frame_dig 0
+pushint 34 // 34
+extract_uint64
+frame_bury 8
+frame_dig 0
+frame_dig 0
+pushint 42 // 42
+extract_uint16
+frame_dig 0
+pushint 44 // 44
+extract_uint16
+substring3
+frame_bury 9
+frame_dig 0
+frame_dig 0
+pushint 44 // 44
+extract_uint16
+frame_dig 0
+pushint 46 // 46
+extract_uint16
+substring3
+frame_bury 10
+frame_dig 0
+frame_dig 0
+pushint 46 // 46
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 11
+frame_dig 0
+extract 48 32
+frame_bury 12
+frame_dig 0
+intc 7 // 641
+getbit
+frame_bury 13
+frame_dig 1
+itob
+frame_dig -2
+frame_bury 17
+frame_dig 17
+frame_bury 16
+pushint 81 // 81
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 2
+itob
+concat
+frame_dig 3
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 4
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 6
+itob
+concat
+frame_dig 7
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 8
+itob
+concat
+frame_dig 9
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 10
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+frame_dig 17
+len
++
+frame_bury 15
+frame_dig 15
+intc_2 // 65536
+<
+assert
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 11
+frame_bury 17
+frame_dig 16
+frame_dig 17
+concat
+frame_bury 16
+frame_dig 15
+frame_bury 14
+frame_dig 14
+itob
+extract 6 0
+concat
+frame_dig 12
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig -1
+setbit
+intc_1 // 1
+frame_dig 13
+setbit
+concat
+frame_dig 16
+concat
+frame_bury 0
+frame_dig -2
+extract 2 0
+box_del
+pop
+frame_dig -2
+extract 2 0
+frame_dig 0
+box_put
+retsub
+
+// update_art_nft_sale
+updateartnftsale_51:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 3
+intc_0 // 0
+dup
+bytec_0 // ""
+intc_0 // 0
+dupn 2
+bytec_0 // ""
+dup
+frame_dig -2
+callsub ensureartnftexists_34
+frame_dig -2
+extract 2 0
+box_get
+store 76
+store 75
+load 76
+assert
+load 75
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig 0
+frame_dig 0
+pushint 10 // 10
+extract_uint16
+frame_dig 0
+pushint 12 // 12
+extract_uint16
+substring3
+frame_bury 2
+frame_dig 0
+frame_dig 0
+pushint 12 // 12
+extract_uint16
+frame_dig 0
+pushint 14 // 14
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 14 // 14
+extract_uint16
+frame_dig 0
+pushint 16 // 16
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
+pushint 16 // 16
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 5
+frame_dig 0
+pushint 18 // 18
+extract_uint64
+frame_bury 6
+frame_dig 0
+pushint 26 // 26
+extract_uint64
+frame_bury 7
+frame_dig 0
+extract 34 32
+frame_bury 8
+frame_dig 0
+intc 5 // 785
+getbit
+frame_bury 9
+frame_dig 1
+callsub optappintoasset_52
+frame_dig 1
+itob
+frame_dig -2
+frame_bury 13
+frame_dig 13
+frame_bury 12
+pushint 99 // 99
+frame_bury 10
+frame_dig 10
+frame_dig 13
+len
++
+frame_bury 11
+frame_dig 11
+intc_2 // 65536
+<
+assert
+frame_dig 10
+itob
+extract 6 0
+concat
+frame_dig 2
+frame_bury 13
+frame_dig 12
+frame_dig 13
+concat
+frame_bury 12
+frame_dig 11
+frame_bury 10
+frame_dig 10
+frame_dig 13
+len
++
+frame_bury 11
+frame_dig 11
+intc_2 // 65536
+<
+assert
+frame_dig 10
+itob
+extract 6 0
+concat
+frame_dig 3
+frame_bury 13
+frame_dig 12
+frame_dig 13
+concat
+frame_bury 12
+frame_dig 11
+frame_bury 10
+frame_dig 10
+frame_dig 13
+len
++
+frame_bury 11
+frame_dig 11
+intc_2 // 65536
+<
+assert
+frame_dig 10
+itob
+extract 6 0
+concat
+frame_dig 4
+frame_bury 13
+frame_dig 12
+frame_dig 13
+concat
+frame_bury 12
+frame_dig 11
+frame_bury 10
+frame_dig 10
+frame_dig 13
+len
++
+frame_bury 11
+frame_dig 11
+intc_2 // 65536
+<
+assert
+frame_dig 10
+itob
+extract 6 0
+concat
+frame_dig 5
+frame_bury 13
+frame_dig 12
+frame_dig 13
+concat
+frame_bury 12
+frame_dig 11
+frame_bury 10
+frame_dig 10
+itob
+extract 6 0
+concat
+frame_dig 6
+itob
+concat
+frame_dig 7
+itob
+concat
+frame_dig 8
+concat
+frame_dig 8
+concat
+bytec_2 // 0x00
+intc_0 // 0
+frame_dig -1
+setbit
+intc_1 // 1
+frame_dig 9
+setbit
+concat
+frame_dig 12
+concat
+frame_bury 0
+frame_dig -2
+extract 2 0
+box_del
+pop
+frame_dig -2
+extract 2 0
+frame_dig 0
+box_put
+retsub
+
+// opt_app_into_asset
+optappintoasset_52:
+proto 1 0
+itxn_begin
+pushint 4 // axfer
+itxn_field TypeEnum
+frame_dig -1
+itxn_field XferAsset
+global CurrentApplicationAddress
+itxn_field AssetReceiver
+global CurrentApplicationAddress
+itxn_field Sender
+intc_0 // 0
+itxn_field AssetAmount
+itxn_submit
+retsub
+
+// perform_asset_transfer
+performassettransfer_53:
+proto 3 0
+itxn_begin
+pushint 4 // axfer
+itxn_field TypeEnum
+frame_dig -3
+itxn_field XferAsset
+frame_dig -2
+itxn_field AssetReceiver
+frame_dig -1
+itxn_field AssetAmount
+itxn_submit
+retsub
+
+// register_creator_caster
+registercreatorcaster_54:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub registercreator_5
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// get_registered_creative_caster
+getregisteredcreativecaster_55:
+proto 0 0
+bytec_0 // ""
+dup
+txna ApplicationArgs 1
+frame_bury 1
+frame_dig 1
+callsub getregisteredcreative_6
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// transfer_asset_from_contract
+transferassetfromcontract_56:
+proto 3 0
+itxn_begin
+pushint 4 // axfer
+itxn_field TypeEnum
+frame_dig -3
+itxn_field XferAsset
+frame_dig -2
+itxn_field AssetAmount
+frame_dig -1
+itxn_field AssetReceiver
+itxn_submit
+retsub
+
+// send_aura_token
+sendauratoken_57:
+proto 2 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+dup
+callsub ensureaurasexist_25
+bytec 9 // 0x000461757261
+frame_bury 0
+frame_dig 0
+extract 2 0
+box_get
+store 28
+store 27
+load 28
+assert
+load 27
+frame_bury 1
+frame_dig 1
+intc_0 // 0
+extract_uint64
+frame_bury 2
+frame_dig 1
+pushint 10 // 10
+extract_uint64
+frame_bury 3
+frame_dig 3
+intc_1 // 1
+>
+// Not enough aura tokens
+assert
+itxn_begin
+pushint 4 // axfer
+itxn_field TypeEnum
+frame_dig 2
+itxn_field XferAsset
+frame_dig -2
+itxn_field AssetReceiver
+frame_dig -1
+itxn_field AssetAmount
+itxn_submit
+frame_dig 3
+intc_1 // 1
+-
+frame_bury 3
+frame_dig 2
+itob
+frame_dig 0
+frame_bury 7
+frame_dig 7
+frame_bury 6
+pushint 18 // 18
+frame_bury 4
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig 3
+itob
+concat
+frame_dig 6
+concat
+frame_bury 1
+frame_dig 0
+extract 2 0
+box_del
+pop
+frame_dig 0
+extract 2 0
+frame_dig 1
+box_put
+retsub
+
+// set_aura_frozen
+setaurafrozen_58:
+proto 2 0
+bytec_0 // ""
+intc_0 // 0
+callsub ensureaurasexist_25
+bytec 7 // "aura"
+box_get
+store 105
+store 104
+load 105
+assert
+load 104
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+itxn_begin
+pushint 5 // afrz
+itxn_field TypeEnum
+frame_dig 1
+itxn_field FreezeAsset
+frame_dig -2
+itxn_field FreezeAssetAccount
+frame_dig -1
+itxn_field FreezeAssetFrozen
+itxn_submit
+retsub
+
+// pay_95_percent
+pay95percent_59:
+proto 3 0
+intc_0 // 0
+frame_dig -3
+gtxns Amount
+frame_dig -2
+==
+// Transaction price is not the required amount
+assert
+frame_dig -3
+gtxns Receiver
+global CurrentApplicationAddress
+==
+// Transaction receiver has to be the app Address
+assert
+frame_dig -2
+pushint 5 // 5
+*
+pushint 100 // 100
+/
+frame_bury 0
+itxn_begin
+intc_1 // pay
+itxn_field TypeEnum
+frame_dig 0
+itxn_field Amount
+global CurrentApplicationAddress
+itxn_field Sender
+frame_dig -1
+itxn_field Receiver
+itxn_submit
+retsub
+
+// create_sound_nft_caster
+createsoundnftcaster_60:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 4
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+dupn 2
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+frame_bury 4
+txna ApplicationArgs 4
+frame_bury 5
+txna ApplicationArgs 5
+frame_bury 6
+txna ApplicationArgs 6
+btoi
+frame_bury 7
+txna ApplicationArgs 7
+frame_bury 8
+txna ApplicationArgs 8
+btoi
+frame_bury 9
+txna ApplicationArgs 9
+frame_bury 10
+txna ApplicationArgs 10
+frame_bury 11
+txna ApplicationArgs 11
+frame_bury 12
+txna ApplicationArgs 12
+btoi
+frame_bury 13
+txna ApplicationArgs 13
+intc_0 // 0
+getbyte
+frame_bury 14
+txna ApplicationArgs 14
+intc_0 // 0
+getbyte
+frame_bury 15
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+frame_dig 6
+frame_dig 7
+frame_dig 8
+frame_dig 9
+frame_dig 10
+frame_dig 11
+frame_dig 12
+frame_dig 13
+frame_dig 14
+frame_dig 15
+callsub createsoundnft_7
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// create_art_nft_caster
+createartnftcaster_61:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 5
+intc_0 // 0
+dupn 2
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+frame_bury 4
+txna ApplicationArgs 4
+frame_bury 5
+txna ApplicationArgs 5
+frame_bury 6
+txna ApplicationArgs 6
+frame_bury 7
+txna ApplicationArgs 7
+btoi
+frame_bury 8
+txna ApplicationArgs 8
+intc_0 // 0
+getbyte
+frame_bury 9
+txna ApplicationArgs 9
+intc_0 // 0
+getbyte
+frame_bury 10
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+frame_dig 6
+frame_dig 7
+frame_dig 8
+frame_dig 9
+frame_dig 10
+callsub createartnft_8
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// claim_created_art_caster
+claimcreatedartcaster_62:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+txna ApplicationArgs 1
+frame_bury 2
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+pushint 4 // axfer
+==
+assert
+frame_dig 1
+frame_dig 2
+callsub claimcreatedart_9
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// create_art_auction_caster
+createartauctioncaster_63:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 2
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+btoi
+frame_bury 4
+txna ApplicationArgs 4
+btoi
+frame_bury 5
+txna ApplicationArgs 5
+btoi
+frame_bury 6
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+frame_dig 6
+callsub createartauction_10
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// bid_on_art_auction_caster
+bidonartauctioncaster_64:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+btoi
+frame_bury 3
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub bidonartauction_11
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// complete_art_auction_caster
+completeartauctioncaster_65:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+txna ApplicationArgs 1
+frame_bury 2
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+callsub completeartauction_12
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// place_nft_on_sale_caster
+placenftonsalecaster_66:
+proto 0 0
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+txna ApplicationArgs 1
+frame_bury 1
+txna ApplicationArgs 2
+frame_bury 2
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 3
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub placenftonsale_13
+retsub
+
+// purchase_nft_caster
+purchasenftcaster_67:
+proto 0 0
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 4
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 4
+txna ApplicationArgs 4
+intc_0 // 0
+getbyte
+frame_bury 5
+txna ApplicationArgs 5
+intc_0 // 0
+getbyte
+frame_bury 6
+txna ApplicationArgs 6
+intc_0 // 0
+getbyte
+frame_bury 8
+txn GroupIndex
+pushint 3 // 3
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+txn GroupIndex
+pushint 2 // 2
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+pushint 4 // axfer
+==
+assert
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 7
+frame_dig 7
+gtxns TypeEnum
+pushint 4 // axfer
+==
+assert
+frame_dig 0
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+frame_dig 6
+frame_dig 7
+frame_dig 8
+callsub purchasenft_14
+retsub
+
+// transfer_nft_caster
+transfernftcaster_68:
+proto 0 0
+intc_0 // 0
+bytec_0 // ""
+dupn 2
+txna ApplicationArgs 1
+frame_bury 1
+txna ApplicationArgs 2
+frame_bury 2
+txna ApplicationArgs 3
+frame_bury 3
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub transfernft_15
+retsub
+
+// create_proposal_caster
+createproposalcaster_69:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+frame_bury 4
+txna ApplicationArgs 4
+btoi
+frame_bury 5
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+callsub createproposal_16
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// vote_on_proposal_caster
+voteonproposalcaster_70:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+dupn 3
+bytec_0 // ""
+txna ApplicationArgs 1
+intc_0 // 0
+pushint 8 // 8
+*
+getbit
+frame_bury 2
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+frame_bury 3
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 4
+txna ApplicationArgs 4
+frame_bury 5
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+callsub voteonproposal_17
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// end_proposal_voting_caster
+endproposalvotingcaster_71:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+txna ApplicationArgs 1
+frame_bury 2
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+callsub endproposalvoting_18
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// unfreeze_auras_caster
+unfreezeaurascaster_72:
+proto 0 0
+intc_0 // 0
+dupn 2
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+frame_bury 1
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+frame_bury 2
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 0
+frame_dig 1
+frame_dig 2
+callsub unfreezeauras_19
+retsub
+
+// create_aura_tokens_caster
+createauratokenscaster_73:
+proto 0 0
+bytec_0 // ""
+callsub createauratokens_20
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// create_event_caster
+createeventcaster_74:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+dup
+bytec_0 // ""
+intc_0 // 0
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+btoi
+frame_bury 4
+txna ApplicationArgs 4
+btoi
+frame_bury 5
+txna ApplicationArgs 5
+frame_bury 6
+txna ApplicationArgs 6
+btoi
+frame_bury 7
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+frame_dig 6
+frame_dig 7
+callsub createevent_21
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// purchase_event_ticket_caster
+purchaseeventticketcaster_75:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 4
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+callsub purchaseeventticket_22
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// hello_caster
+hellocaster_76:
+proto 0 0
+bytec_0 // ""
+dup
+txna ApplicationArgs 1
+frame_bury 1
+frame_dig 1
+callsub hello_23
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
