@@ -23,6 +23,46 @@ def delete() -> P.Expr:
     return P.Approve()
 
 
+@app.external(authorize=B.Authorize.only_creator())
+def promote_to_admin(acc: P.abi.Account):
+    from .subroutines.records import update_creative_is_admin
+
+    return P.Seq(
+        (address := P.abi.Address()).set(acc.address()),
+        (is_admin := P.abi.Bool()).set(True),
+        update_creative_is_admin(address, is_admin),
+    )
+
+
+@app.external(authorize=B.Authorize.only_creator())
+def demote_from_admin(acc: P.abi.Account):
+    from .subroutines.records import update_creative_is_admin
+
+    return P.Seq(
+        (address := P.abi.Address()).set(acc.address()),
+        (is_admin := P.abi.Bool()).set(False),
+        update_creative_is_admin(address, is_admin),
+    )
+
+
+@app.external
+def ensure_creative_is_admin(address: P.abi.Address):
+    return P.Seq(
+        P.Assert(
+            app.state.aurally_nft_owners[address.get()].exists(),
+            comment="The specified address is not a creative",
+        ),
+        (creative := AurallyCreative()).decode(
+            app.state.aurally_nft_owners[address.get()].get()
+        ),
+        (is_admin := P.abi.Bool()).set(creative.is_admin),
+        (should_be := P.abi.Bool()).set(True),
+        P.Assert(
+            is_admin.get() == should_be.get(), comment="The creative is not an admin"
+        ),
+    )
+
+
 @app.external
 def create_aura_tokens(*, output: AurallyToken):
     from .subroutines.tokens import bootstrap_token
@@ -402,18 +442,16 @@ def create_art_auction(
 def bid_on_art_auction(
     txn: P.abi.PaymentTransaction,
     auction_key: P.abi.String,
-    bid_ammount: P.abi.Uint64,
     current_highest_bidder: P.abi.Account,
     *,
     output: ArtAuctionItem,
 ):
     from .subroutines.transactions import refund_last_bidder
+    from .subroutines.records import record_auction_bid
+    from .subroutines.validators import ensure_art_auction_exists
 
     return P.Seq(
-        P.Assert(
-            app.state.art_auctions[auction_key.get()].exists(),
-            comment="art auction with the specified key does not exist",
-        ),
+        ensure_art_auction_exists(auction_key),
         P.Assert(txn.get().receiver() == P.Global.current_application_address()),
         (auction := ArtAuctionItem()).decode(
             app.state.art_auctions[auction_key.get()].get()
@@ -422,7 +460,10 @@ def bid_on_art_auction(
         (highest_bid := P.abi.Uint64()).set(auction.highest_bid),
         (highest_bidder := P.abi.Address()).set(auction.highest_bidder),
         (min_bid := P.abi.Uint64()).set(auction.min_bid),
-        P.Assert(current_highest_bidder.address() == highest_bidder.get()),
+        P.Assert(
+            current_highest_bidder.address() == highest_bidder.get(),
+            comment="The current_highest_bidder passed is not the highest_bidder",
+        ),
         P.If(
             highest_bid.get() == P.Int(0),
             P.Assert(
@@ -440,9 +481,56 @@ def bid_on_art_auction(
                 (note := P.abi.String()).set(
                     P.Concat(P.Bytes("Refund for your bid on: "), auction_name.get())
                 ),
-                refund_last_bidder(current_highest_bidder, highest_bid, note)
+                refund_last_bidder(current_highest_bidder, highest_bid, note),
             ),
         ),
-        perform_auction_bid(txn, auction_key, bid_ammount),
+        record_auction_bid(txn, auction_key),
         output.decode(app.state.art_auctions[auction_key.get()].get()),
+    )
+
+
+@app.external
+def complete_art_auction(
+    optin_txn: P.abi.AssetTransferTransaction,
+    txn: P.abi.AssetTransferTransaction,
+    auction_key: P.abi.String,
+    *,
+    output: ArtNFT,
+):
+    from .subroutines.validators import ensure_art_nft_exists, ensure_art_auction_exists
+    from .subroutines.records import update_art_nft_owner
+
+    return P.Seq(
+        ensure_art_auction_exists(auction_key),
+        (auction_item := ArtAuctionItem()).decode(
+            app.state.art_auctions[auction_key.get()].get()
+        ),
+        (item_asset_key := P.abi.String()).set(auction_item.item_asset_key),
+        (auctioneer := P.abi.Address()).set(auction_item.auctioneer),
+        (highest_bidder := P.abi.Address()).set(auction_item.highest_bidder),
+        (art_nft := ArtNFT()).decode(app.state.art_nfts[item_asset_key.get()].get()),
+        (art_nft_asset_id := P.abi.Uint64()).set(art_nft.asset_id),
+        P.Assert(
+            optin_txn.get().sender() == highest_bidder.get(),
+            comment="The highest_bidder should optin",
+        ),
+        P.Assert(
+            txn.get().xfer_asset() == art_nft_asset_id.get(),
+            comment="The asset transfered is not the auctioned asset",
+        ),
+        P.Assert(
+            auctioneer.get() == txn.get().sender(),
+            comment="Only the auctioneer is allowed to complete an auction",
+        ),
+        P.Assert(
+            txn.get().asset_amount() == P.Int(1),
+            comment="You can only transfer one asset at a time",
+        ),
+        P.Assert(
+            txn.get().asset_receiver() == highest_bidder.get(),
+            comment="The asset should be sent to the highest_bidder",
+        ),
+        ensure_art_nft_exists(item_asset_key),
+        update_art_nft_owner(item_asset_key, highest_bidder),
+        output.decode(app.state.art_nfts[item_asset_key.get()].get()),
     )

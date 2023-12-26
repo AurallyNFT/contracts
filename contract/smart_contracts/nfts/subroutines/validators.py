@@ -35,8 +35,18 @@ def ensure_asset_is_aura(asset: P.abi.Asset):
     )
 
 
-#
-#
+@P.Subroutine(P.TealType.none)
+def ensure_art_auction_exists(auction_key: P.abi.String):
+    from smart_contracts.nfts.contract import app
+
+    return P.Seq(
+        P.Assert(
+            app.state.art_auctions[auction_key.get()].exists(),
+            comment="art auction with the specified key does not exist",
+        ),
+    )
+
+
 # @P.Subroutine(P.TealType.none)
 # def ensure_has_auras(txn: P.abi.Transaction):
 #     from smart_contracts.nfts.contract import app
@@ -81,27 +91,6 @@ def ensure_asset_is_aura(asset: P.abi.Asset):
 #     return P.Assert(
 #         app.state.aurally_nft_owners[txn.get().sender()].exists(),
 #         comment="User is not an NFT owner",
-#     )
-#
-#
-# @P.Subroutine(P.TealType.none)
-# def ensure_sender_is_app_creator(txn: P.abi.Transaction):
-#     return P.Assert(
-#         txn.get().sender() == P.Global.creator_address(),
-#         comment="Not app creator: You are not authorised to perform this action",
-#     )
-#
-#
-# @P.Subroutine(P.TealType.none)
-# def ensure_is_admin_or_app_creator(addr: P.abi.Address):
-#     from smart_contracts.nfts.contract import app
-#
-#     return P.Assert(
-#         P.Or(
-#             addr.get() == P.Global.creator_address(),
-#             app.state.aurally_admins[addr.get()].exists(),
-#         ),
-#         comment="Not admin: You are not authorised to perform this action",
 #     )
 
 
@@ -173,10 +162,17 @@ def ensure_registered_creative(txn: P.abi.Transaction, creative_type: P.abi.Stri
         (fullname := P.abi.String()).set(creative.fullname),
         (username := P.abi.String()).set(creative.username),
         (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
+        (is_admin := P.abi.Bool()).set(creative.is_admin),
         P.If(creative_type.get() == P.Bytes("music"), is_music_creative.set(True)),
         P.If(creative_type.get() == P.Bytes("art"), is_music_creative.set(True)),
         creative.set(
-            is_music_creative, is_art_creative, minted, fullname, username, d_nft_id
+            is_music_creative,
+            is_art_creative,
+            minted,
+            fullname,
+            username,
+            d_nft_id,
+            is_admin,
         ),
         app.state.aurally_nft_owners[txn.get().sender()].set(creative),
     )

@@ -57,7 +57,7 @@ def refund_last_bidder(account: P.abi.Account, amt: P.abi.Uint64, note: P.abi.St
                 P.TxnField.type_enum: P.TxnType.Payment,
                 P.TxnField.amount: amt.get(),
                 P.TxnField.receiver: account.address(),
-                P.TxnField.note: note.get()
+                P.TxnField.note: note.get(),
             }
         )
     )

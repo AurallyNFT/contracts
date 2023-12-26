@@ -36,50 +36,6 @@ def save_art_nft(
 
 
 @P.Subroutine(P.TealType.none)
-def transfer_art_auction_item_to_highest_bidder(auction_key: P.abi.String):
-    return P.Seq(
-        (auction_item := ArtAuctionItem()).decode(
-            app.state.art_auctions[auction_key.get()].get()
-        ),
-        (highest_bidder := P.abi.Address()).set(auction_item.highest_bidder),
-        (nft_key := P.abi.String()).set(auction_item.item_id),
-        update_art_nft_owner(nft_key, highest_bidder),
-    )
-
-
-@P.Subroutine(P.TealType.none)
-def update_art_nft_owner(asset_key: P.abi.String, new_owner: P.abi.Address):
-    return P.Seq(
-        (art_nft := ArtNFT()).decode(app.state.art_nfts[asset_key.get()].get()),
-        (asset_id := P.abi.Uint64()).set(art_nft.asset_id),
-        (title := P.abi.String()).set(art_nft.title),
-        (name := P.abi.String()).set(art_nft.name),
-        (description := P.abi.String()).set(art_nft.description),
-        (ipfs_location := P.abi.String()).set(art_nft.ipfs_location),
-        (price := P.abi.Uint64()).set(art_nft.price),
-        (sold_price := P.abi.Uint64()).set(art_nft.sold_price),
-        (creator := P.abi.Address()).set(art_nft.creator),
-        (for_sale := P.abi.Bool()).set(art_nft.for_sale),
-        (claimed := P.abi.Bool()).set(art_nft.claimed),
-        art_nft.set(
-            asset_id,
-            asset_key,
-            title,
-            name,
-            description,
-            ipfs_location,
-            price,
-            sold_price,
-            creator,
-            new_owner,
-            for_sale,
-            claimed,
-        ),
-        app.state.art_nfts[asset_key.get()].set(art_nft),
-    )
-
-
-@P.Subroutine(P.TealType.none)
 def update_sound_nft_owner(asset_key: P.abi.String, new_owner: P.abi.Address):
     return P.Seq(
         (sound_nft := SoundNFT()).decode(app.state.sound_nfts[asset_key.get()].get()),

@@ -2,6 +2,42 @@
     "name": "Aurally_NFT",
     "methods": [
         {
+            "name": "promote_to_admin",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "acc"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "demote_from_admin",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "acc"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "ensure_creative_is_admin",
+            "args": [
+                {
+                    "type": "address",
+                    "name": "address"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "create_aura_tokens",
             "args": [],
             "returns": {
@@ -25,7 +61,7 @@
                 }
             ],
             "returns": {
-                "type": "(bool,bool,uint64,string,string,uint64)"
+                "type": "(bool,bool,uint64,string,string,uint64,bool)"
             }
         },
         {
@@ -225,7 +261,47 @@
                 }
             ],
             "returns": {
-                "type": "(address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
+                "type": "(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
+            }
+        },
+        {
+            "name": "bid_on_art_auction",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "auction_key"
+                },
+                {
+                    "type": "account",
+                    "name": "current_highest_bidder"
+                }
+            ],
+            "returns": {
+                "type": "(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
+            }
+        },
+        {
+            "name": "complete_art_auction",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "optin_txn"
+                },
+                {
+                    "type": "axfer",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "auction_key"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
             }
         }
     ],

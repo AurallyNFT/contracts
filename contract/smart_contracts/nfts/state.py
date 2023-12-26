@@ -16,9 +16,3 @@ class AppState:
     art_nfts = BoxMapping(P.abi.String, ArtNFT)
     art_auctions = BoxMapping(P.abi.String, ArtAuctionItem)
     registered_asa = BoxMapping(P.abi.String, AurallyToken)
-    aurally_admins = BoxMapping(P.abi.Address, P.abi.String)
-    # events = BoxMapping(P.abi.String, Event)
-    # event_tickets = BoxMapping(P.abi.String, EventTicket)
-    # active_proposal = GlobalStateValue(
-    #     stack_type=P.TealType.bytes, default=P.Bytes("None")
-    # )

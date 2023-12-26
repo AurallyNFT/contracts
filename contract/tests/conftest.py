@@ -2,6 +2,10 @@ from pathlib import Path
 from typing import List
 from beaker import localnet
 from beaker.localnet import LocalAccount
+from beaker.client import ApplicationClient
+from beaker.consts import algo
+from tests.utils import build_contract
+from smart_contracts.nfts import contract as nft_contract
 
 import pytest
 from algokit_utils import (
@@ -19,7 +23,7 @@ def test_accounts() -> List[LocalAccount]:
 
 @pytest.fixture(scope="session")
 def test_account(test_accounts: List[LocalAccount]) -> LocalAccount:
-    return test_accounts.pop()
+    return test_accounts[-1]
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -35,4 +39,21 @@ def algod_client() -> AlgodClient:
     # you can remove this assertion to test on other networks,
     # included here to prevent accidentally running against other networks
     assert is_localnet(client)
+    return client
+
+
+@pytest.fixture(scope="session")
+def nft_app_client(test_accounts: List[LocalAccount]) -> ApplicationClient:
+    build_contract("Aurally_NFT", "NFT")
+
+    app_creator_account = test_accounts[0]
+
+    client = ApplicationClient(
+        app=nft_contract.app,
+        signer=app_creator_account.signer,
+        sender=app_creator_account.address,
+        client=localnet.get_algod_client(),
+    )
+    client.create()
+    client.fund(2 * algo)
     return client

@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from typing import Literal
+import dotenv
 
 from smart_contracts.nfts import contract as nft_contract
 
@@ -9,6 +10,7 @@ AurallyContract = Literal["NFT", "Proposal"]
 
 
 def build_contract(contract_name: str, contract: AurallyContract):
+    dotenv.load_dotenv()
     artifacts_dir = (
         Path(__file__)
         .parent.parent.joinpath("smart_contracts")

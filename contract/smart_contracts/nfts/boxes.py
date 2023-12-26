@@ -12,6 +12,7 @@ class AurallyCreative(P.abi.NamedTuple):
     fullname: P.abi.Field[P.abi.String]
     username: P.abi.Field[P.abi.String]
     d_nft_id: P.abi.Field[P.abi.Uint64]
+    is_admin: P.abi.Field[P.abi.Bool]
 
 
 class SoundNFT(P.abi.NamedTuple):
@@ -48,6 +49,7 @@ class ArtNFT(P.abi.NamedTuple):
 
 
 class ArtAuctionItem(P.abi.NamedTuple):
+    auction_key: P.abi.Field[P.abi.String]
     auctioneer: P.abi.Field[P.abi.Address]
     item_asset_key: P.abi.Field[P.abi.String]
     item_name: P.abi.Field[P.abi.String]

@@ -60,63 +60,6 @@
 #
 #     print(res.return_value)
 #     assert list(res.return_value)[3] == "Dev Ready"
-
-
-# # @pytest.mark.skip
-# def test_bid_on_auction(
-#     algod_client: AlgodClient,
-#     aurally_client: ApplicationClient,
-#     test_account: LocalAccount,
-#     auction_key: str,
-# ):
-#     sp = algod_client.suggested_params()
-#     raw_txn = transaction.PaymentTxn(
-#         sender=test_account.address, sp=sp, receiver=test_account.address, amt=0
-#     )
-#     txn = atomic_transaction_composer.TransactionWithSigner(
-#         txn=raw_txn, signer=test_account.signer
-#     )
-#
-#     result = aurally_client.call(
-#         aurally_contract.bid_on_art_auction,
-#         txn=txn,
-#         auction_key=auction_key,
-#         bid_ammount=20000,
-#         boxes=[(aurally_client.app_id, auction_key.encode())],
-#     )
-#
-#     assert list(result.return_value)[6] == 20000
-#
-#
-# # @pytest.mark.skip
-# def test_complete_art_auction(
-#     algod_client: AlgodClient,
-#     aurally_client: ApplicationClient,
-#     test_account: LocalAccount,
-#     auction_key: str,
-# ):
-#     nft_name = "Sun God Nika"
-#     sp = algod_client.suggested_params()
-#     url = "https://ipfs.io/ipfs/" + nft_name
-#     raw_txn = transaction.PaymentTxn(
-#         sender=test_account.address, receiver=test_account.address, amt=0, sp=sp
-#     )
-#
-#     txn = atomic_transaction_composer.TransactionWithSigner(
-#         txn=raw_txn, signer=test_account.signer
-#     )
-#
-#     result = aurally_client.call(
-#         aurally_contract.complete_art_auction,
-#         txn=txn,
-#         auction_key=auction_key,
-#         boxes=[
-#             (aurally_client.app_id, url.encode()),
-#             (aurally_client.app_id, auction_key.encode()),
-#         ],
-#     )
-#
-#     assert list(result.return_value)[2] == nft_name
 #
 #
 # def test_place_nft_on_sale(
