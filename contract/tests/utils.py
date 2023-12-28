@@ -4,9 +4,10 @@ from typing import Literal
 import dotenv
 
 from smart_contracts.nfts import contract as nft_contract
+from smart_contracts.community import contract as community_contract
 
 
-AurallyContract = Literal["NFT", "Proposal"]
+AurallyContract = Literal["NFT", "Community"]
 
 
 def build_contract(contract_name: str, contract: AurallyContract):
@@ -22,3 +23,5 @@ def build_contract(contract_name: str, contract: AurallyContract):
     match contract:
         case "NFT":
             nft_contract.app.build().export(artifacts_dir)
+        case "Community":
+            community_contract.app.build().export(artifacts_dir)

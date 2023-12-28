@@ -31,7 +31,7 @@ def bootstrap_token(
             }
         ),
         (asset_id := P.abi.Uint64()).set(P.InnerTxn.created_asset_id()),
-        (P.Log(P.Itob(asset_id.get()))),
-        (proposal_token := AurallyToken()).set(asset_id, asset_key, total),
+        (claimed := P.abi.Bool()).set(False),
+        (proposal_token := AurallyToken()).set(asset_id, asset_key, total, claimed),
         app.state.registered_asa[asset_key.get()].set(proposal_token),
     )

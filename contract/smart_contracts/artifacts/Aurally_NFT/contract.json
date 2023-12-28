@@ -2,46 +2,53 @@
     "name": "Aurally_NFT",
     "methods": [
         {
-            "name": "promote_to_admin",
-            "args": [
-                {
-                    "type": "account",
-                    "name": "acc"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "demote_from_admin",
-            "args": [
-                {
-                    "type": "account",
-                    "name": "acc"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
-            "name": "ensure_creative_is_admin",
-            "args": [
-                {
-                    "type": "address",
-                    "name": "address"
-                }
-            ],
-            "returns": {
-                "type": "void"
-            }
-        },
-        {
             "name": "create_aura_tokens",
             "args": [],
             "returns": {
-                "type": "(uint64,string,uint64)"
+                "type": "(uint64,string,uint64,bool)"
+            }
+        },
+        {
+            "name": "claim_aura_percentage",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "percent_reciever"
+                }
+            ],
+            "returns": {
+                "type": "(uint64,string,uint64,bool)"
+            }
+        },
+        {
+            "name": "update_scalling_constant",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "constant"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            }
+        },
+        {
+            "name": "update_epoch_target",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "target"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            }
+        },
+        {
+            "name": "update_aura_rewards",
+            "args": [],
+            "returns": {
+                "type": "uint64"
             }
         },
         {
@@ -61,7 +68,7 @@
                 }
             ],
             "returns": {
-                "type": "(bool,bool,uint64,string,string,uint64,bool)"
+                "type": "(bool,bool,uint64,string,string,uint64)"
             }
         },
         {
@@ -268,16 +275,24 @@
             "name": "bid_on_art_auction",
             "args": [
                 {
-                    "type": "pay",
-                    "name": "txn"
-                },
-                {
                     "type": "string",
                     "name": "auction_key"
                 },
                 {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
                     "type": "account",
                     "name": "current_highest_bidder"
+                },
+                {
+                    "type": "axfer",
+                    "name": "optin_txn"
+                },
+                {
+                    "type": "axfer",
+                    "name": "aura_optin_txn"
                 }
             ],
             "returns": {
@@ -289,15 +304,19 @@
             "args": [
                 {
                     "type": "axfer",
-                    "name": "optin_txn"
+                    "name": "txn"
                 },
                 {
-                    "type": "axfer",
-                    "name": "txn"
+                    "type": "asset",
+                    "name": "aura"
                 },
                 {
                     "type": "string",
                     "name": "auction_key"
+                },
+                {
+                    "type": "account",
+                    "name": "highest_bidder_account"
                 }
             ],
             "returns": {

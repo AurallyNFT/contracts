@@ -1,6 +1,5 @@
 import pyteal as P
-
-from smart_contracts.nfts.boxes import ArtNFT, AurallyCreative, AurallyToken, SoundNFT
+from smart_contracts.nfts.boxes import AurallyCreative, AurallyToken
 
 
 @P.Subroutine(P.TealType.none)
@@ -162,7 +161,6 @@ def ensure_registered_creative(txn: P.abi.Transaction, creative_type: P.abi.Stri
         (fullname := P.abi.String()).set(creative.fullname),
         (username := P.abi.String()).set(creative.username),
         (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
-        (is_admin := P.abi.Bool()).set(creative.is_admin),
         P.If(creative_type.get() == P.Bytes("music"), is_music_creative.set(True)),
         P.If(creative_type.get() == P.Bytes("art"), is_music_creative.set(True)),
         creative.set(
@@ -172,7 +170,6 @@ def ensure_registered_creative(txn: P.abi.Transaction, creative_type: P.abi.Stri
             fullname,
             username,
             d_nft_id,
-            is_admin,
         ),
         app.state.aurally_nft_owners[txn.get().sender()].set(creative),
     )

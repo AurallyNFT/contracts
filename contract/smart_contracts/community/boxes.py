@@ -8,7 +8,7 @@ class Proposal(P.abi.NamedTuple):
     yes_votes: P.abi.Field[P.abi.Uint64]
     no_votes: P.abi.Field[P.abi.Uint64]
     end_date: P.abi.Field[P.abi.Uint64]
-    active: P.abi.Field[P.abi.Bool]
+    ended: P.abi.Field[P.abi.Bool]
 
 
 class Event(P.abi.NamedTuple):

@@ -18,12 +18,14 @@ def ensure_sender_is_app_creator(txn: P.abi.Transaction):
 
 @P.Subroutine(P.TealType.none)
 def ensure_is_admin_or_app_creator(addr: P.abi.Address):
-    from smart_contracts.nfts.contract import app
+    from smart_contracts.community.contract import app
 
-    return P.Assert(
-        P.Or(
-            addr.get() == P.Global.creator_address(),
-            app.state.aurally_admins[addr.get()].exists(),
+    return P.Seq(
+        P.Assert(
+            P.Or(
+                addr.get() == P.Global.creator_address(),
+                app.state.admins[addr.get()].get() == P.Bytes("True"),
+            ),
+            comment="Not admin: You are not authorised to perform this action",
         ),
-        comment="Not admin: You are not authorised to perform this action",
     )

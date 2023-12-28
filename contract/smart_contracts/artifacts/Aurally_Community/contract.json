@@ -1,0 +1,58 @@
+{
+    "name": "Aurally_Community",
+    "methods": [
+        {
+            "name": "promote_to_admin",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "acc"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "demote_from_admin",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "acc"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "create_proposal",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "title"
+                },
+                {
+                    "type": "string",
+                    "name": "proposal_key"
+                },
+                {
+                    "type": "string",
+                    "name": "proposal_detail"
+                },
+                {
+                    "type": "uint64",
+                    "name": "end_date"
+                }
+            ],
+            "returns": {
+                "type": "(string,string,string,uint64,uint64,uint64,bool)"
+            }
+        }
+    ],
+    "networks": {}
+}

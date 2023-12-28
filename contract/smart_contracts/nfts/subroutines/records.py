@@ -4,33 +4,16 @@ from smart_contracts.nfts.boxes import ArtAuctionItem, ArtNFT, AurallyCreative
 
 
 @P.Subroutine(P.TealType.none)
-def update_creative_is_admin(address: P.abi.Address, is_admin: P.abi.Bool):
+def increase_app_nft_transaction_count():
     from smart_contracts.nfts.contract import app
 
     return P.Seq(
-        P.Assert(
-            app.state.aurally_nft_owners[address.get()].exists(),
-            comment="The address is not an aurally creative",
+        app.state.epoch_nft_transactions.set(
+            app.state.epoch_nft_transactions.get() + P.Int(1)
         ),
-        (creative := AurallyCreative()).decode(
-            app.state.aurally_nft_owners[address.get()].get()
+        app.state.total_nft_transactions.set(
+            app.state.total_nft_transactions.get() + P.Int(1)
         ),
-        (is_music_creative := P.abi.Bool()).set(creative.is_music_creative),
-        (is_art_creative := P.abi.Bool()).set(creative.is_art_creative),
-        (minted := P.abi.Uint64()).set(creative.minted),
-        (fullname := P.abi.String()).set(creative.fullname),
-        (username := P.abi.String()).set(creative.username),
-        (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
-        creative.set(
-            is_music_creative,
-            is_art_creative,
-            minted,
-            fullname,
-            username,
-            d_nft_id,
-            is_admin,
-        ),
-        app.state.aurally_nft_owners[address.get()].set(creative),
     )
 
 
@@ -55,7 +38,6 @@ def create_nft_owner(
         (is_music_creative := P.abi.Bool()).set(False),
         (is_art_creative := P.abi.Bool()).set(False),
         (minted := P.abi.Uint64()).set(0),
-        (is_admin := P.abi.Bool()).set(False),
         (creative := AurallyCreative()).set(
             is_music_creative,
             is_art_creative,
@@ -63,7 +45,6 @@ def create_nft_owner(
             fullname,
             username,
             dnft_id,
-            is_admin,
         ),
         app.state.aurally_nft_owners[txn.get().sender()].set(creative),
     )
@@ -83,7 +64,6 @@ def increment_creator_nft_count(creator: P.abi.Address):
         (fullname := P.abi.String()).set(creative.fullname),
         (username := P.abi.String()).set(creative.username),
         (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
-        (is_admin := P.abi.Bool()).set(creative.is_admin),
         (minted.set(minted.get() + P.Int(1))),
         creative.set(
             is_music_creative,
@@ -92,7 +72,6 @@ def increment_creator_nft_count(creator: P.abi.Address):
             fullname,
             username,
             d_nft_id,
-            is_admin,
         ),
         app.state.aurally_nft_owners[creator.get()].set(creative),
     )
