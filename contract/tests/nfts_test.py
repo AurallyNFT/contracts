@@ -52,7 +52,7 @@ def test_create_sound_nft(
     nft_app_client: ApplicationClient,
     test_account: LocalAccount,
     aura_index: int,
-):
+) -> Tuple[int, str]:
     asset_key = f"Dev Stockins_{datetime.utcnow()}"
 
     nft_name = "Dev Stockins"
@@ -74,6 +74,7 @@ def test_create_sound_nft(
         artist="GigaChad",
         release_date=200023021,
         genre="Pop",
+        description="Some song description",
         price=20000,
         cover_image_ipfs="some_id",
         audio_sample_ipfs="some_other_id",
@@ -88,7 +89,7 @@ def test_create_sound_nft(
         ],
     )
     assert list(result.return_value)[3] == "Dev Tokens"
-    return [result.return_value[0], asset_key]
+    return (result.return_value[0], asset_key)
 
 
 @pytest.mark.dependency()
@@ -277,7 +278,7 @@ def test_bid_on_auction(
         boxes=[
             (nft_app_client.app_id, auction_key.encode()),
             (nft_app_client.app_id, test_create_art_nft[1].encode()),
-            (nft_app_client.app_id, "aura".encode())
+            (nft_app_client.app_id, "aura".encode()),
         ],
     )
 
@@ -327,7 +328,94 @@ def test_complete_art_auction(
     assert list(result.return_value)[-3] == bidder_account.address
 
 
-def test_update_aura_rewards(nft_app_client: ApplicationClient):
-    result = nft_app_client.call(nft_contract.update_aura_rewards)
+def test_place_nft_on_sale(
+    algod_client: AlgodClient,
+    nft_app_client: ApplicationClient,
+    test_account: LocalAccount,
+    test_create_sound_nft: Tuple[int, str],
+):
+    sp = algod_client.suggested_params()
+    txn = transaction.AssetTransferTxn(
+        sender=test_account.address,
+        receiver=nft_app_client.app_addr,
+        sp=sp,
+        index=test_create_sound_nft[0],
+        amt=20,
+    )
+    txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=txn, signer=test_account.signer
+    )
+
+    sale_key = "some sale"
+    result = nft_app_client.call(
+        nft_contract.place_nft_on_sale,
+        txn=txn,
+        asset_key=test_create_sound_nft[1],
+        asset_type="sound",
+        sale_price=20000,
+        sale_key=sale_key,
+        boxes=[
+            (nft_app_client.app_id, test_create_sound_nft[1].encode()),
+            (nft_app_client.app_id, sale_key.encode()),
+        ],
+    )
     print(result.return_value)
-    assert False
+    assert list(result.return_value)[-1] == test_account.address
+
+
+# @pytest.mark.skip
+def test_purchase_nft(
+    algod_client: AlgodClient,
+    nft_app_client: ApplicationClient,
+    test_account: LocalAccount,
+    test_accounts: List[LocalAccount],
+    test_create_sound_nft: Tuple[int, str],
+    aura_index: int,
+):
+    buyer_account = test_accounts[1]
+    sp = algod_client.suggested_params()
+
+    raw_txn = transaction.PaymentTxn(
+        sender=buyer_account.address, receiver=test_account.address, amt=20000, sp=sp
+    )
+    txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=raw_txn, signer=buyer_account.signer
+    )
+
+    optin_txn = transaction.AssetOptInTxn(
+        sender=buyer_account.address, index=test_create_sound_nft[0], sp=sp
+    )
+    optin_txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=optin_txn, signer=buyer_account.signer
+    )
+    aura_optin_txn = transaction.AssetOptInTxn(
+        sender=buyer_account.address, index=aura_index, sp=sp
+    )
+    aura_optin_txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=aura_optin_txn, signer=buyer_account.signer
+    )
+
+    sale_key = "some sale"
+    result = nft_app_client.call(
+        nft_contract.purchase_nft,
+        txn=txn,
+        optin_txn=optin_txn,
+        sale_key=sale_key,
+        asset_type="sound",
+        buyer=buyer_account.address,
+        aura=aura_index,
+        asset=test_create_sound_nft[0],
+        aura_optin_txn=aura_optin_txn,
+        boxes=[
+            (nft_app_client.app_id, "aura".encode()),
+            (nft_app_client.app_id, test_create_sound_nft[1].encode()),
+            (nft_app_client.app_id, sale_key.encode())
+        ],
+    )
+    assert list(result.return_value)[-2] == 19
+#
+#
+# def test_update_aura_rewards(nft_app_client: ApplicationClient):
+#     result = nft_app_client.call(nft_contract.update_aura_rewards)
+#     print(result.return_value)
+#     assert False

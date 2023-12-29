@@ -1,6 +1,14 @@
 import pyteal as P
+from contract.smart_contracts.nfts.subroutines.validators import (
+    ensure_fixed_asset_sale_exists,
+)
 
-from smart_contracts.nfts.boxes import ArtAuctionItem, ArtNFT, AurallyCreative
+from smart_contracts.nfts.boxes import (
+    ArtAuctionItem,
+    ArtNFT,
+    AurallyCreative,
+    FixedAssetSale,
+)
 
 
 @P.Subroutine(P.TealType.none)
@@ -167,11 +175,10 @@ def update_art_nft_owner(asset_key: P.abi.String, new_owner: P.abi.Address):
     return P.Seq(
         (art_nft := ArtNFT()).decode(app.state.art_nfts[asset_key.get()].get()),
         (asset_id := P.abi.Uint64()).set(art_nft.asset_id),
-        (asset_key := P.abi.String()).set(art_nft.asset_key),
         (title := P.abi.String()).set(art_nft.title),
         (name := P.abi.String()).set(art_nft.name),
         (description := P.abi.String()).set(art_nft.description),
-        (ipfs_location := P.abi.String()).set(art_nft.ipfs_location),
+        (ipfs_location := P.abi.String()).set(art_nft.image_url),
         (price := P.abi.Uint64()).set(art_nft.price),
         (sold_price := P.abi.Uint64()).set(art_nft.sold_price),
         (creator := P.abi.Address()).set(art_nft.creator),
@@ -192,4 +199,57 @@ def update_art_nft_owner(asset_key: P.abi.String, new_owner: P.abi.Address):
             claimed,
         ),
         app.state.art_nfts[asset_key.get()].set(art_nft),
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def new_fixed_asset_sale(
+    txn: P.abi.AssetTransferTransaction,
+    sale_key: P.abi.String,
+    asset_key: P.abi.String,
+    asset_type: P.abi.String,
+    price: P.abi.Uint64,
+):
+    from smart_contracts.nfts.contract import app
+
+    return P.Seq(
+        (asset_id := P.abi.Uint64()).set(txn.get().xfer_asset()),
+        (seller := P.abi.Address()).set(txn.get().sender()),
+        (supply := P.abi.Uint64()).set(txn.get().asset_amount()),
+        (fixed_sale_asset := FixedAssetSale()).set(
+            sale_key, asset_key, asset_id, asset_type, price, supply, seller
+        ),
+        app.state.fixed_asset_sales[sale_key.get()].set(fixed_sale_asset),
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def update_fixed_asset_sale_supply(
+    sale_key: P.abi.String, amt: P.abi.Uint64, action: P.abi.String
+):
+    from smart_contracts.nfts.contract import app
+
+    return P.Seq(
+        P.Assert(
+            P.Or(action.get() == P.Bytes("add"), action.get() == P.Bytes("subtract")),
+            comment="The allowed actions are `add` and `subtract`",
+        ),
+        ensure_fixed_asset_sale_exists(sale_key),
+        (sale := FixedAssetSale()).decode(
+            app.state.fixed_asset_sales[sale_key.get()].get()
+        ),
+        (sale_key := P.abi.String()).set(sale.sale_key),
+        (asset_key := P.abi.String()).set(sale.asset_key),
+        (asset_id := P.abi.Uint64()).set(sale.asset_id),
+        (asset_type := P.abi.String()).set(sale.asset_type),
+        (price := P.abi.Uint64()).set(sale.price),
+        (supply := P.abi.Uint64()).set(sale.supply),
+        (seller := P.abi.Address()).set(sale.seller),
+        P.If(
+            action.get() == P.Bytes("add"),
+            supply.set(supply.get() + amt.get()),
+            supply.set(supply.get() - amt.get()),
+        ),
+        sale.set(sale_key, asset_key, asset_id, asset_type, price, supply, seller),
+        app.state.fixed_asset_sales[sale_key.get()].set(sale),
     )

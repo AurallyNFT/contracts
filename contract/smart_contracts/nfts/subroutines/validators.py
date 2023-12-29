@@ -20,6 +20,24 @@ def ensure_auras_exist():
 
 
 @P.Subroutine(P.TealType.none)
+def ensure_valid_nft_type(nft_type: P.abi.String):
+    return P.Assert(
+        P.Or(nft_type.get() == P.Bytes("art"), nft_type.get() == P.Bytes("sound")),
+        comment="asset_type can only be `art` or `sound`",
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def ensure_fixed_asset_sale_exists(sale_key: P.abi.String):
+    from smart_contracts.nfts.contract import app
+
+    return P.Assert(
+        app.state.fixed_asset_sales[sale_key.get()].exists(),
+        comment="Fixed asset sale with the specified sale_key does not exist",
+    )
+
+
+@P.Subroutine(P.TealType.none)
 def ensure_asset_is_aura(asset: P.abi.Asset):
     from smart_contracts.nfts.contract import app
 
@@ -35,14 +53,48 @@ def ensure_asset_is_aura(asset: P.abi.Asset):
 
 
 @P.Subroutine(P.TealType.none)
-def ensure_art_auction_exists(auction_key: P.abi.String):
+def ensure_txn_is_aura_optin(txn: P.abi.AssetTransferTransaction):
     from smart_contracts.nfts.contract import app
 
     return P.Seq(
-        P.Assert(
-            app.state.art_auctions[auction_key.get()].exists(),
-            comment="art auction with the specified key does not exist",
+        (aura_token := AurallyToken()).decode(
+            app.state.registered_asa[P.Bytes("aura")].get()
         ),
+        (aura_id := P.abi.Uint64()).set(aura_token.asset_id),
+        P.Assert(
+            txn.get().xfer_asset() == aura_id.get(),
+            comment="The txn is not an aura optin Transaction",
+        ),
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def ensure_art_auction_exists(auction_key: P.abi.String):
+    from smart_contracts.nfts.contract import app
+
+    return P.Assert(
+        app.state.art_auctions[auction_key.get()].exists(),
+        comment="art auction with the specified key does not exist",
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def ensure_sound_nft_exists(asset_key: P.abi.String):
+    from smart_contracts.nfts.contract import app
+
+    return P.Assert(
+        app.state.sound_nfts[asset_key.get()].exists(),
+        comment="SoundNFT with the specified asset_key does not exist",
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def ensure_art_nft_exists(asset_key: P.abi.String):
+    from smart_contracts.nfts.contract import app
+
+    return P.Assert(
+        app.state.art_nfts[asset_key.get()].exists(),
+        comment="ArtNFT with the specified asset_key does not exist",
     )
 
 
@@ -94,56 +146,6 @@ def ensure_art_auction_exists(auction_key: P.abi.String):
 
 
 @P.Subroutine(P.TealType.none)
-def ensure_sound_nft_exists(key: P.abi.String):
-    from smart_contracts.nfts.contract import app
-
-    return P.Assert(
-        app.state.sound_nfts[key.get()].exists(),
-        comment="SoundNFT with specified key does not exist",
-    )
-
-
-@P.Subroutine(P.TealType.none)
-def ensure_art_nft_exists(key: P.abi.String):
-    from smart_contracts.nfts.contract import app
-
-    return P.Assert(
-        app.state.art_nfts[key.get()].exists(),
-        comment="ArtNFT with specified key does not exist",
-    )
-
-
-# @P.Subroutine(P.TealType.none)
-# def ensure_sender_is_sound_nft_owner(txn: P.abi.Transaction, key: P.abi.String):
-#     from smart_contracts.nfts.contract import app
-#
-#     return P.Seq(
-#         ensure_sound_nft_exists(key),
-#         (sound_nft := SoundNFT()).decode(app.state.sound_nfts[key.get()].get()),
-#         (owner := P.abi.Address()).set(sound_nft.creator),
-#         P.Assert(
-#             txn.get().sender() == owner.get(),
-#             comment="Not Sound NFT owner: You are not authorised to perform this action",
-#         ),
-#     )
-#
-#
-# @P.Subroutine(P.TealType.none)
-# def ensure_sender_is_art_nft_owner(txn: P.abi.Transaction, key: P.abi.String):
-#     from smart_contracts.nfts.contract import app
-#
-#     return P.Seq(
-#         ensure_sound_nft_exists(key),
-#         (art_nft := ArtNFT()).decode(app.state.art_nfts[key.get()].get()),
-#         (owner := P.abi.Address()).set(art_nft.creator),
-#         P.Assert(
-#             txn.get().sender() == owner.get(),
-#             comment="Not Art NFT owner: You are not authorised to perform this action",
-#         ),
-#     )
-
-
-@P.Subroutine(P.TealType.none)
 def ensure_registered_creative(txn: P.abi.Transaction, creative_type: P.abi.String):
     from smart_contracts.nfts.contract import app
 
@@ -172,4 +174,12 @@ def ensure_registered_creative(txn: P.abi.Transaction, creative_type: P.abi.Stri
             d_nft_id,
         ),
         app.state.aurally_nft_owners[txn.get().sender()].set(creative),
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def ensure_asset_reciver_is_application(txn: P.abi.AssetTransferTransaction):
+    return P.Assert(
+        txn.get().asset_receiver() == P.Global.current_application_address(),
+        comment="The asset_receiver must be the current_application_address",
     )

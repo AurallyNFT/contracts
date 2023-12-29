@@ -1,87 +1,71 @@
 #pragma version 8
 intcblock 0 1 65536 4 784 785
-bytecblock 0x 0x00 0x151f7c75 0x61757261 0x617572615f726577617264 0x65706f63685f6e66745f7472616e73616374696f6e73 0x65706f63685f7461726765745f7472616e73616374696f6e 0x6e6574776f726b5f646966666963756c7479 0x7363616c696e675f636f6e7374616e74 0x746f74616c5f617572616c6c795f746f6b656e73 0x746f74616c5f6e66745f7472616e73616374696f6e73 0x000461757261 0x72657761726461626c655f746f6b656e735f737570706c79 0x068101
+bytecblock 0x 0x151f7c75 0x00 0x61757261 0x617572615f726577617264 0x65706f63685f6e66745f7472616e73616374696f6e73 0x65706f63685f7461726765745f7472616e73616374696f6e 0x6e6574776f726b5f646966666963756c7479 0x7363616c696e675f636f6e7374616e74 0x746f74616c5f617572616c6c795f746f6b656e73 0x746f74616c5f6e66745f7472616e73616374696f6e73 0x000461757261 0x736f756e64 0x72657761726461626c655f746f6b656e735f737570706c79 0x068101 0x616464 0x617274
 txn NumAppArgs
 intc_0 // 0
 ==
-bnz main_l28
+bnz main_l32
 txna ApplicationArgs 0
 pushbytes 0xc19cff5c // "create_aura_tokens()(uint64,string,uint64,bool)"
 ==
-bnz main_l27
+bnz main_l31
 txna ApplicationArgs 0
 pushbytes 0x7dc33deb // "claim_aura_percentage(account)(uint64,string,uint64,bool)"
 ==
-bnz main_l26
+bnz main_l30
 txna ApplicationArgs 0
 pushbytes 0xe0908cb9 // "update_scalling_constant(uint64)uint64"
 ==
-bnz main_l25
+bnz main_l29
 txna ApplicationArgs 0
 pushbytes 0x7eafcdf5 // "update_epoch_target(uint64)uint64"
 ==
-bnz main_l24
+bnz main_l28
 txna ApplicationArgs 0
 pushbytes 0x4347ee67 // "update_aura_rewards()uint64"
 ==
-bnz main_l23
+bnz main_l27
 txna ApplicationArgs 0
 pushbytes 0x2e4c9f45 // "register_creator(txn,string,string)(bool,bool,uint64,string,string,uint64)"
 ==
-bnz main_l22
+bnz main_l26
 txna ApplicationArgs 0
-pushbytes 0xfa759456 // "create_sound_nft(pay,string,string,string,string,string,uint64,string,uint64,string,string,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+pushbytes 0x58affa05 // "create_sound_nft(pay,string,string,string,string,string,uint64,string,string,uint64,string,string,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
 ==
-bnz main_l21
+bnz main_l25
 txna ApplicationArgs 0
-pushbytes 0x8c877e57 // "claim_created_sound(axfer,string,account,asset)(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+pushbytes 0x5214cf1b // "claim_created_sound(axfer,string,account,asset)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
 ==
-bnz main_l20
+bnz main_l24
 txna ApplicationArgs 0
 pushbytes 0xc81396d3 // "create_art_nft(pay,string,string,string,string,string,string,uint64,asset,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
 ==
-bnz main_l19
+bnz main_l23
 txna ApplicationArgs 0
 pushbytes 0x8e351ddc // "claim_created_art(axfer,string,account,asset)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
 ==
-bnz main_l18
+bnz main_l22
 txna ApplicationArgs 0
 pushbytes 0x823cad1f // "create_art_auction(pay,string,string,uint64,uint64,uint64,string)(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
 ==
-bnz main_l17
+bnz main_l21
 txna ApplicationArgs 0
 pushbytes 0x9febf9df // "bid_on_art_auction(string,pay,account,axfer,axfer)(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
 ==
-bnz main_l16
+bnz main_l20
 txna ApplicationArgs 0
 pushbytes 0x70cc63f7 // "complete_art_auction(axfer,asset,string,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
 ==
-bnz main_l15
+bnz main_l19
+txna ApplicationArgs 0
+pushbytes 0xdde4eb22 // "place_nft_on_sale(axfer,string,string,uint64,string)(string,string,uint64,string,uint64,uint64,address)"
+==
+bnz main_l18
+txna ApplicationArgs 0
+pushbytes 0x3c0407c5 // "purchase_nft(pay,axfer,string,string,account,asset,asset,axfer)(string,string,uint64,string,uint64,uint64,address)"
+==
+bnz main_l17
 err
-main_l15:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub completeartauctioncaster_47
-intc_1 // 1
-return
-main_l16:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub bidonartauctioncaster_46
-intc_1 // 1
-return
 main_l17:
 txn OnCompletion
 intc_0 // NoOp
@@ -91,7 +75,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createartauctioncaster_45
+callsub purchasenftcaster_58
 intc_1 // 1
 return
 main_l18:
@@ -103,7 +87,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub claimcreatedartcaster_44
+callsub placenftonsalecaster_57
 intc_1 // 1
 return
 main_l19:
@@ -115,7 +99,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createartnftcaster_43
+callsub completeartauctioncaster_56
 intc_1 // 1
 return
 main_l20:
@@ -127,7 +111,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub claimcreatedsoundcaster_42
+callsub bidonartauctioncaster_55
 intc_1 // 1
 return
 main_l21:
@@ -139,7 +123,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createsoundnftcaster_41
+callsub createartauctioncaster_54
 intc_1 // 1
 return
 main_l22:
@@ -151,7 +135,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub registercreatorcaster_30
+callsub claimcreatedartcaster_53
 intc_1 // 1
 return
 main_l23:
@@ -163,7 +147,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updateaurarewardscaster_23
+callsub createartnftcaster_52
 intc_1 // 1
 return
 main_l24:
@@ -175,7 +159,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updateepochtargetcaster_20
+callsub claimcreatedsoundcaster_51
 intc_1 // 1
 return
 main_l25:
@@ -187,7 +171,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updatescallingconstantcaster_19
+callsub createsoundnftcaster_50
 intc_1 // 1
 return
 main_l26:
@@ -199,7 +183,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub claimaurapercentagecaster_18
+callsub registercreatorcaster_35
 intc_1 // 1
 return
 main_l27:
@@ -211,24 +195,72 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createauratokenscaster_17
+callsub updateaurarewardscaster_25
 intc_1 // 1
 return
 main_l28:
 txn OnCompletion
 intc_0 // NoOp
 ==
-bnz main_l34
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub updateepochtargetcaster_22
+intc_1 // 1
+return
+main_l29:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub updatescallingconstantcaster_21
+intc_1 // 1
+return
+main_l30:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub claimaurapercentagecaster_20
+intc_1 // 1
+return
+main_l31:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub createauratokenscaster_19
+intc_1 // 1
+return
+main_l32:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l38
 txn OnCompletion
 intc_3 // UpdateApplication
 ==
-bnz main_l33
+bnz main_l37
 txn OnCompletion
 pushint 5 // DeleteApplication
 ==
-bnz main_l32
+bnz main_l36
 err
-main_l32:
+main_l36:
 txn ApplicationID
 intc_0 // 0
 !=
@@ -236,7 +268,7 @@ assert
 callsub delete_2
 intc_1 // 1
 return
-main_l33:
+main_l37:
 txn ApplicationID
 intc_0 // 0
 !=
@@ -244,7 +276,7 @@ assert
 callsub update_1
 intc_1 // 1
 return
-main_l34:
+main_l38:
 txn ApplicationID
 intc_0 // 0
 ==
@@ -271,7 +303,7 @@ app_global_put
 bytec 7 // "network_difficulty"
 intc_1 // 1
 app_global_put
-bytec 12 // "rewardable_tokens_supply"
+bytec 13 // "rewardable_tokens_supply"
 pushint 80000000 // 80000000
 app_global_put
 bytec 8 // "scaling_constant"
@@ -347,7 +379,7 @@ frame_dig 1
 frame_dig 4
 frame_dig 2
 frame_dig 3
-callsub bootstraptoken_16
+callsub bootstraptoken_18
 frame_dig 1
 extract 2 0
 box_len
@@ -395,7 +427,7 @@ frame_dig 2
 intc_0 // 0
 extract_uint64
 frame_bury 3
-bytec 12 // "rewardable_tokens_supply"
+bytec 13 // "rewardable_tokens_supply"
 app_global_get
 frame_bury 4
 itxn_begin
@@ -429,7 +461,7 @@ concat
 frame_dig 4
 itob
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 5
 setbit
@@ -499,7 +531,7 @@ app_global_get
 intc_0 // 0
 ==
 bnz updateaurarewards_7_l2
-callsub calculateandupdatereward_22
+callsub calculateandupdatereward_24
 b updateaurarewards_7_l3
 updateaurarewards_7_l2:
 bytec 4 // "aura_reward"
@@ -526,7 +558,7 @@ bz registercreator_8_l2
 frame_dig -3
 frame_dig -2
 frame_dig -1
-callsub createnftowner_25
+callsub createnftowner_28
 registercreator_8_l2:
 frame_dig -3
 gtxns Sender
@@ -541,7 +573,7 @@ retsub
 
 // create_sound_nft
 createsoundnft_9:
-proto 15 1
+proto 16 1
 bytec_0 // ""
 dupn 2
 intc_0 // 0
@@ -551,10 +583,10 @@ intc_0 // 0
 dup
 bytec_0 // ""
 dup
-frame_dig -15
-callsub ensurezeropayment_34
+frame_dig -16
+callsub ensurezeropayment_39
 frame_dig -2
-callsub ensureassetisaura_36
+callsub ensureassetisaura_43
 intc_0 // 0
 store 18
 createsoundnft_9_l1:
@@ -569,9 +601,9 @@ pushint 6 // appl
 itxn_field TypeEnum
 pushint 5 // DeleteApplication
 itxn_field OnCompletion
-bytec 13 // 0x068101
+bytec 14 // 0x068101
 itxn_field ApprovalProgram
-bytec 13 // 0x068101
+bytec 14 // 0x068101
 itxn_field ClearStateProgram
 itxn_submit
 load 18
@@ -582,17 +614,17 @@ b createsoundnft_9_l1
 createsoundnft_9_l3:
 pushbytes 0x00056d75736963 // 0x00056d75736963
 frame_bury 1
-frame_dig -15
+frame_dig -16
 frame_dig 1
-callsub ensureregisteredcreative_40
+callsub ensureregisteredcreative_48
 frame_dig -1
 txnas Accounts
-frame_dig -15
+frame_dig -16
 gtxns Sender
 ==
 // The creator must be the same as the transaction sender
 assert
-frame_dig -13
+frame_dig -14
 extract 2 0
 box_len
 store 20
@@ -601,7 +633,7 @@ load 20
 !
 // An asset with this key already exists
 assert
-frame_dig -15
+frame_dig -16
 gtxns Sender
 frame_bury 2
 frame_dig 2
@@ -612,7 +644,7 @@ assert
 itxn_begin
 pushint 3 // acfg
 itxn_field TypeEnum
-frame_dig -14
+frame_dig -15
 extract 2 0
 itxn_field ConfigAssetName
 frame_dig -3
@@ -631,11 +663,11 @@ intc_0 // 0
 frame_bury 5
 frame_dig 3
 itob
-frame_dig -13
+frame_dig -14
 frame_bury 10
 frame_dig 10
 frame_bury 9
-pushint 81 // 81
+pushint 83 // 83
 frame_bury 7
 frame_dig 7
 frame_dig 10
@@ -652,6 +684,27 @@ extract 6 0
 concat
 frame_dig -3
 itob
+concat
+frame_dig -13
+frame_bury 10
+frame_dig 9
+frame_dig 10
+concat
+frame_bury 9
+frame_dig 8
+frame_bury 7
+frame_dig 7
+frame_dig 10
+len
++
+frame_bury 8
+frame_dig 8
+intc_2 // 65536
+<
+assert
+frame_dig 7
+itob
+extract 6 0
 concat
 frame_dig -12
 frame_bury 10
@@ -696,6 +749,9 @@ itob
 extract 6 0
 concat
 frame_dig -10
+itob
+concat
+frame_dig -9
 frame_bury 10
 frame_dig 9
 frame_dig 10
@@ -715,9 +771,6 @@ assert
 frame_dig 7
 itob
 extract 6 0
-concat
-frame_dig -9
-itob
 concat
 frame_dig -8
 frame_bury 10
@@ -799,7 +852,7 @@ extract 6 0
 concat
 frame_dig 2
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 4
 setbit
@@ -810,20 +863,20 @@ concat
 frame_dig 9
 concat
 frame_bury 6
-frame_dig -13
+frame_dig -14
 extract 2 0
 box_del
 pop
-frame_dig -13
+frame_dig -14
 extract 2 0
 frame_dig 6
 box_put
 frame_dig 2
-callsub incrementcreatornftcount_26
-callsub increaseappnfttransactioncount_24
+callsub incrementcreatornftcount_29
+callsub increaseappnfttransactioncount_27
 frame_dig 2
-callsub rewardwithauratokens_31
-frame_dig -13
+callsub rewardwithauratokens_36
+frame_dig -14
 extract 2 0
 box_get
 store 22
@@ -846,6 +899,7 @@ bytec_0 // ""
 dupn 2
 intc_0 // 0
 bytec_0 // ""
+dup
 intc_0 // 0
 bytec_0 // ""
 dupn 3
@@ -854,7 +908,7 @@ dupn 3
 bytec_0 // ""
 dup
 frame_dig -3
-callsub ensuresoundnftexists_38
+callsub ensuresoundnftexists_46
 frame_dig -3
 extract 2 0
 box_get
@@ -917,22 +971,22 @@ frame_dig 1
 pushint 32 // 32
 extract_uint16
 frame_dig 1
-pushint 42 // 42
+pushint 34 // 34
 extract_uint16
 substring3
 frame_bury 9
 frame_dig 1
+frame_dig 1
 pushint 34 // 34
-extract_uint64
-frame_bury 10
-frame_dig 1
-frame_dig 1
-pushint 42 // 42
 extract_uint16
 frame_dig 1
 pushint 44 // 44
 extract_uint16
 substring3
+frame_bury 10
+frame_dig 1
+pushint 36 // 36
+extract_uint64
 frame_bury 11
 frame_dig 1
 frame_dig 1
@@ -947,26 +1001,35 @@ frame_dig 1
 frame_dig 1
 pushint 46 // 46
 extract_uint16
-dig 1
-len
+frame_dig 1
+pushint 48 // 48
+extract_uint16
 substring3
 frame_bury 13
 frame_dig 1
-extract 48 32
+frame_dig 1
+pushint 48 // 48
+extract_uint16
+dig 1
+len
+substring3
 frame_bury 14
 frame_dig 1
-pushint 640 // 640
-getbit
+extract 50 32
 frame_bury 15
 frame_dig 1
-pushint 641 // 641
+pushint 656 // 656
 getbit
 frame_bury 16
-frame_dig 16
+frame_dig 1
+pushint 657 // 657
+getbit
+frame_bury 17
+frame_dig 17
 !
 // This art nft has already been claimed
 assert
-frame_dig 14
+frame_dig 15
 frame_dig -4
 gtxns Sender
 ==
@@ -974,7 +1037,7 @@ gtxns Sender
 assert
 frame_dig -2
 txnas Accounts
-frame_dig 14
+frame_dig 15
 ==
 // The reciever must be the creator of the nft
 assert
@@ -986,28 +1049,28 @@ frame_dig 2
 assert
 frame_dig 2
 frame_dig 4
-frame_dig 14
-callsub transferassetfromcontract_32
+frame_dig 15
+callsub transferassetfromcontract_37
 intc_1 // 1
-frame_bury 16
+frame_bury 17
 frame_dig 2
 itob
 frame_dig 3
+frame_bury 21
+frame_dig 21
 frame_bury 20
-frame_dig 20
-frame_bury 19
-pushint 81 // 81
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
+pushint 83 // 83
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
@@ -1015,65 +1078,65 @@ frame_dig 4
 itob
 concat
 frame_dig 5
+frame_bury 21
+frame_dig 20
+frame_dig 21
+concat
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
 frame_dig 6
+frame_bury 21
+frame_dig 20
+frame_dig 21
+concat
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
 frame_dig 7
+frame_bury 21
+frame_dig 20
+frame_dig 21
+concat
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
@@ -1081,94 +1144,115 @@ frame_dig 8
 itob
 concat
 frame_dig 9
+frame_bury 21
+frame_dig 20
+frame_dig 21
+concat
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
 frame_dig 10
-itob
+frame_bury 21
+frame_dig 20
+frame_dig 21
 concat
-frame_dig 11
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
+frame_dig 11
+itob
+concat
 frame_dig 12
+frame_bury 21
+frame_dig 20
+frame_dig 21
+concat
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 18
 itob
 extract 6 0
 concat
 frame_dig 13
+frame_bury 21
+frame_dig 20
+frame_dig 21
+concat
 frame_bury 20
 frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
+frame_bury 18
 frame_dig 18
-frame_bury 17
-frame_dig 17
+frame_dig 21
+len
++
+frame_bury 19
+frame_dig 19
+intc_2 // 65536
+<
+assert
+frame_dig 18
 itob
 extract 6 0
 concat
 frame_dig 14
+frame_bury 21
+frame_dig 20
+frame_dig 21
 concat
-bytec_1 // 0x00
-intc_0 // 0
+frame_bury 20
+frame_dig 19
+frame_bury 18
+frame_dig 18
+itob
+extract 6 0
+concat
 frame_dig 15
-setbit
-intc_1 // 1
+concat
+bytec_2 // 0x00
+intc_0 // 0
 frame_dig 16
 setbit
+intc_1 // 1
+frame_dig 17
+setbit
 concat
-frame_dig 19
+frame_dig 20
 concat
 frame_bury 1
 frame_dig 3
@@ -1205,9 +1289,9 @@ dup
 bytec_0 // ""
 dup
 frame_dig -10
-callsub ensurezeropayment_34
+callsub ensurezeropayment_39
 frame_dig -2
-callsub ensureassetisaura_36
+callsub ensureassetisaura_43
 frame_dig -1
 txnas Accounts
 frame_dig -10
@@ -1228,7 +1312,7 @@ pushbytes 0x0003617274 // 0x0003617274
 frame_bury 1
 frame_dig -10
 frame_dig 1
-callsub ensureregisteredcreative_40
+callsub ensureregisteredcreative_48
 frame_dig -10
 gtxns Sender
 frame_bury 2
@@ -1372,7 +1456,7 @@ frame_dig 2
 concat
 frame_dig 6
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 5
 setbit
@@ -1392,10 +1476,10 @@ extract 2 0
 frame_dig 8
 box_put
 frame_dig 2
-callsub incrementcreatornftcount_26
-callsub increaseappnfttransactioncount_24
+callsub incrementcreatornftcount_29
+callsub increaseappnfttransactioncount_27
 frame_dig 2
-callsub rewardwithauratokens_31
+callsub rewardwithauratokens_36
 frame_dig -9
 extract 2 0
 box_get
@@ -1424,7 +1508,7 @@ dupn 4
 bytec_0 // ""
 dup
 frame_dig -3
-callsub ensureartnftexists_39
+callsub ensureartnftexists_47
 frame_dig -3
 extract 2 0
 box_get
@@ -1531,7 +1615,7 @@ frame_bury 14
 frame_dig 2
 frame_dig 14
 frame_dig 10
-callsub transferassetfromcontract_32
+callsub transferassetfromcontract_37
 frame_dig -4
 gtxns Sender
 frame_bury 11
@@ -1648,7 +1732,7 @@ frame_dig 10
 concat
 frame_dig 11
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 12
 setbit
@@ -1693,7 +1777,7 @@ load 52
 // An auction with this key already exists
 assert
 frame_dig -7
-callsub ensurezeropayment_34
+callsub ensurezeropayment_39
 frame_dig -3
 frame_dig -2
 <
@@ -1742,7 +1826,7 @@ frame_dig -1
 frame_dig -4
 frame_dig -3
 frame_dig -2
-callsub newartauction_27
+callsub newartauction_30
 frame_dig -6
 extract 2 0
 box_get
@@ -1769,7 +1853,7 @@ bytec_0 // ""
 intc_0 // 0
 bytec_0 // ""
 frame_dig -5
-callsub ensureartauctionexists_37
+callsub ensureartauctionexists_45
 frame_dig -4
 gtxns Receiver
 global CurrentApplicationAddress
@@ -1887,7 +1971,7 @@ frame_bury 11
 frame_dig -3
 frame_dig 3
 frame_dig 11
-callsub refundlastbidder_33
+callsub refundlastbidder_38
 b bidonartauction_14_l5
 bidonartauction_14_l4:
 frame_dig -4
@@ -1900,7 +1984,7 @@ b bidonartauction_14_l2
 bidonartauction_14_l5:
 frame_dig -4
 frame_dig -5
-callsub recordauctionbid_28
+callsub recordauctionbid_31
 frame_dig -5
 extract 2 0
 box_get
@@ -1921,7 +2005,7 @@ intc_0 // 0
 bytec_0 // ""
 intc_0 // 0
 frame_dig -2
-callsub ensureartauctionexists_37
+callsub ensureartauctionexists_45
 frame_dig -2
 extract 2 0
 box_get
@@ -2008,13 +2092,13 @@ frame_dig 4
 // The asset should be sent to the highest_bidder
 assert
 frame_dig 2
-callsub ensureartnftexists_39
+callsub ensureartnftexists_47
 frame_dig 2
 frame_dig 4
-callsub updateartnftowner_29
-callsub increaseappnfttransactioncount_24
+callsub updateartnftowner_32
+callsub increaseappnfttransactioncount_27
 frame_dig 4
-callsub rewardwithauratokens_31
+callsub rewardwithauratokens_36
 frame_dig 2
 extract 2 0
 box_get
@@ -2026,8 +2110,258 @@ load 79
 frame_bury 0
 retsub
 
+// place_nft_on_sale
+placenftonsale_16:
+proto 5 1
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+frame_dig -3
+callsub ensurevalidnfttype_41
+frame_dig -1
+extract 2 0
+box_len
+store 84
+store 83
+load 84
+!
+// a fixed_onsale_asset with this key already exists
+assert
+frame_dig -5
+callsub ensureassetreciverisapplication_49
+frame_dig -3
+extract 2 0
+bytec 12 // "sound"
+==
+bnz placenftonsale_16_l2
+frame_dig -4
+extract 2 0
+box_get
+store 88
+store 87
+load 88
+assert
+load 87
+frame_bury 3
+frame_dig 3
+intc_0 // 0
+extract_uint64
+frame_bury 1
+b placenftonsale_16_l3
+placenftonsale_16_l2:
+frame_dig -4
+extract 2 0
+box_get
+store 86
+store 85
+load 86
+assert
+load 85
+frame_bury 2
+frame_dig 2
+intc_0 // 0
+extract_uint64
+frame_bury 1
+placenftonsale_16_l3:
+frame_dig -5
+gtxns XferAsset
+frame_dig 1
+==
+// The asset being transfered is not the same as the specified asset_key
+assert
+frame_dig -5
+frame_dig -1
+frame_dig -4
+frame_dig -3
+frame_dig -2
+callsub newfixedassetsale_33
+frame_dig -1
+extract 2 0
+box_get
+store 90
+store 89
+load 90
+assert
+load 89
+frame_bury 0
+retsub
+
+// purchase_nft
+purchasenft_17:
+proto 8 1
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+bytec_0 // ""
+dupn 4
+intc_0 // 0
+bytec_0 // ""
+frame_dig -6
+callsub ensurefixedassetsaleexists_42
+frame_dig -5
+callsub ensurevalidnfttype_41
+frame_dig -2
+callsub ensureassetisaura_43
+frame_dig -1
+callsub ensuretxnisauraoptin_44
+frame_dig -6
+extract 2 0
+box_get
+store 92
+store 91
+load 92
+assert
+load 91
+frame_bury 2
+frame_dig 2
+frame_dig 2
+pushint 2 // 2
+extract_uint16
+frame_dig 2
+pushint 12 // 12
+extract_uint16
+substring3
+frame_bury 3
+frame_dig 2
+pushint 14 // 14
+extract_uint64
+frame_bury 4
+frame_dig 2
+extract 30 32
+frame_bury 5
+frame_dig 2
+frame_dig 2
+pushint 2 // 2
+extract_uint16
+frame_dig 2
+pushint 12 // 12
+extract_uint16
+substring3
+frame_bury 6
+frame_dig -8
+gtxns Amount
+frame_dig 4
+==
+// The payment amount must be equat to the sale price
+assert
+frame_dig -8
+gtxns Receiver
+frame_dig 5
+==
+// The payment reciever must be the sale seller
+assert
+frame_dig -4
+txnas Accounts
+frame_dig -8
+gtxns Sender
+==
+// The buyer must be the same as the person make the transaction
+assert
+frame_dig 3
+extract 2 0
+frame_dig 6
+extract 2 0
+==
+// The asset_key must be the same as the key of the asset to be purchased
+assert
+frame_dig -5
+extract 2 0
+bytec 12 // "sound"
+==
+bnz purchasenft_17_l2
+frame_dig 6
+callsub ensureartnftexists_47
+frame_dig 6
+extract 2 0
+box_get
+store 96
+store 95
+load 96
+assert
+load 95
+frame_bury 8
+frame_dig 8
+intc_0 // 0
+extract_uint64
+frame_bury 1
+b purchasenft_17_l3
+purchasenft_17_l2:
+frame_dig 6
+callsub ensuresoundnftexists_46
+frame_dig 6
+extract 2 0
+box_get
+store 94
+store 93
+load 94
+assert
+load 93
+frame_bury 7
+frame_dig 7
+intc_0 // 0
+extract_uint64
+frame_bury 1
+purchasenft_17_l3:
+frame_dig -8
+gtxns Sender
+frame_bury 9
+frame_dig 9
+len
+pushint 32 // 32
+==
+assert
+frame_dig -7
+gtxns XferAsset
+frame_dig 1
+==
+// The optin_txn should be for the asset being purchased
+assert
+frame_dig -3
+txnas Assets
+frame_dig 1
+==
+// The passed asset must be the same a the asset being purchased
+assert
+intc_1 // 1
+frame_bury 10
+itxn_begin
+intc_3 // axfer
+itxn_field TypeEnum
+frame_dig 1
+itxn_field XferAsset
+frame_dig -8
+gtxns Sender
+itxn_field AssetReceiver
+pushbytes 0x596f75206173736574207075726368617365 // "You asset purchase"
+itxn_field Note
+frame_dig 10
+itxn_field AssetAmount
+itxn_submit
+callsub increaseappnfttransactioncount_27
+frame_dig 9
+callsub rewardwithauratokens_36
+pushbytes 0x00087375627472616374 // 0x00087375627472616374
+frame_bury 11
+frame_dig -6
+frame_dig 10
+frame_dig 11
+callsub updatefixedassetsalesupply_34
+frame_dig -6
+extract 2 0
+box_get
+store 98
+store 97
+load 98
+assert
+load 97
+frame_bury 0
+retsub
+
 // bootstrap_token
-bootstraptoken_16:
+bootstraptoken_18:
 proto 4 0
 intc_0 // 0
 dup
@@ -2087,7 +2421,7 @@ concat
 frame_dig -3
 itob
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 1
 setbit
@@ -2106,19 +2440,19 @@ box_put
 retsub
 
 // create_aura_tokens_caster
-createauratokenscaster_17:
+createauratokenscaster_19:
 proto 0 0
 bytec_0 // ""
 callsub createauratokens_3
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // claim_aura_percentage_caster
-claimaurapercentagecaster_18:
+claimaurapercentagecaster_20:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -2129,14 +2463,14 @@ frame_bury 1
 frame_dig 1
 callsub claimaurapercentage_4
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // update_scalling_constant_caster
-updatescallingconstantcaster_19:
+updatescallingconstantcaster_21:
 proto 0 0
 intc_0 // 0
 dup
@@ -2146,7 +2480,7 @@ frame_bury 1
 frame_dig 1
 callsub updatescallingconstant_5
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 itob
 concat
@@ -2154,7 +2488,7 @@ log
 retsub
 
 // update_epoch_target_caster
-updateepochtargetcaster_20:
+updateepochtargetcaster_22:
 proto 0 0
 intc_0 // 0
 dup
@@ -2164,7 +2498,7 @@ frame_bury 1
 frame_dig 1
 callsub updateepochtarget_6
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 itob
 concat
@@ -2172,7 +2506,7 @@ log
 retsub
 
 // calculate_and_update_network_difficulty
-calculateandupdatenetworkdifficulty_21:
+calculateandupdatenetworkdifficulty_23:
 proto 0 0
 intc_0 // 0
 dupn 4
@@ -2203,39 +2537,52 @@ frame_bury 4
 frame_dig 4
 intc_0 // 0
 ==
-bnz calculateandupdatenetworkdifficulty_21_l2
+bnz calculateandupdatenetworkdifficulty_23_l2
 bytec 7 // "network_difficulty"
 frame_dig 4
 app_global_put
-b calculateandupdatenetworkdifficulty_21_l3
-calculateandupdatenetworkdifficulty_21_l2:
+b calculateandupdatenetworkdifficulty_23_l3
+calculateandupdatenetworkdifficulty_23_l2:
 bytec 7 // "network_difficulty"
 intc_1 // 1
 app_global_put
-calculateandupdatenetworkdifficulty_21_l3:
+calculateandupdatenetworkdifficulty_23_l3:
 retsub
 
 // calculate_and_update_reward
-calculateandupdatereward_22:
+calculateandupdatereward_24:
 proto 0 0
-callsub calculateandupdatenetworkdifficulty_21
+callsub calculateandupdatenetworkdifficulty_23
 retsub
 
 // update_aura_rewards_caster
-updateaurarewardscaster_23:
+updateaurarewardscaster_25:
 proto 0 0
 intc_0 // 0
 callsub updateaurarewards_7
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 itob
 concat
 log
 retsub
 
+// ensure_fixed_asset_sale_exists
+ensurefixedassetsaleexists_26:
+proto 1 0
+frame_dig -1
+extract 2 0
+box_len
+store 102
+store 101
+load 102
+// Fixed asset sale with the specified sale_key does not exist
+assert
+retsub
+
 // increase_app_nft_transaction_count
-increaseappnfttransactioncount_24:
+increaseappnfttransactioncount_27:
 proto 0 0
 bytec 5 // "epoch_nft_transactions"
 bytec 5 // "epoch_nft_transactions"
@@ -2252,7 +2599,7 @@ app_global_put
 retsub
 
 // create_nft_owner
-createnftowner_25:
+createnftowner_28:
 proto 3 0
 intc_0 // 0
 dupn 3
@@ -2280,7 +2627,7 @@ intc_0 // 0
 frame_bury 2
 intc_0 // 0
 frame_bury 3
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 1
 setbit
@@ -2338,7 +2685,7 @@ box_put
 retsub
 
 // increment_creator_nft_count
-incrementcreatornftcount_26:
+incrementcreatornftcount_29:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -2394,7 +2741,7 @@ frame_dig 1
 intc_1 // 1
 +
 frame_bury 1
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 2
 setbit
@@ -2450,7 +2797,7 @@ box_put
 retsub
 
 // new_art_auction
-newartauction_27:
+newartauction_30:
 proto 8 0
 bytec_0 // ""
 intc_0 // 0
@@ -2577,7 +2924,7 @@ itob
 concat
 frame_dig 2
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 3
 setbit
@@ -2596,7 +2943,7 @@ box_put
 retsub
 
 // record_auction_bid
-recordauctionbid_28:
+recordauctionbid_31:
 proto 2 0
 bytec_0 // ""
 dupn 4
@@ -2776,7 +3123,7 @@ itob
 concat
 frame_dig 4
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 10
 setbit
@@ -2795,12 +3142,12 @@ box_put
 retsub
 
 // update_art_nft_owner
-updateartnftowner_29:
+updateartnftowner_32:
 proto 2 0
 bytec_0 // ""
 intc_0 // 0
 bytec_0 // ""
-dupn 4
+dupn 3
 intc_0 // 0
 dup
 bytec_0 // ""
@@ -2823,22 +3170,13 @@ extract_uint64
 frame_bury 1
 frame_dig 0
 frame_dig 0
-pushint 8 // 8
-extract_uint16
-frame_dig 0
-pushint 10 // 10
-extract_uint16
-substring3
-frame_bury 2
-frame_dig 0
-frame_dig 0
 pushint 10 // 10
 extract_uint16
 frame_dig 0
 pushint 12 // 12
 extract_uint16
 substring3
-frame_bury 3
+frame_bury 2
 frame_dig 0
 frame_dig 0
 pushint 12 // 12
@@ -2847,7 +3185,7 @@ frame_dig 0
 pushint 14 // 14
 extract_uint16
 substring3
-frame_bury 4
+frame_bury 3
 frame_dig 0
 frame_dig 0
 pushint 14 // 14
@@ -2856,7 +3194,7 @@ frame_dig 0
 pushint 16 // 16
 extract_uint16
 substring3
-frame_bury 5
+frame_bury 4
 frame_dig 0
 frame_dig 0
 pushint 16 // 16
@@ -2864,155 +3202,423 @@ extract_uint16
 dig 1
 len
 substring3
-frame_bury 6
+frame_bury 5
 frame_dig 0
 pushint 18 // 18
 extract_uint64
-frame_bury 7
+frame_bury 6
 frame_dig 0
 pushint 26 // 26
 extract_uint64
-frame_bury 8
+frame_bury 7
 frame_dig 0
 extract 34 32
-frame_bury 9
+frame_bury 8
 frame_dig 0
 intc 4 // 784
 getbit
-frame_bury 10
+frame_bury 9
 frame_dig 0
 intc 5 // 785
 getbit
-frame_bury 11
+frame_bury 10
 frame_dig 1
 itob
-frame_dig 2
-frame_bury 15
-frame_dig 15
+frame_dig -2
 frame_bury 14
+frame_dig 14
+frame_bury 13
 pushint 99 // 99
-frame_bury 12
-frame_dig 12
-frame_dig 15
+frame_bury 11
+frame_dig 11
+frame_dig 14
 len
 +
-frame_bury 13
-frame_dig 13
+frame_bury 12
+frame_dig 12
 intc_2 // 65536
 <
 assert
+frame_dig 11
+itob
+extract 6 0
+concat
+frame_dig 2
+frame_bury 14
+frame_dig 13
+frame_dig 14
+concat
+frame_bury 13
 frame_dig 12
+frame_bury 11
+frame_dig 11
+frame_dig 14
+len
++
+frame_bury 12
+frame_dig 12
+intc_2 // 65536
+<
+assert
+frame_dig 11
 itob
 extract 6 0
 concat
 frame_dig 3
-frame_bury 15
-frame_dig 14
-frame_dig 15
-concat
 frame_bury 14
 frame_dig 13
-frame_bury 12
+frame_dig 14
+concat
+frame_bury 13
 frame_dig 12
-frame_dig 15
+frame_bury 11
+frame_dig 11
+frame_dig 14
 len
 +
-frame_bury 13
-frame_dig 13
+frame_bury 12
+frame_dig 12
 intc_2 // 65536
 <
 assert
-frame_dig 12
+frame_dig 11
 itob
 extract 6 0
 concat
 frame_dig 4
-frame_bury 15
-frame_dig 14
-frame_dig 15
-concat
 frame_bury 14
 frame_dig 13
-frame_bury 12
+frame_dig 14
+concat
+frame_bury 13
 frame_dig 12
-frame_dig 15
+frame_bury 11
+frame_dig 11
+frame_dig 14
 len
 +
-frame_bury 13
-frame_dig 13
+frame_bury 12
+frame_dig 12
 intc_2 // 65536
 <
 assert
-frame_dig 12
+frame_dig 11
 itob
 extract 6 0
 concat
 frame_dig 5
-frame_bury 15
-frame_dig 14
-frame_dig 15
-concat
 frame_bury 14
 frame_dig 13
-frame_bury 12
-frame_dig 12
-frame_dig 15
-len
-+
+frame_dig 14
+concat
 frame_bury 13
-frame_dig 13
-intc_2 // 65536
-<
-assert
 frame_dig 12
+frame_bury 11
+frame_dig 11
 itob
 extract 6 0
 concat
 frame_dig 6
-frame_bury 15
-frame_dig 14
-frame_dig 15
-concat
-frame_bury 14
-frame_dig 13
-frame_bury 12
-frame_dig 12
 itob
-extract 6 0
 concat
 frame_dig 7
 itob
 concat
 frame_dig 8
-itob
-concat
-frame_dig 9
 concat
 frame_dig -1
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
-frame_dig 10
+frame_dig 9
 setbit
 intc_1 // 1
-frame_dig 11
+frame_dig 10
 setbit
 concat
-frame_dig 14
+frame_dig 13
 concat
 frame_bury 0
-frame_dig 2
+frame_dig -2
 extract 2 0
 box_del
 pop
+frame_dig -2
+extract 2 0
+frame_dig 0
+box_put
+retsub
+
+// new_fixed_asset_sale
+newfixedassetsale_33:
+proto 5 0
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -5
+gtxns XferAsset
+frame_bury 0
+frame_dig -5
+gtxns Sender
+frame_bury 1
+frame_dig 1
+len
+pushint 32 // 32
+==
+assert
+frame_dig -5
+gtxns AssetAmount
+frame_bury 2
+frame_dig -4
+frame_bury 7
+frame_dig 7
+frame_bury 6
+pushint 62 // 62
+frame_bury 4
+frame_dig 4
+frame_dig 7
+len
++
+frame_bury 5
+frame_dig 5
+intc_2 // 65536
+<
+assert
+frame_dig 4
+itob
+extract 6 0
+frame_dig -3
+frame_bury 7
+frame_dig 6
+frame_dig 7
+concat
+frame_bury 6
+frame_dig 5
+frame_bury 4
+frame_dig 4
+frame_dig 7
+len
++
+frame_bury 5
+frame_dig 5
+intc_2 // 65536
+<
+assert
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig 0
+itob
+concat
+frame_dig -2
+frame_bury 7
+frame_dig 6
+frame_dig 7
+concat
+frame_bury 6
+frame_dig 5
+frame_bury 4
+frame_dig 4
+itob
+extract 6 0
+concat
+frame_dig -1
+itob
+concat
 frame_dig 2
+itob
+concat
+frame_dig 1
+concat
+frame_dig 6
+concat
+frame_bury 3
+frame_dig -4
+extract 2 0
+box_del
+pop
+frame_dig -4
+extract 2 0
+frame_dig 3
+box_put
+retsub
+
+// update_fixed_asset_sale_supply
+updatefixedassetsalesupply_34:
+proto 3 0
+bytec_0 // ""
+dupn 2
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+frame_dig -1
+extract 2 0
+bytec 15 // "add"
+==
+frame_dig -1
+extract 2 0
+pushbytes 0x7375627472616374 // "subtract"
+==
+||
+// The allowed actions are `add` and `subtract`
+assert
+frame_dig -3
+callsub ensurefixedassetsaleexists_26
+frame_dig -3
+extract 2 0
+box_get
+store 100
+store 99
+load 100
+assert
+load 99
+frame_bury 0
+frame_dig 0
+frame_dig 0
+intc_0 // 0
+extract_uint16
+frame_dig 0
+pushint 2 // 2
+extract_uint16
+substring3
+frame_bury 1
+frame_dig 0
+frame_dig 0
+pushint 2 // 2
+extract_uint16
+frame_dig 0
+pushint 12 // 12
+extract_uint16
+substring3
+frame_bury 2
+frame_dig 0
+intc_3 // 4
+extract_uint64
+frame_bury 3
+frame_dig 0
+frame_dig 0
+pushint 12 // 12
+extract_uint16
+dig 1
+len
+substring3
+frame_bury 4
+frame_dig 0
+pushint 14 // 14
+extract_uint64
+frame_bury 5
+frame_dig 0
+pushint 22 // 22
+extract_uint64
+frame_bury 6
+frame_dig 0
+extract 30 32
+frame_bury 7
+frame_dig -1
+extract 2 0
+bytec 15 // "add"
+==
+bnz updatefixedassetsalesupply_34_l2
+frame_dig 6
+frame_dig -2
+-
+frame_bury 6
+b updatefixedassetsalesupply_34_l3
+updatefixedassetsalesupply_34_l2:
+frame_dig 6
+frame_dig -2
++
+frame_bury 6
+updatefixedassetsalesupply_34_l3:
+frame_dig 1
+frame_bury 11
+frame_dig 11
+frame_bury 10
+pushint 62 // 62
+frame_bury 8
+frame_dig 8
+frame_dig 11
+len
++
+frame_bury 9
+frame_dig 9
+intc_2 // 65536
+<
+assert
+frame_dig 8
+itob
+extract 6 0
+frame_dig 2
+frame_bury 11
+frame_dig 10
+frame_dig 11
+concat
+frame_bury 10
+frame_dig 9
+frame_bury 8
+frame_dig 8
+frame_dig 11
+len
++
+frame_bury 9
+frame_dig 9
+intc_2 // 65536
+<
+assert
+frame_dig 8
+itob
+extract 6 0
+concat
+frame_dig 3
+itob
+concat
+frame_dig 4
+frame_bury 11
+frame_dig 10
+frame_dig 11
+concat
+frame_bury 10
+frame_dig 9
+frame_bury 8
+frame_dig 8
+itob
+extract 6 0
+concat
+frame_dig 5
+itob
+concat
+frame_dig 6
+itob
+concat
+frame_dig 7
+concat
+frame_dig 10
+concat
+frame_bury 0
+frame_dig 1
+extract 2 0
+box_del
+pop
+frame_dig 1
 extract 2 0
 frame_dig 0
 box_put
 retsub
 
 // register_creator_caster
-registercreatorcaster_30:
+registercreatorcaster_35:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3031,14 +3637,14 @@ frame_dig 2
 frame_dig 3
 callsub registercreator_8
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // reward_with_aura_tokens
-rewardwithauratokens_31:
+rewardwithauratokens_36:
 proto 1 0
 bytec_0 // ""
 dup
@@ -3049,7 +3655,7 @@ intc_0 // 0
 dup
 bytec_0 // ""
 dup
-callsub ensureaurasexist_35
+callsub ensureaurasexist_40
 bytec 11 // 0x000461757261
 frame_bury 0
 frame_dig 0
@@ -3078,14 +3684,14 @@ frame_bury 5
 frame_dig 3
 intc_0 // 0
 >
-bnz rewardwithauratokens_31_l2
+bnz rewardwithauratokens_36_l2
 pushbytes 0x001b4e6f206d6f7265207472616e73616374696f6e2072657761726473 // 0x001b4e6f206d6f7265207472616e73616374696f6e2072657761726473
 frame_bury 5
-b rewardwithauratokens_31_l3
-rewardwithauratokens_31_l2:
+b rewardwithauratokens_36_l3
+rewardwithauratokens_36_l2:
 pushbytes 0x00125472616e73616374696f6e20526577617264 // 0x00125472616e73616374696f6e20526577617264
 frame_bury 5
-rewardwithauratokens_31_l3:
+rewardwithauratokens_36_l3:
 itxn_begin
 intc_3 // axfer
 itxn_field TypeEnum
@@ -3119,7 +3725,7 @@ concat
 frame_dig 3
 itob
 concat
-bytec_1 // 0x00
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 4
 setbit
@@ -3138,7 +3744,7 @@ box_put
 retsub
 
 // transfer_asset_from_contract
-transferassetfromcontract_32:
+transferassetfromcontract_37:
 proto 3 0
 itxn_begin
 intc_3 // axfer
@@ -3153,7 +3759,7 @@ itxn_submit
 retsub
 
 // refund_last_bidder
-refundlastbidder_33:
+refundlastbidder_38:
 proto 3 0
 itxn_begin
 intc_1 // pay
@@ -3170,7 +3776,7 @@ itxn_submit
 retsub
 
 // ensure_zero_payment
-ensurezeropayment_34:
+ensurezeropayment_39:
 proto 1 0
 frame_dig -1
 gtxns Amount
@@ -3181,7 +3787,7 @@ assert
 retsub
 
 // ensure_auras_exist
-ensureaurasexist_35:
+ensureaurasexist_40:
 proto 0 0
 bytec_3 // "aura"
 box_len
@@ -3192,8 +3798,37 @@ load 28
 assert
 retsub
 
+// ensure_valid_nft_type
+ensurevalidnfttype_41:
+proto 1 0
+frame_dig -1
+extract 2 0
+bytec 16 // "art"
+==
+frame_dig -1
+extract 2 0
+bytec 12 // "sound"
+==
+||
+// asset_type can only be `art` or `sound`
+assert
+retsub
+
+// ensure_fixed_asset_sale_exists
+ensurefixedassetsaleexists_42:
+proto 1 0
+frame_dig -1
+extract 2 0
+box_len
+store 104
+store 103
+load 104
+// Fixed asset sale with the specified sale_key does not exist
+assert
+retsub
+
 // ensure_asset_is_aura
-ensureassetisaura_36:
+ensureassetisaura_43:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -3217,8 +3852,33 @@ frame_dig 1
 assert
 retsub
 
+// ensure_txn_is_aura_optin
+ensuretxnisauraoptin_44:
+proto 1 0
+bytec_0 // ""
+intc_0 // 0
+bytec_3 // "aura"
+box_get
+store 106
+store 105
+load 106
+assert
+load 105
+frame_bury 0
+frame_dig 0
+intc_0 // 0
+extract_uint64
+frame_bury 1
+frame_dig -1
+gtxns XferAsset
+frame_dig 1
+==
+// The txn is not an aura optin Transaction
+assert
+retsub
+
 // ensure_art_auction_exists
-ensureartauctionexists_37:
+ensureartauctionexists_45:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -3231,7 +3891,7 @@ assert
 retsub
 
 // ensure_sound_nft_exists
-ensuresoundnftexists_38:
+ensuresoundnftexists_46:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -3239,12 +3899,12 @@ box_len
 store 40
 store 39
 load 40
-// SoundNFT with specified key does not exist
+// SoundNFT with the specified asset_key does not exist
 assert
 retsub
 
 // ensure_art_nft_exists
-ensureartnftexists_39:
+ensureartnftexists_47:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -3252,12 +3912,12 @@ box_len
 store 50
 store 49
 load 50
-// ArtNFT with specified key does not exist
+// ArtNFT with the specified asset_key does not exist
 assert
 retsub
 
 // ensure_registered_creative
-ensureregisteredcreative_40:
+ensureregisteredcreative_48:
 proto 2 0
 bytec_0 // ""
 intc_0 // 0
@@ -3322,22 +3982,22 @@ frame_dig -1
 extract 2 0
 pushbytes 0x6d75736963 // "music"
 ==
-bnz ensureregisteredcreative_40_l3
-ensureregisteredcreative_40_l1:
+bnz ensureregisteredcreative_48_l3
+ensureregisteredcreative_48_l1:
 frame_dig -1
 extract 2 0
-pushbytes 0x617274 // "art"
+bytec 16 // "art"
 ==
-bz ensureregisteredcreative_40_l4
+bz ensureregisteredcreative_48_l4
 intc_1 // 1
 frame_bury 1
-b ensureregisteredcreative_40_l4
-ensureregisteredcreative_40_l3:
+b ensureregisteredcreative_48_l4
+ensureregisteredcreative_48_l3:
 intc_1 // 1
 frame_bury 1
-b ensureregisteredcreative_40_l1
-ensureregisteredcreative_40_l4:
-bytec_1 // 0x00
+b ensureregisteredcreative_48_l1
+ensureregisteredcreative_48_l4:
+bytec_2 // 0x00
 intc_0 // 0
 frame_dig 1
 setbit
@@ -3394,8 +4054,19 @@ frame_dig 0
 box_put
 retsub
 
+// ensure_asset_reciver_is_application
+ensureassetreciverisapplication_49:
+proto 1 0
+frame_dig -1
+gtxns AssetReceiver
+global CurrentApplicationAddress
+==
+// The asset_receiver must be the current_application_address
+assert
+retsub
+
 // create_sound_nft_caster
-createsoundnftcaster_41:
+createsoundnftcaster_50:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3403,6 +4074,7 @@ bytec_0 // ""
 dupn 4
 intc_0 // 0
 bytec_0 // ""
+dup
 intc_0 // 0
 bytec_0 // ""
 dupn 2
@@ -3424,25 +4096,27 @@ frame_bury 7
 txna ApplicationArgs 7
 frame_bury 8
 txna ApplicationArgs 8
-btoi
 frame_bury 9
 txna ApplicationArgs 9
+btoi
 frame_bury 10
 txna ApplicationArgs 10
 frame_bury 11
 txna ApplicationArgs 11
 frame_bury 12
 txna ApplicationArgs 12
-btoi
 frame_bury 13
 txna ApplicationArgs 13
-intc_0 // 0
-getbyte
+btoi
 frame_bury 14
 txna ApplicationArgs 14
 intc_0 // 0
 getbyte
 frame_bury 15
+txna ApplicationArgs 15
+intc_0 // 0
+getbyte
+frame_bury 16
 txn GroupIndex
 intc_1 // 1
 -
@@ -3467,16 +4141,17 @@ frame_dig 12
 frame_dig 13
 frame_dig 14
 frame_dig 15
+frame_dig 16
 callsub createsoundnft_9
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // claim_created_sound_caster
-claimcreatedsoundcaster_42:
+claimcreatedsoundcaster_51:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3508,14 +4183,14 @@ frame_dig 3
 frame_dig 4
 callsub claimcreatedsound_10
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // create_art_nft_caster
-createartnftcaster_43:
+createartnftcaster_52:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3567,14 +4242,14 @@ frame_dig 9
 frame_dig 10
 callsub createartnft_11
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // claim_created_art_caster
-claimcreatedartcaster_44:
+claimcreatedartcaster_53:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3606,14 +4281,14 @@ frame_dig 3
 frame_dig 4
 callsub claimcreatedart_12
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // create_art_auction_caster
-createartauctioncaster_45:
+createartauctioncaster_54:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3655,14 +4330,14 @@ frame_dig 6
 frame_dig 7
 callsub createartauction_13
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // bid_on_art_auction_caster
-bidonartauctioncaster_46:
+bidonartauctioncaster_55:
 proto 0 0
 bytec_0 // ""
 dup
@@ -3708,14 +4383,14 @@ frame_dig 4
 frame_dig 5
 callsub bidonartauction_14
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log
 retsub
 
 // complete_art_auction_caster
-completeartauctioncaster_47:
+completeartauctioncaster_56:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3747,7 +4422,116 @@ frame_dig 3
 frame_dig 4
 callsub completeartauction_15
 frame_bury 0
-bytec_2 // 0x151f7c75
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// place_nft_on_sale_caster
+placenftonsalecaster_57:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+bytec_0 // ""
+dup
+intc_0 // 0
+bytec_0 // ""
+txna ApplicationArgs 1
+frame_bury 2
+txna ApplicationArgs 2
+frame_bury 3
+txna ApplicationArgs 3
+btoi
+frame_bury 4
+txna ApplicationArgs 4
+frame_bury 5
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_3 // axfer
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+callsub placenftonsale_16
+frame_bury 0
+bytec_1 // 0x151f7c75
+frame_dig 0
+concat
+log
+retsub
+
+// purchase_nft_caster
+purchasenftcaster_58:
+proto 0 0
+bytec_0 // ""
+intc_0 // 0
+dup
+bytec_0 // ""
+dup
+intc_0 // 0
+dupn 3
+txna ApplicationArgs 1
+frame_bury 3
+txna ApplicationArgs 2
+frame_bury 4
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 5
+txna ApplicationArgs 4
+intc_0 // 0
+getbyte
+frame_bury 6
+txna ApplicationArgs 5
+intc_0 // 0
+getbyte
+frame_bury 7
+txn GroupIndex
+pushint 3 // 3
+-
+frame_bury 1
+frame_dig 1
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+txn GroupIndex
+pushint 2 // 2
+-
+frame_bury 2
+frame_dig 2
+gtxns TypeEnum
+intc_3 // axfer
+==
+assert
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 8
+frame_dig 8
+gtxns TypeEnum
+intc_3 // axfer
+==
+assert
+frame_dig 1
+frame_dig 2
+frame_dig 3
+frame_dig 4
+frame_dig 5
+frame_dig 6
+frame_dig 7
+frame_dig 8
+callsub purchasenft_17
+frame_bury 0
+bytec_1 // 0x151f7c75
 frame_dig 0
 concat
 log

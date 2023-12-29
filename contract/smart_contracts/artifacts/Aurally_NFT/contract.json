@@ -107,6 +107,10 @@
                     "name": "genre"
                 },
                 {
+                    "type": "string",
+                    "name": "description"
+                },
+                {
                     "type": "uint64",
                     "name": "price"
                 },
@@ -136,7 +140,7 @@
                 }
             ],
             "returns": {
-                "type": "(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+                "type": "(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
             }
         },
         {
@@ -160,7 +164,7 @@
                 }
             ],
             "returns": {
-                "type": "(uint64,string,uint64,string,string,string,uint64,string,uint64,string,string,string,address,bool,bool)"
+                "type": "(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
             }
         },
         {
@@ -321,6 +325,74 @@
             ],
             "returns": {
                 "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+            }
+        },
+        {
+            "name": "place_nft_on_sale",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_key"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_type"
+                },
+                {
+                    "type": "uint64",
+                    "name": "sale_price"
+                },
+                {
+                    "type": "string",
+                    "name": "sale_key"
+                }
+            ],
+            "returns": {
+                "type": "(string,string,uint64,string,uint64,uint64,address)"
+            }
+        },
+        {
+            "name": "purchase_nft",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "axfer",
+                    "name": "optin_txn"
+                },
+                {
+                    "type": "string",
+                    "name": "sale_key"
+                },
+                {
+                    "type": "string",
+                    "name": "asset_type"
+                },
+                {
+                    "type": "account",
+                    "name": "buyer"
+                },
+                {
+                    "type": "asset",
+                    "name": "asset"
+                },
+                {
+                    "type": "asset",
+                    "name": "aura"
+                },
+                {
+                    "type": "axfer",
+                    "name": "aura_optin_txn"
+                }
+            ],
+            "returns": {
+                "type": "(string,string,uint64,string,uint64,uint64,address)"
             }
         }
     ],

@@ -23,10 +23,11 @@ class SoundNFT(P.abi.NamedTuple):
     artist: P.abi.Field[P.abi.String]
     release_date: P.abi.Field[P.abi.Uint64]  # A UTC timestamp of the release_date
     genre: P.abi.Field[P.abi.String]
+    description: P.abi.Field[P.abi.String]
     price: P.abi.Field[P.abi.Uint64]
-    cover_image_ipfs: P.abi.Field[P.abi.String]
-    audio_sample_ipfs: P.abi.Field[P.abi.String]
-    full_track_ipfs: P.abi.Field[P.abi.String]
+    cover_image_url: P.abi.Field[P.abi.String]
+    audio_sample_url: P.abi.Field[P.abi.String]
+    full_track_url: P.abi.Field[P.abi.String]
     creator: P.abi.Field[P.abi.Address]
     for_sale: P.abi.Field[P.abi.Bool]
     claimed: P.abi.Field[P.abi.Bool]
@@ -38,7 +39,7 @@ class ArtNFT(P.abi.NamedTuple):
     title: P.abi.Field[P.abi.String]
     name: P.abi.Field[P.abi.String]
     description: P.abi.Field[P.abi.String]
-    ipfs_location: P.abi.Field[P.abi.String]
+    image_url: P.abi.Field[P.abi.String]
     price: P.abi.Field[P.abi.Uint64]
     sold_price: P.abi.Field[P.abi.Uint64]
     creator: P.abi.Field[P.abi.Address]
@@ -66,3 +67,13 @@ class AurallyToken(P.abi.NamedTuple):
     asset_key: P.abi.Field[P.abi.String]
     asset_total: P.abi.Field[P.abi.Uint64]
     claimed: P.abi.Field[P.abi.Bool]
+
+
+class FixedAssetSale(P.abi.NamedTuple):
+    sale_key: P.abi.Field[P.abi.String]
+    asset_key: P.abi.Field[P.abi.String]
+    asset_id: P.abi.Field[P.abi.Uint64]
+    asset_type: P.abi.Field[P.abi.String]
+    price: P.abi.Field[P.abi.Uint64]
+    supply: P.abi.Field[P.abi.Uint64]
+    seller: P.abi.Field[P.abi.Address]
