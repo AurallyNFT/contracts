@@ -19,22 +19,35 @@ def reward_with_aura_tokens(receiver: P.abi.Address):
         (claimed := P.abi.Bool()).set(aura_asset.claimed),
         (note := P.abi.String()).set(""),
         P.If(
-            aura_asset_total.get() > P.Int(0),
-            note.set("Transaction Reward"),
-            note.set("No more transaction rewards"),
-        ),
-        # Perform Asset Transfer
-        P.InnerTxnBuilder.Execute(
-            {
-                P.TxnField.type_enum: P.TxnType.AssetTransfer,
-                P.TxnField.xfer_asset: aura_asset_id.get(),
-                P.TxnField.asset_receiver: receiver.get(),
-                P.TxnField.asset_amount: app.state.aura_reward.get(),
-                P.TxnField.note: note.get()
-            }
+            aura_asset_total.get() > app.state.aura_reward.get(),
+            P.Seq(
+                note.set("Your Transaction Reward"),
+                # Perform Asset Transfer
+                P.InnerTxnBuilder.Execute(
+                    {
+                        P.TxnField.type_enum: P.TxnType.AssetTransfer,
+                        P.TxnField.xfer_asset: aura_asset_id.get(),
+                        P.TxnField.asset_receiver: receiver.get(),
+                        P.TxnField.asset_amount: app.state.aura_reward.get(),
+                        P.TxnField.note: note.get(),
+                    }
+                ),
+            ),
+            P.Seq(
+                note.set("No more transaction rewards"),
+                P.InnerTxnBuilder.Execute(
+                    {
+                        P.TxnField.type_enum: P.TxnType.AssetTransfer,
+                        P.TxnField.xfer_asset: aura_asset_id.get(),
+                        P.TxnField.asset_receiver: receiver.get(),
+                        P.TxnField.asset_amount: P.Int(0),
+                        P.TxnField.note: note.get(),
+                    }
+                ),
+            )
         ),
         # Update Asset Total
-        aura_asset_total.set(aura_asset_total.get() - P.Int(1)),
+        aura_asset_total.set(aura_asset_total.get() - app.state.aura_reward.get()),
         aura_asset.set(aura_asset_id, aura_asset_key, aura_asset_total, claimed),
         app.state.registered_asa[aura_asset_key.get()].set(aura_asset),
     )

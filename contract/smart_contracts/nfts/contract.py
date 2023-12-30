@@ -303,7 +303,9 @@ def create_art_nft(
         increase_app_nft_transaction_count,
     )
 
+    opup = P.OpUp(P.OpUpMode.OnCall)
     return P.Seq(
+        opup.maximize_budget(P.Int(1000)),
         ensure_zero_payment(txn),
         ensure_asset_is_aura(aura),
         P.Assert(
@@ -656,8 +658,6 @@ def purchase_nft(
     aura_optin_txn: P.abi.AssetTransferTransaction,
     *,
     output: FixedAssetSale
-    # seller: P.abi.Account,
-    # nft_id: P.abi.Asset,
 ):
     from .subroutines.validators import (
         ensure_fixed_asset_sale_exists,

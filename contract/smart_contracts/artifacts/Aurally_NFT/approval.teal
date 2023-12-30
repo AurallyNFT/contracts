@@ -1,6 +1,6 @@
 #pragma version 8
-intcblock 0 1 65536 4 784 785
-bytecblock 0x 0x151f7c75 0x00 0x61757261 0x617572615f726577617264 0x65706f63685f6e66745f7472616e73616374696f6e73 0x65706f63685f7461726765745f7472616e73616374696f6e 0x6e6574776f726b5f646966666963756c7479 0x7363616c696e675f636f6e7374616e74 0x746f74616c5f617572616c6c795f746f6b656e73 0x746f74616c5f6e66745f7472616e73616374696f6e73 0x000461757261 0x736f756e64 0x72657761726461626c655f746f6b656e735f737570706c79 0x068101 0x616464 0x617274
+intcblock 0 1 65536 4 1000 784 785
+bytecblock 0x 0x151f7c75 0x00 0x617572615f726577617264 0x61757261 0x65706f63685f6e66745f7472616e73616374696f6e73 0x65706f63685f7461726765745f7472616e73616374696f6e 0x6e6574776f726b5f646966666963756c7479 0x7363616c696e675f636f6e7374616e74 0x746f74616c5f617572616c6c795f746f6b656e73 0x746f74616c5f6e66745f7472616e73616374696f6e73 0x068101 0x000461757261 0x736f756e64 0x72657761726461626c655f746f6b656e735f737570706c79 0x616464 0x617274
 txn NumAppArgs
 intc_0 // 0
 ==
@@ -291,7 +291,7 @@ proto 0 0
 pushbytes 0x617572615f626173655f726577617264 // "aura_base_reward"
 intc_1 // 1
 app_global_put
-bytec 4 // "aura_reward"
+bytec_3 // "aura_reward"
 intc_1 // 1
 app_global_put
 bytec 5 // "epoch_nft_transactions"
@@ -303,7 +303,7 @@ app_global_put
 bytec 7 // "network_difficulty"
 intc_1 // 1
 app_global_put
-bytec 13 // "rewardable_tokens_supply"
+bytec 14 // "rewardable_tokens_supply"
 pushint 80000000 // 80000000
 app_global_put
 bytec 8 // "scaling_constant"
@@ -358,7 +358,7 @@ global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 11 // 0x000461757261
+bytec 12 // 0x000461757261
 frame_bury 1
 pushbytes 0x0003415552 // 0x0003415552
 frame_bury 2
@@ -413,9 +413,9 @@ global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 11 // 0x000461757261
+bytec 12 // 0x000461757261
 frame_bury 1
-bytec_3 // "aura"
+bytec 4 // "aura"
 box_get
 store 11
 store 10
@@ -427,7 +427,7 @@ frame_dig 2
 intc_0 // 0
 extract_uint64
 frame_bury 3
-bytec 13 // "rewardable_tokens_supply"
+bytec 14 // "rewardable_tokens_supply"
 app_global_get
 frame_bury 4
 itxn_begin
@@ -534,11 +534,11 @@ bnz updateaurarewards_7_l2
 callsub calculateandupdatereward_24
 b updateaurarewards_7_l3
 updateaurarewards_7_l2:
-bytec 4 // "aura_reward"
+bytec_3 // "aura_reward"
 intc_1 // 1
 app_global_put
 updateaurarewards_7_l3:
-bytec 4 // "aura_reward"
+bytec_3 // "aura_reward"
 app_global_get
 frame_bury 0
 retsub
@@ -591,7 +591,7 @@ intc_0 // 0
 store 18
 createsoundnft_9_l1:
 load 18
-pushint 1000 // 1000
+intc 4 // 1000
 global MinTxnFee
 /
 <
@@ -601,9 +601,9 @@ pushint 6 // appl
 itxn_field TypeEnum
 pushint 5 // DeleteApplication
 itxn_field OnCompletion
-bytec 14 // 0x068101
+bytec 11 // 0x068101
 itxn_field ApprovalProgram
-bytec 14 // 0x068101
+bytec 11 // 0x068101
 itxn_field ClearStateProgram
 itxn_submit
 load 18
@@ -1288,6 +1288,31 @@ intc_0 // 0
 dup
 bytec_0 // ""
 dup
+intc_0 // 0
+store 41
+createartnft_11_l1:
+load 41
+intc 4 // 1000
+global MinTxnFee
+/
+<
+bz createartnft_11_l3
+itxn_begin
+pushint 6 // appl
+itxn_field TypeEnum
+pushint 5 // DeleteApplication
+itxn_field OnCompletion
+bytec 11 // 0x068101
+itxn_field ApprovalProgram
+bytec 11 // 0x068101
+itxn_field ClearStateProgram
+itxn_submit
+load 41
+intc_1 // 1
++
+store 41
+b createartnft_11_l1
+createartnft_11_l3:
 frame_dig -10
 callsub ensurezeropayment_39
 frame_dig -2
@@ -1302,9 +1327,9 @@ assert
 frame_dig -9
 extract 2 0
 box_len
+store 43
 store 42
-store 41
-load 42
+load 43
 !
 // An art NFT with this key already exists
 assert
@@ -1483,11 +1508,11 @@ callsub rewardwithauratokens_36
 frame_dig -9
 extract 2 0
 box_get
+store 45
 store 44
-store 43
-load 44
+load 45
 assert
-load 43
+load 44
 frame_bury 0
 retsub
 
@@ -1512,11 +1537,11 @@ callsub ensureartnftexists_47
 frame_dig -3
 extract 2 0
 box_get
+store 47
 store 46
-store 45
-load 46
+load 47
 assert
-load 45
+load 46
 frame_bury 1
 frame_dig 1
 intc_0 // 0
@@ -1581,11 +1606,11 @@ frame_dig 1
 extract 66 32
 frame_bury 11
 frame_dig 1
-intc 4 // 784
+intc 5 // 784
 getbit
 frame_bury 12
 frame_dig 1
-intc 5 // 785
+intc 6 // 785
 getbit
 frame_bury 13
 frame_dig 13
@@ -1754,11 +1779,11 @@ box_put
 frame_dig 3
 extract 2 0
 box_get
+store 49
 store 48
-store 47
-load 48
+load 49
 assert
-load 47
+load 48
 frame_bury 0
 retsub
 
@@ -1770,9 +1795,9 @@ dupn 3
 frame_dig -6
 extract 2 0
 box_len
+store 53
 store 52
-store 51
-load 52
+load 53
 !
 // An auction with this key already exists
 assert
@@ -1786,19 +1811,19 @@ assert
 frame_dig -5
 extract 2 0
 box_len
+store 55
 store 54
-store 53
-load 54
+load 55
 // Art NFT with this key was not found
 assert
 frame_dig -5
 extract 2 0
 box_get
+store 57
 store 56
-store 55
-load 56
+load 57
 assert
-load 55
+load 56
 frame_bury 1
 frame_dig 1
 extract 66 32
@@ -1830,11 +1855,11 @@ callsub newartauction_30
 frame_dig -6
 extract 2 0
 box_get
+store 59
 store 58
-store 57
-load 58
+load 59
 assert
-load 57
+load 58
 frame_bury 0
 retsub
 
@@ -1862,11 +1887,11 @@ assert
 frame_dig -5
 extract 2 0
 box_get
+store 63
 store 62
-store 61
-load 62
+load 63
 assert
-load 61
+load 62
 frame_bury 1
 frame_dig 1
 frame_dig 1
@@ -1900,23 +1925,23 @@ frame_bury 6
 frame_dig 6
 extract 2 0
 box_get
+store 65
 store 64
-store 63
-load 64
+load 65
 assert
-load 63
+load 64
 frame_bury 7
 frame_dig 7
 intc_0 // 0
 extract_uint64
 frame_bury 8
-bytec_3 // "aura"
+bytec 4 // "aura"
 box_get
+store 67
 store 66
-store 65
-load 66
+load 67
 assert
-load 65
+load 66
 frame_bury 9
 frame_dig 9
 intc_0 // 0
@@ -1988,11 +2013,11 @@ callsub recordauctionbid_31
 frame_dig -5
 extract 2 0
 box_get
+store 69
 store 68
-store 67
-load 68
+load 69
 assert
-load 67
+load 68
 frame_bury 0
 retsub
 
@@ -2009,11 +2034,11 @@ callsub ensureartauctionexists_45
 frame_dig -2
 extract 2 0
 box_get
+store 75
 store 74
-store 73
-load 74
+load 75
 assert
-load 73
+load 74
 frame_bury 1
 frame_dig 1
 frame_dig 1
@@ -2033,23 +2058,23 @@ frame_bury 4
 frame_dig 2
 extract 2 0
 box_get
+store 77
 store 76
-store 75
-load 76
+load 77
 assert
-load 75
+load 76
 frame_bury 5
 frame_dig 5
 intc_0 // 0
 extract_uint64
 frame_bury 6
-bytec_3 // "aura"
+bytec 4 // "aura"
 box_get
+store 79
 store 78
-store 77
-load 78
+load 79
 assert
-load 77
+load 78
 frame_bury 7
 frame_dig 7
 intc_0 // 0
@@ -2102,11 +2127,11 @@ callsub rewardwithauratokens_36
 frame_dig 2
 extract 2 0
 box_get
+store 81
 store 80
-store 79
-load 80
+load 81
 assert
-load 79
+load 80
 frame_bury 0
 retsub
 
@@ -2122,9 +2147,9 @@ callsub ensurevalidnfttype_41
 frame_dig -1
 extract 2 0
 box_len
+store 85
 store 84
-store 83
-load 84
+load 85
 !
 // a fixed_onsale_asset with this key already exists
 assert
@@ -2132,17 +2157,17 @@ frame_dig -5
 callsub ensureassetreciverisapplication_49
 frame_dig -3
 extract 2 0
-bytec 12 // "sound"
+bytec 13 // "sound"
 ==
 bnz placenftonsale_16_l2
 frame_dig -4
 extract 2 0
 box_get
+store 89
 store 88
-store 87
-load 88
+load 89
 assert
-load 87
+load 88
 frame_bury 3
 frame_dig 3
 intc_0 // 0
@@ -2153,11 +2178,11 @@ placenftonsale_16_l2:
 frame_dig -4
 extract 2 0
 box_get
+store 87
 store 86
-store 85
-load 86
+load 87
 assert
-load 85
+load 86
 frame_bury 2
 frame_dig 2
 intc_0 // 0
@@ -2179,11 +2204,11 @@ callsub newfixedassetsale_33
 frame_dig -1
 extract 2 0
 box_get
+store 91
 store 90
-store 89
-load 90
+load 91
 assert
-load 89
+load 90
 frame_bury 0
 retsub
 
@@ -2210,11 +2235,11 @@ callsub ensuretxnisauraoptin_44
 frame_dig -6
 extract 2 0
 box_get
+store 93
 store 92
-store 91
-load 92
+load 93
 assert
-load 91
+load 92
 frame_bury 2
 frame_dig 2
 frame_dig 2
@@ -2269,7 +2294,7 @@ extract 2 0
 assert
 frame_dig -5
 extract 2 0
-bytec 12 // "sound"
+bytec 13 // "sound"
 ==
 bnz purchasenft_17_l2
 frame_dig 6
@@ -2277,11 +2302,11 @@ callsub ensureartnftexists_47
 frame_dig 6
 extract 2 0
 box_get
+store 97
 store 96
-store 95
-load 96
+load 97
 assert
-load 95
+load 96
 frame_bury 8
 frame_dig 8
 intc_0 // 0
@@ -2294,11 +2319,11 @@ callsub ensuresoundnftexists_46
 frame_dig 6
 extract 2 0
 box_get
+store 95
 store 94
-store 93
-load 94
+load 95
 assert
-load 93
+load 94
 frame_bury 7
 frame_dig 7
 intc_0 // 0
@@ -2352,11 +2377,11 @@ callsub updatefixedassetsalesupply_34
 frame_dig -6
 extract 2 0
 box_get
+store 99
 store 98
-store 97
-load 98
+load 99
 assert
-load 97
+load 98
 frame_bury 0
 retsub
 
@@ -2574,9 +2599,9 @@ proto 1 0
 frame_dig -1
 extract 2 0
 box_len
+store 103
 store 102
-store 101
-load 102
+load 103
 // Fixed asset sale with the specified sale_key does not exist
 assert
 retsub
@@ -2811,9 +2836,9 @@ dup
 frame_dig -7
 extract 2 0
 box_len
+store 61
 store 60
-store 59
-load 60
+load 61
 !
 // an art auction with this key already exists
 assert
@@ -2957,11 +2982,11 @@ dup
 frame_dig -1
 extract 2 0
 box_get
+store 71
 store 70
-store 69
-load 70
+load 71
 assert
-load 69
+load 70
 frame_bury 0
 frame_dig 0
 extract 2 32
@@ -3158,11 +3183,11 @@ dup
 frame_dig -2
 extract 2 0
 box_get
+store 83
 store 82
-store 81
-load 82
+load 83
 assert
-load 81
+load 82
 frame_bury 0
 frame_dig 0
 intc_0 // 0
@@ -3215,11 +3240,11 @@ frame_dig 0
 extract 34 32
 frame_bury 8
 frame_dig 0
-intc 4 // 784
+intc 5 // 784
 getbit
 frame_bury 9
 frame_dig 0
-intc 5 // 785
+intc 6 // 785
 getbit
 frame_bury 10
 frame_dig 1
@@ -3479,11 +3504,11 @@ callsub ensurefixedassetsaleexists_26
 frame_dig -3
 extract 2 0
 box_get
+store 101
 store 100
-store 99
-load 100
+load 101
 assert
-load 99
+load 100
 frame_bury 0
 frame_dig 0
 frame_dig 0
@@ -3656,7 +3681,7 @@ dup
 bytec_0 // ""
 dup
 callsub ensureaurasexist_40
-bytec 11 // 0x000461757261
+bytec 12 // 0x000461757261
 frame_bury 0
 frame_dig 0
 extract 2 0
@@ -3682,16 +3707,12 @@ frame_bury 4
 pushbytes 0x0000 // 0x0000
 frame_bury 5
 frame_dig 3
-intc_0 // 0
+bytec_3 // "aura_reward"
+app_global_get
 >
 bnz rewardwithauratokens_36_l2
 pushbytes 0x001b4e6f206d6f7265207472616e73616374696f6e2072657761726473 // 0x001b4e6f206d6f7265207472616e73616374696f6e2072657761726473
 frame_bury 5
-b rewardwithauratokens_36_l3
-rewardwithauratokens_36_l2:
-pushbytes 0x00125472616e73616374696f6e20526577617264 // 0x00125472616e73616374696f6e20526577617264
-frame_bury 5
-rewardwithauratokens_36_l3:
 itxn_begin
 intc_3 // axfer
 itxn_field TypeEnum
@@ -3699,15 +3720,34 @@ frame_dig 2
 itxn_field XferAsset
 frame_dig -1
 itxn_field AssetReceiver
-bytec 4 // "aura_reward"
+intc_0 // 0
+itxn_field AssetAmount
+frame_dig 5
+extract 2 0
+itxn_field Note
+itxn_submit
+b rewardwithauratokens_36_l3
+rewardwithauratokens_36_l2:
+pushbytes 0x0017596f7572205472616e73616374696f6e20526577617264 // 0x0017596f7572205472616e73616374696f6e20526577617264
+frame_bury 5
+itxn_begin
+intc_3 // axfer
+itxn_field TypeEnum
+frame_dig 2
+itxn_field XferAsset
+frame_dig -1
+itxn_field AssetReceiver
+bytec_3 // "aura_reward"
 app_global_get
 itxn_field AssetAmount
 frame_dig 5
 extract 2 0
 itxn_field Note
 itxn_submit
+rewardwithauratokens_36_l3:
 frame_dig 3
-intc_1 // 1
+bytec_3 // "aura_reward"
+app_global_get
 -
 frame_bury 3
 frame_dig 2
@@ -3789,7 +3829,7 @@ retsub
 // ensure_auras_exist
 ensureaurasexist_40:
 proto 0 0
-bytec_3 // "aura"
+bytec 4 // "aura"
 box_len
 store 28
 store 27
@@ -3807,7 +3847,7 @@ bytec 16 // "art"
 ==
 frame_dig -1
 extract 2 0
-bytec 12 // "sound"
+bytec 13 // "sound"
 ==
 ||
 // asset_type can only be `art` or `sound`
@@ -3820,9 +3860,9 @@ proto 1 0
 frame_dig -1
 extract 2 0
 box_len
+store 105
 store 104
-store 103
-load 104
+load 105
 // Fixed asset sale with the specified sale_key does not exist
 assert
 retsub
@@ -3832,7 +3872,7 @@ ensureassetisaura_43:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
-bytec_3 // "aura"
+bytec 4 // "aura"
 box_get
 store 30
 store 29
@@ -3857,13 +3897,13 @@ ensuretxnisauraoptin_44:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
-bytec_3 // "aura"
+bytec 4 // "aura"
 box_get
+store 107
 store 106
-store 105
-load 106
+load 107
 assert
-load 105
+load 106
 frame_bury 0
 frame_dig 0
 intc_0 // 0
@@ -3883,9 +3923,9 @@ proto 1 0
 frame_dig -1
 extract 2 0
 box_len
+store 73
 store 72
-store 71
-load 72
+load 73
 // art auction with the specified key does not exist
 assert
 retsub
@@ -3909,9 +3949,9 @@ proto 1 0
 frame_dig -1
 extract 2 0
 box_len
+store 51
 store 50
-store 49
-load 50
+load 51
 // ArtNFT with the specified asset_key does not exist
 assert
 retsub
