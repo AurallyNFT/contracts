@@ -26,7 +26,7 @@ pushbytes 0x4347ee67 // "update_aura_rewards()uint64"
 ==
 bnz main_l27
 txna ApplicationArgs 0
-pushbytes 0x2e4c9f45 // "register_creator(txn,string,string)(bool,bool,uint64,string,string,uint64)"
+pushbytes 0x8efb3db7 // "register_creator(txn,string,string,string)(bool,bool,uint64,string,string,string,uint64)"
 ==
 bnz main_l26
 txna ApplicationArgs 0
@@ -545,9 +545,9 @@ retsub
 
 // register_creator
 registercreator_8:
-proto 3 1
+proto 4 1
 bytec_0 // ""
-frame_dig -3
+frame_dig -4
 gtxns Sender
 box_len
 store 15
@@ -555,12 +555,13 @@ store 14
 load 15
 !
 bz registercreator_8_l2
+frame_dig -4
 frame_dig -3
 frame_dig -2
 frame_dig -1
 callsub createnftowner_28
 registercreator_8_l2:
-frame_dig -3
+frame_dig -4
 gtxns Sender
 box_get
 store 17
@@ -2625,7 +2626,7 @@ retsub
 
 // create_nft_owner
 createnftowner_28:
-proto 3 0
+proto 4 0
 intc_0 // 0
 dupn 3
 bytec_0 // ""
@@ -2636,7 +2637,7 @@ dup
 itxn_begin
 pushint 3 // acfg
 itxn_field TypeEnum
-frame_dig -3
+frame_dig -4
 gtxns Sender
 itxn_field ConfigAssetName
 global CurrentApplicationAddress
@@ -2666,7 +2667,28 @@ frame_dig -2
 frame_bury 8
 frame_dig 8
 frame_bury 7
-pushint 21 // 21
+pushint 23 // 23
+frame_bury 5
+frame_dig 5
+frame_dig 8
+len
++
+frame_bury 6
+frame_dig 6
+intc_2 // 65536
+<
+assert
+frame_dig 5
+itob
+extract 6 0
+concat
+frame_dig -3
+frame_bury 8
+frame_dig 7
+frame_dig 8
+concat
+frame_bury 7
+frame_dig 6
 frame_bury 5
 frame_dig 5
 frame_dig 8
@@ -2699,11 +2721,11 @@ concat
 frame_dig 7
 concat
 frame_bury 4
-frame_dig -3
+frame_dig -4
 gtxns Sender
 box_del
 pop
-frame_dig -3
+frame_dig -4
 gtxns Sender
 frame_dig 4
 box_put
@@ -2716,7 +2738,7 @@ bytec_0 // ""
 intc_0 // 0
 dupn 2
 bytec_0 // ""
-dup
+dupn 2
 intc_0 // 0
 dupn 2
 bytec_0 // ""
@@ -2743,25 +2765,34 @@ getbit
 frame_bury 3
 frame_dig 0
 frame_dig 0
+pushint 11 // 11
+extract_uint16
+frame_dig 0
+pushint 13 // 13
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
 pushint 9 // 9
 extract_uint16
 frame_dig 0
 pushint 11 // 11
 extract_uint16
 substring3
-frame_bury 4
+frame_bury 5
 frame_dig 0
 frame_dig 0
-pushint 11 // 11
+pushint 13 // 13
 extract_uint16
 dig 1
 len
 substring3
-frame_bury 5
-frame_dig 0
-pushint 13 // 13
-extract_uint64
 frame_bury 6
+frame_dig 0
+pushint 15 // 15
+extract_uint64
+frame_bury 7
 frame_dig 1
 intc_1 // 1
 +
@@ -2777,40 +2808,61 @@ frame_dig 1
 itob
 concat
 frame_dig 4
+frame_bury 11
+frame_dig 11
 frame_bury 10
-frame_dig 10
-frame_bury 9
-pushint 21 // 21
-frame_bury 7
-frame_dig 7
-frame_dig 10
-len
-+
+pushint 23 // 23
 frame_bury 8
 frame_dig 8
+frame_dig 11
+len
++
+frame_bury 9
+frame_dig 9
 intc_2 // 65536
 <
 assert
-frame_dig 7
+frame_dig 8
 itob
 extract 6 0
 concat
 frame_dig 5
+frame_bury 11
+frame_dig 10
+frame_dig 11
+concat
 frame_bury 10
 frame_dig 9
-frame_dig 10
-concat
-frame_bury 9
+frame_bury 8
 frame_dig 8
-frame_bury 7
-frame_dig 7
+frame_dig 11
+len
++
+frame_bury 9
+frame_dig 9
+intc_2 // 65536
+<
+assert
+frame_dig 8
 itob
 extract 6 0
 concat
 frame_dig 6
+frame_bury 11
+frame_dig 10
+frame_dig 11
+concat
+frame_bury 10
+frame_dig 9
+frame_bury 8
+frame_dig 8
+itob
+extract 6 0
+concat
+frame_dig 7
 itob
 concat
-frame_dig 9
+frame_dig 10
 concat
 frame_bury 0
 frame_dig -1
@@ -3648,11 +3700,13 @@ proto 0 0
 bytec_0 // ""
 intc_0 // 0
 bytec_0 // ""
-dup
+dupn 2
 txna ApplicationArgs 1
 frame_bury 2
 txna ApplicationArgs 2
 frame_bury 3
+txna ApplicationArgs 3
+frame_bury 4
 txn GroupIndex
 intc_1 // 1
 -
@@ -3660,6 +3714,7 @@ frame_bury 1
 frame_dig 1
 frame_dig 2
 frame_dig 3
+frame_dig 4
 callsub registercreator_8
 frame_bury 0
 bytec_1 // 0x151f7c75
@@ -3963,7 +4018,7 @@ bytec_0 // ""
 intc_0 // 0
 dupn 2
 bytec_0 // ""
-dup
+dupn 2
 intc_0 // 0
 dupn 2
 bytec_0 // ""
@@ -3999,25 +4054,34 @@ extract_uint64
 frame_bury 3
 frame_dig 0
 frame_dig 0
+pushint 11 // 11
+extract_uint16
+frame_dig 0
+pushint 13 // 13
+extract_uint16
+substring3
+frame_bury 4
+frame_dig 0
+frame_dig 0
 pushint 9 // 9
 extract_uint16
 frame_dig 0
 pushint 11 // 11
 extract_uint16
 substring3
-frame_bury 4
+frame_bury 5
 frame_dig 0
 frame_dig 0
-pushint 11 // 11
+pushint 13 // 13
 extract_uint16
 dig 1
 len
 substring3
-frame_bury 5
-frame_dig 0
-pushint 13 // 13
-extract_uint64
 frame_bury 6
+frame_dig 0
+pushint 15 // 15
+extract_uint64
+frame_bury 7
 frame_dig -1
 extract 2 0
 pushbytes 0x6d75736963 // "music"
@@ -4048,40 +4112,61 @@ frame_dig 3
 itob
 concat
 frame_dig 4
+frame_bury 11
+frame_dig 11
 frame_bury 10
-frame_dig 10
-frame_bury 9
-pushint 21 // 21
-frame_bury 7
-frame_dig 7
-frame_dig 10
-len
-+
+pushint 23 // 23
 frame_bury 8
 frame_dig 8
+frame_dig 11
+len
++
+frame_bury 9
+frame_dig 9
 intc_2 // 65536
 <
 assert
-frame_dig 7
+frame_dig 8
 itob
 extract 6 0
 concat
 frame_dig 5
+frame_bury 11
+frame_dig 10
+frame_dig 11
+concat
 frame_bury 10
 frame_dig 9
-frame_dig 10
-concat
-frame_bury 9
+frame_bury 8
 frame_dig 8
-frame_bury 7
-frame_dig 7
+frame_dig 11
+len
++
+frame_bury 9
+frame_dig 9
+intc_2 // 65536
+<
+assert
+frame_dig 8
 itob
 extract 6 0
 concat
 frame_dig 6
+frame_bury 11
+frame_dig 10
+frame_dig 11
+concat
+frame_bury 10
+frame_dig 9
+frame_bury 8
+frame_dig 8
+itob
+extract 6 0
+concat
+frame_dig 7
 itob
 concat
-frame_dig 9
+frame_dig 10
 concat
 frame_bury 0
 frame_dig -2

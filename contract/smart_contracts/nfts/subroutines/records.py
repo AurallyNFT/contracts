@@ -29,6 +29,7 @@ def increase_app_nft_transaction_count():
 def create_nft_owner(
     txn: P.abi.Transaction,
     fullname: P.abi.String,
+    image_url: P.abi.String,
     username: P.abi.String,
 ):
     from smart_contracts.nfts.contract import app
@@ -50,6 +51,7 @@ def create_nft_owner(
             is_music_creative,
             is_art_creative,
             minted,
+            image_url,
             fullname,
             username,
             dnft_id,
@@ -70,6 +72,7 @@ def increment_creator_nft_count(creator: P.abi.Address):
         (is_music_creative := P.abi.Bool()).set(creative.is_music_creative),
         (is_art_creative := P.abi.Bool()).set(creative.is_art_creative),
         (fullname := P.abi.String()).set(creative.fullname),
+        (image_url := P.abi.String()).set(creative.image_url),
         (username := P.abi.String()).set(creative.username),
         (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
         (minted.set(minted.get() + P.Int(1))),
@@ -78,6 +81,7 @@ def increment_creator_nft_count(creator: P.abi.Address):
             is_art_creative,
             minted,
             fullname,
+            image_url,
             username,
             d_nft_id,
         ),

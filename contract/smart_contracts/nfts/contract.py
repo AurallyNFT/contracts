@@ -107,6 +107,7 @@ def update_aura_rewards(*, output: P.abi.Uint64):
 def register_creator(
     txn: P.abi.Transaction,
     fullname: P.abi.String,
+    image_url: P.abi.String,
     username: P.abi.String,
     *,
     output: AurallyCreative,
@@ -116,7 +117,7 @@ def register_creator(
     return P.Seq(
         P.If(
             P.Not(app.state.aurally_nft_owners[txn.get().sender()].exists()),
-            create_nft_owner(txn, fullname, username),
+            create_nft_owner(txn, fullname, image_url, username),
         ),
         output.decode(app.state.aurally_nft_owners[txn.get().sender()].get()),
     )

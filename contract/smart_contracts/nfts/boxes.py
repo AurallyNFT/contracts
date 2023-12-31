@@ -9,6 +9,7 @@ class AurallyCreative(P.abi.NamedTuple):
     is_music_creative: P.abi.Field[P.abi.Bool]
     is_art_creative: P.abi.Field[P.abi.Bool]
     minted: P.abi.Field[P.abi.Uint64]
+    image_url: P.abi.Field[P.abi.String]
     fullname: P.abi.Field[P.abi.String]
     username: P.abi.Field[P.abi.String]
     d_nft_id: P.abi.Field[P.abi.Uint64]

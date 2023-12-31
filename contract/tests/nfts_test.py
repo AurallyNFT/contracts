@@ -37,12 +37,13 @@ def test_register_creator(
         nft_contract.register_creator,
         txn=txn,
         fullname="Dev Ready",
+        image_url="unknown.png",
         username="Dev2700",
         boxes=[
             (nft_app_client.app_id, encoding.decode_address(txn.txn.sender)),
         ],
     )
-    assert list(result.return_value)[3] == "Dev Ready"
+    assert list(result.return_value)[4] == "Dev Ready"
 
 
 @pytest.mark.dependency()
