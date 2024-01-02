@@ -46,6 +46,7 @@ class ArtNFT(P.abi.NamedTuple):
     creator: P.abi.Field[P.abi.Address]
     owner: P.abi.Field[P.abi.Address]
     for_sale: P.abi.Field[P.abi.Bool]
+    on_auction: P.abi.Field[P.abi.Bool]
     claimed: P.abi.Field[P.abi.Bool]
 
 
@@ -68,13 +69,3 @@ class AurallyToken(P.abi.NamedTuple):
     asset_key: P.abi.Field[P.abi.String]
     asset_total: P.abi.Field[P.abi.Uint64]
     claimed: P.abi.Field[P.abi.Bool]
-
-
-class FixedAssetSale(P.abi.NamedTuple):
-    sale_key: P.abi.Field[P.abi.String]
-    asset_key: P.abi.Field[P.abi.String]
-    asset_id: P.abi.Field[P.abi.Uint64]
-    asset_type: P.abi.Field[P.abi.String]
-    price: P.abi.Field[P.abi.Uint64]
-    supply: P.abi.Field[P.abi.Uint64]
-    seller: P.abi.Field[P.abi.Address]

@@ -148,30 +148,6 @@
             }
         },
         {
-            "name": "claim_created_sound",
-            "args": [
-                {
-                    "type": "axfer",
-                    "name": "txn"
-                },
-                {
-                    "type": "string",
-                    "name": "asset_key"
-                },
-                {
-                    "type": "account",
-                    "name": "reciever"
-                },
-                {
-                    "type": "asset",
-                    "name": "asset"
-                }
-            ],
-            "returns": {
-                "type": "(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
-            }
-        },
-        {
             "name": "create_art_nft",
             "args": [
                 {
@@ -216,7 +192,7 @@
                 }
             ],
             "returns": {
-                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
             }
         },
         {
@@ -240,7 +216,7 @@
                 }
             ],
             "returns": {
-                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
             }
         },
         {
@@ -328,11 +304,11 @@
                 }
             ],
             "returns": {
-                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool)"
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
             }
         },
         {
-            "name": "place_nft_on_sale",
+            "name": "place_art_on_sale",
             "args": [
                 {
                     "type": "axfer",
@@ -343,20 +319,12 @@
                     "name": "asset_key"
                 },
                 {
-                    "type": "string",
-                    "name": "asset_type"
-                },
-                {
                     "type": "uint64",
                     "name": "sale_price"
-                },
-                {
-                    "type": "string",
-                    "name": "sale_key"
                 }
             ],
             "returns": {
-                "type": "(string,string,uint64,string,uint64,uint64,address)"
+                "type": "(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
             }
         },
         {
@@ -372,7 +340,7 @@
                 },
                 {
                     "type": "string",
-                    "name": "sale_key"
+                    "name": "asset_key"
                 },
                 {
                     "type": "string",
@@ -396,7 +364,7 @@
                 }
             ],
             "returns": {
-                "type": "(string,string,uint64,string,uint64,uint64,address)"
+                "type": "void"
             }
         }
     ],

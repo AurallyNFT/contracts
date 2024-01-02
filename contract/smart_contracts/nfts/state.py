@@ -7,7 +7,6 @@ from smart_contracts.nfts.boxes import (
     ArtNFT,
     AurallyCreative,
     AurallyToken,
-    FixedAssetSale,
     SoundNFT,
 )
 
@@ -18,7 +17,6 @@ class AppState:
     art_nfts = BoxMapping(P.abi.String, ArtNFT)
     art_auctions = BoxMapping(P.abi.String, ArtAuctionItem)
     registered_asa = BoxMapping(P.abi.String, AurallyToken)
-    fixed_asset_sales = BoxMapping(P.abi.String, FixedAssetSale)
 
     aura_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(1))
     aura_base_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(1))

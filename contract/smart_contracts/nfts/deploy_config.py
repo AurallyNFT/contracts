@@ -11,14 +11,13 @@ logger = logging.getLogger(__name__)
 def deploy(
     algod_client: AlgodClient,
     indexer_client: IndexerClient,
-    app_spec: algokit_utils.ApplicationSpecification,
     deployer: algokit_utils.Account,
 ) -> None:
-    from smart_contracts.artifacts.Aurally.client import (
-        AurallyClient,
+    from smart_contracts.artifacts.Aurally_NFT.client import (
+        AurallyNftClient,
     )
 
-    app_client = AurallyClient(
+    app_client = AurallyNftClient(
         algod_client,
         creator=deployer,
         indexer_client=indexer_client,
@@ -32,14 +31,7 @@ def deploy(
         ),
         on_update=algokit_utils.OnUpdate.AppendApp
         if is_mainnet
-        else algokit_utils.OnUpdate.ReplaceApp,
+        else algokit_utils.OnUpdate.UpdateApp,
         # allow_delete=not is_mainnet,
         # allow_update=not is_mainnet,
-    )
-
-    name = "world"
-    response = app_client.hello(name=name)
-    logger.info(
-        f"Called hello on {app_spec.contract.name} ({app_client.app_id}) "
-        f"with name={name}, received: {response.return_value}"
     )

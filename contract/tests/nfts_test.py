@@ -94,35 +94,6 @@ def test_create_sound_nft(
 
 
 @pytest.mark.dependency()
-def test_claim_created_sound(
-    algod_client: AlgodClient,
-    nft_app_client: ApplicationClient,
-    test_account: LocalAccount,
-    test_create_sound_nft: Tuple[int, str],
-):
-    sp = algod_client.suggested_params()
-    raw_txn = transaction.AssetTransferTxn(
-        sender=test_account.address,
-        receiver=test_account.address,
-        amt=0,
-        sp=sp,
-        index=test_create_sound_nft[0],
-    )
-    txn = atomic_transaction_composer.TransactionWithSigner(
-        txn=raw_txn, signer=test_account.signer
-    )
-    result = nft_app_client.call(
-        nft_contract.claim_created_sound,
-        txn=txn,
-        asset_key=test_create_sound_nft[1],
-        reciever=test_account.address,
-        asset=test_create_sound_nft[0],
-        boxes=[(nft_app_client.app_id, test_create_sound_nft[1].encode())],
-    )
-    assert result.return_value[-1] == True
-
-
-@pytest.mark.dependency()
 @pytest.fixture(scope="session")
 def test_create_art_nft(
     algod_client: AlgodClient,
@@ -192,7 +163,7 @@ def test_claim_created_art(
         asset=test_create_art_nft[0],
         boxes=[(nft_app_client.app_id, test_create_art_nft[1].encode())],
     )
-    assert result.return_value[-3] == test_account.address
+    assert result.return_value[-4] == test_account.address
 
 
 # @pytest.mark.skip
@@ -326,42 +297,39 @@ def test_complete_art_auction(
     )
 
     print(result.return_value)
-    assert list(result.return_value)[-3] == bidder_account.address
+    assert list(result.return_value)[-4] == bidder_account.address
 
 
-def test_place_nft_on_sale(
+def test_place_art_on_sale(
     algod_client: AlgodClient,
     nft_app_client: ApplicationClient,
-    test_account: LocalAccount,
-    test_create_sound_nft: Tuple[int, str],
+    test_accounts: List[LocalAccount],
+    test_create_art_nft: Tuple[int, str],
 ):
+    bidder_account = test_accounts[1]
     sp = algod_client.suggested_params()
     txn = transaction.AssetTransferTxn(
-        sender=test_account.address,
+        sender=bidder_account.address,
         receiver=nft_app_client.app_addr,
         sp=sp,
-        index=test_create_sound_nft[0],
-        amt=20,
+        index=test_create_art_nft[0],
+        amt=1,
     )
     txn = atomic_transaction_composer.TransactionWithSigner(
-        txn=txn, signer=test_account.signer
+        txn=txn, signer=bidder_account.signer
     )
 
-    sale_key = "some sale"
     result = nft_app_client.call(
-        nft_contract.place_nft_on_sale,
+        nft_contract.place_art_on_sale,
         txn=txn,
-        asset_key=test_create_sound_nft[1],
-        asset_type="sound",
+        asset_key=test_create_art_nft[1],
         sale_price=20000,
-        sale_key=sale_key,
         boxes=[
-            (nft_app_client.app_id, test_create_sound_nft[1].encode()),
-            (nft_app_client.app_id, sale_key.encode()),
+            (nft_app_client.app_id, test_create_art_nft[1].encode()),
         ],
     )
     print(result.return_value)
-    assert list(result.return_value)[-1] == test_account.address
+    assert list(result.return_value)[-3] == True
 
 
 # @pytest.mark.skip
@@ -396,12 +364,11 @@ def test_purchase_nft(
         txn=aura_optin_txn, signer=buyer_account.signer
     )
 
-    sale_key = "some sale"
-    result = nft_app_client.call(
+    nft_app_client.call(
         nft_contract.purchase_nft,
         txn=txn,
         optin_txn=optin_txn,
-        sale_key=sale_key,
+        asset_key=test_create_sound_nft[1],
         asset_type="sound",
         buyer=buyer_account.address,
         aura=aura_index,
@@ -410,10 +377,8 @@ def test_purchase_nft(
         boxes=[
             (nft_app_client.app_id, "aura".encode()),
             (nft_app_client.app_id, test_create_sound_nft[1].encode()),
-            (nft_app_client.app_id, sale_key.encode())
         ],
     )
-    assert list(result.return_value)[-2] == 19
 #
 #
 # def test_update_aura_rewards(nft_app_client: ApplicationClient):

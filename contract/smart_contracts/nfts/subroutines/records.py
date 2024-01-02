@@ -1,13 +1,10 @@
 import pyteal as P
-from contract.smart_contracts.nfts.subroutines.validators import (
-    ensure_fixed_asset_sale_exists,
-)
 
 from smart_contracts.nfts.boxes import (
     ArtAuctionItem,
     ArtNFT,
     AurallyCreative,
-    FixedAssetSale,
+    SoundNFT,
 )
 
 
@@ -207,53 +204,77 @@ def update_art_nft_owner(asset_key: P.abi.String, new_owner: P.abi.Address):
 
 
 @P.Subroutine(P.TealType.none)
-def new_fixed_asset_sale(
-    txn: P.abi.AssetTransferTransaction,
-    sale_key: P.abi.String,
-    asset_key: P.abi.String,
-    asset_type: P.abi.String,
-    price: P.abi.Uint64,
-):
+def update_art_nft_for_sale(asset_key: P.abi.String, for_sale: P.abi.Bool):
     from smart_contracts.nfts.contract import app
 
     return P.Seq(
-        (asset_id := P.abi.Uint64()).set(txn.get().xfer_asset()),
-        (seller := P.abi.Address()).set(txn.get().sender()),
-        (supply := P.abi.Uint64()).set(txn.get().asset_amount()),
-        (fixed_sale_asset := FixedAssetSale()).set(
-            sale_key, asset_key, asset_id, asset_type, price, supply, seller
+        (art_nft := ArtNFT()).decode(app.state.art_nfts[asset_key.get()].get()),
+        (asset_id := P.abi.Uint64()).set(art_nft.asset_id),
+        (title := P.abi.String()).set(art_nft.title),
+        (name := P.abi.String()).set(art_nft.name),
+        (description := P.abi.String()).set(art_nft.description),
+        (ipfs_location := P.abi.String()).set(art_nft.image_url),
+        (price := P.abi.Uint64()).set(art_nft.price),
+        (sold_price := P.abi.Uint64()).set(art_nft.sold_price),
+        (creator := P.abi.Address()).set(art_nft.creator),
+        (owner := P.abi.Address()).set(art_nft.owner),
+        (claimed := P.abi.Bool()).set(art_nft.claimed),
+        art_nft.set(
+            asset_id,
+            asset_key,
+            title,
+            name,
+            description,
+            ipfs_location,
+            price,
+            sold_price,
+            creator,
+            owner,
+            for_sale,
+            claimed,
         ),
-        app.state.fixed_asset_sales[sale_key.get()].set(fixed_sale_asset),
+        app.state.art_nfts[asset_key.get()].set(art_nft),
     )
 
 
 @P.Subroutine(P.TealType.none)
-def update_fixed_asset_sale_supply(
-    sale_key: P.abi.String, amt: P.abi.Uint64, action: P.abi.String
-):
+def update_sound_nft_for_sale(asset_key: P.abi.String, for_sale: P.abi.Bool):
     from smart_contracts.nfts.contract import app
 
     return P.Seq(
-        P.Assert(
-            P.Or(action.get() == P.Bytes("add"), action.get() == P.Bytes("subtract")),
-            comment="The allowed actions are `add` and `subtract`",
+        (sound_nft := SoundNFT()).decode(app.state.sound_nfts[asset_key.get()].get()),
+        (asset_id := P.abi.Uint64()).set(sound_nft.asset_id),
+        (asset_key := P.abi.String()).set(sound_nft.asset_key),
+        (supply := P.abi.Uint64()).set(sound_nft.supply),
+        (title := P.abi.String()).set(sound_nft.title),
+        (label := P.abi.String()).set(sound_nft.label),
+        (artist := P.abi.String()).set(sound_nft.artist),
+        (release_date := P.abi.Uint64()).set(sound_nft.release_date),
+        (genre := P.abi.String()).set(sound_nft.genre),
+        (description := P.abi.String()).set(sound_nft.description),
+        (price := P.abi.Uint64()).set(sound_nft.price),
+        (cover_image_url := P.abi.String()).set(sound_nft.cover_image_url),
+        (audio_sample_url := P.abi.String()).set(sound_nft.audio_sample_url),
+        (full_track_url := P.abi.String()).set(sound_nft.full_track_url),
+        (creator := P.abi.Address()).set(sound_nft.creator),
+        (claimed := P.abi.Bool()).set(sound_nft.claimed),
+        sound_nft.set(
+            asset_id,
+            asset_key,
+            supply,
+            title,
+            label,
+            artist,
+            release_date,
+            genre,
+            description,
+            price,
+            cover_image_url,
+            audio_sample_url,
+            full_track_url,
+            creator,
+            for_sale,
+            claimed,
         ),
-        ensure_fixed_asset_sale_exists(sale_key),
-        (sale := FixedAssetSale()).decode(
-            app.state.fixed_asset_sales[sale_key.get()].get()
-        ),
-        (sale_key := P.abi.String()).set(sale.sale_key),
-        (asset_key := P.abi.String()).set(sale.asset_key),
-        (asset_id := P.abi.Uint64()).set(sale.asset_id),
-        (asset_type := P.abi.String()).set(sale.asset_type),
-        (price := P.abi.Uint64()).set(sale.price),
-        (supply := P.abi.Uint64()).set(sale.supply),
-        (seller := P.abi.Address()).set(sale.seller),
-        P.If(
-            action.get() == P.Bytes("add"),
-            supply.set(supply.get() + amt.get()),
-            supply.set(supply.get() - amt.get()),
-        ),
-        sale.set(sale_key, asset_key, asset_id, asset_type, price, supply, seller),
-        app.state.fixed_asset_sales[sale_key.get()].set(sale),
+        app.state.sound_nfts[asset_key.get()].set(sound_nft),
     )
