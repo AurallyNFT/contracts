@@ -1,17 +1,19 @@
 import pyteal as P
 
 
+class AurallyVals(P.abi.NamedTuple):
+    reward_base: P.abi.Field[P.abi.Uint64]
+    reward: P.abi.Field[P.abi.Uint64]
+    difficulty: P.abi.Field[P.abi.Uint64]
+
+
 class AurallyCreative(P.abi.NamedTuple):
     """
     Represents a registered account
     """
 
-    is_music_creative: P.abi.Field[P.abi.Bool]
-    is_art_creative: P.abi.Field[P.abi.Bool]
+    address: P.abi.Field[P.abi.Address]
     minted: P.abi.Field[P.abi.Uint64]
-    image_url: P.abi.Field[P.abi.String]
-    fullname: P.abi.Field[P.abi.String]
-    username: P.abi.Field[P.abi.String]
     d_nft_id: P.abi.Field[P.abi.Uint64]
 
 
@@ -27,8 +29,8 @@ class SoundNFT(P.abi.NamedTuple):
     description: P.abi.Field[P.abi.String]
     price: P.abi.Field[P.abi.Uint64]
     cover_image_url: P.abi.Field[P.abi.String]
-    audio_sample_url: P.abi.Field[P.abi.String]
-    full_track_url: P.abi.Field[P.abi.String]
+    audio_sample_id: P.abi.Field[P.abi.String]
+    full_track_id: P.abi.Field[P.abi.String]
     creator: P.abi.Field[P.abi.Address]
     for_sale: P.abi.Field[P.abi.Bool]
     claimed: P.abi.Field[P.abi.Bool]

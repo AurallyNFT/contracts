@@ -23,12 +23,7 @@ def increase_app_nft_transaction_count():
 
 
 @P.Subroutine(P.TealType.none)
-def create_nft_owner(
-    txn: P.abi.Transaction,
-    fullname: P.abi.String,
-    image_url: P.abi.String,
-    username: P.abi.String,
-):
+def create_nft_owner(txn: P.abi.Transaction):
     from smart_contracts.nfts.contract import app
 
     return P.Seq(
@@ -40,17 +35,12 @@ def create_nft_owner(
                 P.TxnField.config_asset_total: P.Int(1),
             }
         ),
+        (address := P.abi.Address()).set(txn.get().sender()),
         (dnft_id := P.abi.Uint64()).set(P.InnerTxn.created_asset_id()),
-        (is_music_creative := P.abi.Bool()).set(False),
-        (is_art_creative := P.abi.Bool()).set(False),
         (minted := P.abi.Uint64()).set(0),
         (creative := AurallyCreative()).set(
-            is_music_creative,
-            is_art_creative,
+            address,
             minted,
-            image_url,
-            fullname,
-            username,
             dnft_id,
         ),
         app.state.aurally_nft_owners[txn.get().sender()].set(creative),
@@ -66,20 +56,11 @@ def increment_creator_nft_count(creator: P.abi.Address):
             app.state.aurally_nft_owners[creator.get()].get()
         ),
         (minted := P.abi.Uint64()).set(creative.minted),
-        (is_music_creative := P.abi.Bool()).set(creative.is_music_creative),
-        (is_art_creative := P.abi.Bool()).set(creative.is_art_creative),
-        (fullname := P.abi.String()).set(creative.fullname),
-        (image_url := P.abi.String()).set(creative.image_url),
-        (username := P.abi.String()).set(creative.username),
         (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
         (minted.set(minted.get() + P.Int(1))),
         creative.set(
-            is_music_creative,
-            is_art_creative,
+            creator,
             minted,
-            fullname,
-            image_url,
-            username,
             d_nft_id,
         ),
         app.state.aurally_nft_owners[creator.get()].set(creative),
@@ -254,8 +235,8 @@ def update_sound_nft_for_sale(asset_key: P.abi.String, for_sale: P.abi.Bool):
         (description := P.abi.String()).set(sound_nft.description),
         (price := P.abi.Uint64()).set(sound_nft.price),
         (cover_image_url := P.abi.String()).set(sound_nft.cover_image_url),
-        (audio_sample_url := P.abi.String()).set(sound_nft.audio_sample_url),
-        (full_track_url := P.abi.String()).set(sound_nft.full_track_url),
+        (audio_sample_url := P.abi.String()).set(sound_nft.audio_sample_id),
+        (full_track_url := P.abi.String()).set(sound_nft.full_track_id),
         (creator := P.abi.Address()).set(sound_nft.creator),
         (claimed := P.abi.Bool()).set(sound_nft.claimed),
         sound_nft.set(

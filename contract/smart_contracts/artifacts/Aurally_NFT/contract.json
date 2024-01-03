@@ -2,6 +2,34 @@
     "name": "Aurally_NFT",
     "methods": [
         {
+            "name": "withdraw_profits",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "amt"
+                },
+                {
+                    "type": "account",
+                    "name": "to"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "update_min_charge_price",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "price"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "create_aura_tokens",
             "args": [],
             "returns": {
@@ -21,34 +49,10 @@
             }
         },
         {
-            "name": "update_scalling_constant",
-            "args": [
-                {
-                    "type": "uint64",
-                    "name": "constant"
-                }
-            ],
-            "returns": {
-                "type": "uint64"
-            }
-        },
-        {
-            "name": "update_epoch_target",
-            "args": [
-                {
-                    "type": "uint64",
-                    "name": "target"
-                }
-            ],
-            "returns": {
-                "type": "uint64"
-            }
-        },
-        {
             "name": "update_aura_rewards",
             "args": [],
             "returns": {
-                "type": "uint64"
+                "type": "(uint64,uint64,uint64)"
             }
         },
         {
@@ -57,22 +61,10 @@
                 {
                     "type": "txn",
                     "name": "txn"
-                },
-                {
-                    "type": "string",
-                    "name": "fullname"
-                },
-                {
-                    "type": "string",
-                    "name": "image_url"
-                },
-                {
-                    "type": "string",
-                    "name": "username"
                 }
             ],
             "returns": {
-                "type": "(bool,bool,uint64,string,string,string,uint64)"
+                "type": "(address,uint64,uint64)"
             }
         },
         {
@@ -300,6 +292,10 @@
                 },
                 {
                     "type": "account",
+                    "name": "auctioneer_account"
+                },
+                {
+                    "type": "account",
                     "name": "highest_bidder_account"
                 }
             ],
@@ -357,6 +353,10 @@
                 {
                     "type": "asset",
                     "name": "aura"
+                },
+                {
+                    "type": "account",
+                    "name": "seller_account"
                 },
                 {
                     "type": "axfer",

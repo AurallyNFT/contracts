@@ -6,10 +6,8 @@ from smart_contracts.nfts.boxes import AurallyToken
 @P.Subroutine(P.TealType.none)
 def reward_with_aura_tokens(receiver: P.abi.Address):
     from smart_contracts.nfts.contract import app
-    from .validators import ensure_auras_exist
 
     return P.Seq(
-        ensure_auras_exist(),
         (aura_asset_key := P.abi.String()).set("aura"),
         (aura_asset := AurallyToken()).decode(
             app.state.registered_asa[aura_asset_key.get()].get()
@@ -44,7 +42,7 @@ def reward_with_aura_tokens(receiver: P.abi.Address):
                         P.TxnField.note: note.get(),
                     }
                 ),
-            )
+            ),
         ),
         # Update Asset Total
         aura_asset_total.set(aura_asset_total.get() - app.state.aura_reward.get()),
@@ -80,4 +78,31 @@ def refund_last_bidder(account: P.abi.Account, amt: P.abi.Uint64, note: P.abi.St
                 P.TxnField.note: note.get(),
             }
         )
+    )
+
+
+@P.Subroutine(P.TealType.none)
+def pay_95_percent(amt: P.abi.Uint64, to: P.abi.Address, note: P.abi.String):
+    from smart_contracts.nfts.contract import app
+    return P.Seq(
+        P.If(
+            amt.get() <= app.state.min_charge_price.get(),
+            P.InnerTxnBuilder.Execute({
+                P.TxnField.type_enum: P.TxnType.Payment,
+                P.TxnField.amount: amt.get(),
+                P.TxnField.receiver: to.get(),
+                P.TxnField.note: note.get(),
+            }),
+            P.Seq(
+                (to_pay := P.abi.Uint64()).set(amt.get() * P.Int(95) / P.Int(100)),
+                P.InnerTxnBuilder.Execute(
+                    {
+                        P.TxnField.type_enum: P.TxnType.Payment,
+                        P.TxnField.amount: to_pay.get(),
+                        P.TxnField.receiver: to.get(),
+                        P.TxnField.note: note.get(),
+                    }
+                ),
+            ),
+        ),
     )

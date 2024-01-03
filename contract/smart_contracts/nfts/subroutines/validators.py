@@ -1,5 +1,15 @@
 import pyteal as P
-from smart_contracts.nfts.boxes import ArtNFT, AurallyCreative, AurallyToken, SoundNFT
+from smart_contracts.nfts.boxes import ArtNFT, AurallyToken
+
+
+@P.Subroutine(P.TealType.none)
+def ensure_sender_is_registered_creative(txn: P.abi.Transaction):
+    from smart_contracts.nfts.contract import app
+
+    return P.Assert(
+        app.state.aurally_nft_owners[txn.get().sender()].exists(),
+        comment="Sender is not a registered creative",
+    )
 
 
 @P.Subroutine(P.TealType.none)
@@ -85,40 +95,6 @@ def ensure_art_nft_exists(asset_key: P.abi.String):
     return P.Assert(
         app.state.art_nfts[asset_key.get()].exists(),
         comment="ArtNFT with the specified asset_key does not exist",
-    )
-
-
-@P.Subroutine(P.TealType.none)
-def ensure_registered_creative(txn: P.abi.Transaction, creative_type: P.abi.String):
-    from smart_contracts.nfts.contract import app
-
-    return P.Seq(
-        P.Assert(
-            app.state.aurally_nft_owners[txn.get().sender()].exists(),
-            comment="Account is not a registered creative",
-        ),
-        (creative := AurallyCreative()).decode(
-            app.state.aurally_nft_owners[txn.get().sender()].get()
-        ),
-        (is_music_creative := P.abi.Bool()).set(creative.is_music_creative),
-        (is_art_creative := P.abi.Bool()).set(creative.is_art_creative),
-        (minted := P.abi.Uint64()).set(creative.minted),
-        (fullname := P.abi.String()).set(creative.fullname),
-        (image_url := P.abi.String()).set(creative.image_url),
-        (username := P.abi.String()).set(creative.username),
-        (d_nft_id := P.abi.Uint64()).set(creative.d_nft_id),
-        P.If(creative_type.get() == P.Bytes("music"), is_music_creative.set(True)),
-        P.If(creative_type.get() == P.Bytes("art"), is_music_creative.set(True)),
-        creative.set(
-            is_music_creative,
-            is_art_creative,
-            minted,
-            fullname,
-            image_url,
-            username,
-            d_nft_id,
-        ),
-        app.state.aurally_nft_owners[txn.get().sender()].set(creative),
     )
 
 
