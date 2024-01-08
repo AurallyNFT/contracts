@@ -20,8 +20,16 @@ def promote_to_admin(acc: P.abi.Account):
 @app.external(authorize=B.Authorize.only_creator())
 def demote_from_admin(acc: P.abi.Account):
     return P.Seq(
-        (is_admin := P.abi.String()).set("False"),
-        app.state.admins[acc.address()].set(is_admin),
+        (succes := P.abi.Bool()).set(app.state.admins[acc.address()].delete()),
+        P.Assert(succes.get())
+    )
+
+
+@app.external(authorize=B.Authorize.only_creator())
+def set_aura_token(aura: P.abi.Asset):
+    return P.Seq(
+        (aura_id := P.abi.Uint64()).set(aura.asset_id()),
+        app.state.aura_index.set(aura_id.get()),
     )
 
 
@@ -42,101 +50,162 @@ def create_proposal(
 
     return P.Seq(
         (proposal_creator := P.abi.Address()).set(txn.get().sender()),
+        P.Assert(
+            app.state.aura_index.exists(),
+            comment="Proposals can't be created until aura token is set",
+        ),
         ensure_is_admin_or_app_creator(proposal_creator),
         ensure_zero_payment(txn),
         P.Assert(
             P.Not(app.state.proposals[proposal_key.get()].exists()),
             comment="Proposal with this key already exists",
         ),
+        P.InnerTxnBuilder.Execute(
+            {
+                P.TxnField.type_enum: P.TxnType.AssetConfig,
+                P.TxnField.config_asset_total: P.Int(1000000000000),
+                P.TxnField.config_asset_name: title.get(),
+                P.TxnField.config_asset_manager: P.Global.current_application_address(),
+                P.TxnField.config_asset_reserve: P.Global.current_application_address(),
+                P.TxnField.config_asset_freeze: P.Global.current_application_address(),
+                P.TxnField.config_asset_clawback: P.Global.current_application_address(),
+            }
+        ),
+        (asset_id := P.abi.Uint64()).set(P.InnerTxn.created_asset_id()),
         (yes_votes := P.abi.Uint64()).set(0),
         (no_votes := P.abi.Uint64()).set(0),
         (ended := P.abi.Bool()).set(False),
         (proposal := Proposal()).set(
-            proposal_key, title, proposal_detail, yes_votes, no_votes, end_date, ended
+            proposal_key,
+            asset_id,
+            title,
+            proposal_detail,
+            yes_votes,
+            no_votes,
+            end_date,
+            ended,
         ),
         app.state.proposals[proposal_key.get()].set(proposal),
         output.decode(app.state.proposals[proposal_key.get()].get()),
     )
-#
-#
-# @app.external
-# def vote_on_proposal(
-#     txn: P.abi.PaymentTransaction,
-#     vote_for: P.abi.Bool,
-#     aura_id: P.abi.Asset,
-#     voter: P.abi.Account,
-#     proposal_key: P.abi.String,
-#     *,
-#     output: Proposal,
-# ):
-#     from .helpers.validators import (
-#         ensure_has_auras,
-#         ensure_auras_frozen_status,
-#         ensure_zero_payment,
-#         ensure_proposal_exists,
-#         ensure_nft_owner_exists_from_txn,
-#     )
-#
-#     from .helpers.transactions import set_aura_frozen
-#
-#     return P.Seq(
-#         ensure_nft_owner_exists_from_txn(txn),
-#         ensure_zero_payment(txn),
-#         ensure_proposal_exists(proposal_key),
-#         P.Assert(
-#             proposal_key.get() == app.state.active_proposal.get(),
-#             comment="This proposal is currenlty not active",
-#         ),
-#         ensure_has_auras(txn),
-#         (auras_frozen_status := P.abi.Bool()).set(False),
-#         ensure_auras_frozen_status(txn, auras_frozen_status),
-#         (proposal := Proposal()).decode(
-#             app.state.dao_proposals[proposal_key.get()].get()
-#         ),
-#         (proposal_id := P.abi.String()).set(proposal.key),
-#         (proposal_title := P.abi.String()).set(proposal.title),
-#         (yes_votes := P.abi.Uint64()).set(proposal.yes_votes),
-#         (no_votes := P.abi.Uint64()).set(proposal.no_votes),
-#         (details := P.abi.String()).set(proposal.details),
-#         (proposal_end_date := P.abi.Uint64()).set(proposal.end_date),
-#         P.If(
-#             vote_for.get(),
-#             yes_votes.set(yes_votes.get() + P.Int(1)),
-#             no_votes.set(no_votes.get() + P.Int(1)),
-#         ),
-#         proposal.set(
-#             proposal_id, proposal_title, yes_votes, no_votes, details, proposal_end_date
-#         ),
-#         app.state.dao_proposals[proposal_key.get()].set(proposal),
-#         auras_frozen_status.set(True),
-#         (voters_address := P.abi.Address()).set(txn.get().sender()),
-#         set_aura_frozen(voters_address, auras_frozen_status),
-#         ensure_auras_frozen_status(txn, auras_frozen_status),
-#         output.decode(app.state.dao_proposals[proposal_key.get()].get()),
-#     )
-#
-#
-# @app.external
-# def end_proposal_voting(
-#     txn: P.abi.PaymentTransaction, proposal_key: P.abi.String, *, output: Proposal
-# ):
-#     from .helpers.validators import (
-#         ensure_zero_payment,
-#         ensure_is_admin_or_app_creator,
-#         ensure_proposal_exists,
-#     )
-#
-#     return P.Seq(
-#         ensure_zero_payment(txn),
-#         (proposal_creator := P.abi.Address()).set(txn.get().sender()),
-#         ensure_is_admin_or_app_creator(proposal_creator),
-#         ensure_proposal_exists(proposal_key),
-#         P.Assert(app.state.active_proposal.get() == proposal_key.get()),
-#         app.state.active_proposal.set(P.Bytes("None")),
-#         output.decode(app.state.dao_proposals[proposal_key.get()].get()),
-#     )
-#
-#
+
+
+@app.external
+def vote_on_proposal(
+    txn: P.abi.PaymentTransaction,
+    voter: P.abi.Account,
+    vote_for: P.abi.Bool,
+    aura: P.abi.Asset,
+    proposal_asset: P.abi.Asset,
+    proposal_key: P.abi.String,
+    *,
+    output: Proposal,
+):
+    from .subroutines.validators import ensure_zero_payment, ensure_proposal_exists
+
+    return P.Seq(
+        P.Assert(
+            app.state.aura_index.exists(),
+            comment="Voting can commence until aura token is set",
+        ),
+        ensure_zero_payment(txn),
+        ensure_proposal_exists(proposal_key),
+        P.Assert(aura.asset_id() == app.state.aura_index.get()),
+        (proposal := Proposal()).decode(app.state.proposals[proposal_key.get()].get()),
+        (key := P.abi.String()).set(proposal.key),
+        (asset_id := P.abi.Uint64()).set(proposal.asset_id),
+        (title := P.abi.String()).set(proposal.title),
+        (details := P.abi.String()).set(proposal.details),
+        (yes_votes := P.abi.Uint64()).set(proposal.yes_votes),
+        (no_votes := P.abi.Uint64()).set(proposal.no_votes),
+        (end_date := P.abi.Uint64()).set(proposal.end_date),
+        (ended := P.abi.Bool()).set(proposal.ended),
+        P.Assert(
+            voter.address() == txn.get().sender(),
+            comment="The voter must be the one sending the transaction",
+        ),
+        (aura_balance := P.AssetHolding.balance(txn.get().sender(), aura.asset_id())),
+        P.Assert(P.Not(ended.get()), comment="Voting has ended"),
+        P.Assert(
+            P.Not(end_date.get() < P.Global.latest_timestamp()),
+            comment="Voting has ended",
+        ),
+        P.Assert(
+            proposal_asset.asset_id() == asset_id.get(),
+            comment="The proposal asset must match the proposal",
+        ),
+        P.Assert(aura_balance.value() >= P.Int(1), comment="Must have at least 1 aura token"),
+        (
+            proposal_asset_balance := P.AssetHolding.balance(
+                txn.get().sender(), proposal_asset.asset_id()
+            )
+        ),
+        P.Assert(
+            P.Not(proposal_asset_balance.hasValue()),
+            comment="You've already voted on this proposal",
+        ),
+        P.If(
+            vote_for.get(),
+            yes_votes.set(yes_votes.get() + P.Int(1)),
+            no_votes.set(no_votes.get() + P.Int(1)),
+        ),
+        proposal.set(
+            key, asset_id, title, details, yes_votes, no_votes, end_date, ended
+        ),
+        P.InnerTxnBuilder.Execute(
+            {
+                P.TxnField.type_enum: P.TxnType.AssetTransfer,
+                P.TxnField.xfer_asset: proposal_asset.asset_id(),
+                P.TxnField.asset_amount: P.Int(1),
+                P.TxnField.asset_receiver: txn.get().sender(),
+            }
+        ),
+        P.InnerTxnBuilder.Execute(
+            {
+                P.TxnField.type_enum: P.TxnType.AssetFreeze,
+                P.TxnField.freeze_asset: proposal_asset.asset_id(),
+                P.TxnField.freeze_asset_account: txn.get().sender(),
+                P.TxnField.freeze_asset_frozen: P.Int(1),
+            }
+        ),
+        app.state.proposals[proposal_key.get()].set(proposal),
+        output.decode(app.state.proposals[proposal_key.get()].get()),
+    )
+
+
+@app.external
+def close_proposal(
+    txn: P.abi.PaymentTransaction, proposal_key: P.abi.String, *, output: Proposal
+):
+    from .subroutines.validators import (
+        ensure_zero_payment,
+        ensure_is_admin_or_app_creator,
+        ensure_proposal_exists,
+    )
+
+    return P.Seq(
+        ensure_zero_payment(txn),
+        (proposal_creator := P.abi.Address()).set(txn.get().sender()),
+        ensure_is_admin_or_app_creator(proposal_creator),
+        ensure_proposal_exists(proposal_key),
+        (proposal := Proposal()).decode(app.state.proposals[proposal_key.get()].get()),
+        (key := P.abi.String()).set(proposal.key),
+        (asset_id := P.abi.Uint64()).set(proposal.asset_id),
+        (title := P.abi.String()).set(proposal.title),
+        (details := P.abi.String()).set(proposal.details),
+        (yes_votes := P.abi.Uint64()).set(proposal.yes_votes),
+        (no_votes := P.abi.Uint64()).set(proposal.no_votes),
+        (end_date := P.abi.Uint64()).set(proposal.end_date),
+        (ended := P.abi.Bool()).set(proposal.ended),
+        ended.set(True),
+        proposal.set(
+            key, asset_id, title, details, yes_votes, no_votes, end_date, ended
+        ),
+        app.state.proposals[proposal_key.get()].set(proposal),
+        output.decode(app.state.proposals[proposal_key.get()].get()),
+    )
+
+
 # @app.external
 # def unfreeze_auras(
 #     txn: P.abi.PaymentTransaction, aura: P.abi.Asset, acc: P.abi.Account

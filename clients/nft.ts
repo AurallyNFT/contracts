@@ -144,7 +144,7 @@ export const APP_SPEC: AppSpec = {
     "create_sound_nft(pay,string,string,string,string,string,uint64,string,string,uint64,string,string,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)": {
       "structs": {
         "output": {
-          "name": "SoundNFT",
+          "name": "SoundNft",
           "elements": [
             [
               "asset_id",
@@ -1350,7 +1350,7 @@ export function AurallyCreative([address, minted, d_nft_id]: [string, bigint, bi
   }
 }
 /**
- * Represents a SoundNFT result as a struct
+ * Represents a SoundNft result as a struct
  */
 export type SoundNft = {
   asset_id: bigint
@@ -1371,7 +1371,7 @@ export type SoundNft = {
   claimed: boolean
 }
 /**
- * Converts the tuple representation of a SoundNFT to the struct representation
+ * Converts the tuple representation of a SoundNft to the struct representation
  */
 export function SoundNft([asset_id, asset_key, supply, title, label, artist, release_date, genre, description, price, cover_image_url, audio_sample_id, full_track_id, creator, for_sale, claimed]: [bigint, string, bigint, string, string, string, bigint, string, string, bigint, string, string, string, string, boolean, boolean] ) {
   return {

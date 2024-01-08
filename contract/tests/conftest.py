@@ -78,3 +78,13 @@ def community_app_client(test_accounts: List[LocalAccount]) -> ApplicationClient
     client.create()
     client.fund(2 * algo)
     return client
+
+
+@pytest.fixture(scope="session")
+def aura_index(nft_app_client: ApplicationClient) -> int:
+    result = nft_app_client.call(
+        nft_contract.create_aura_tokens,
+        boxes=[(nft_app_client.app_id, "aura".encode())],
+    )
+    assert list(result.return_value)[1] == "aura"
+    return list(result.return_value)[0]

@@ -6,26 +6,6 @@ from algosdk.v2client.algod import AlgodClient
 from beaker.client import ApplicationClient
 from beaker.localnet import LocalAccount
 from smart_contracts.nfts import contract as nft_contract
-#
-# def test_update_aura_rewards(
-#     nft_app_client: ApplicationClient,
-# ):
-#     result = nft_app_client.call(
-#         nft_contract.update_aura_rewards,
-#     )
-#     print (result.return_value)
-#     assert False
-
-
-@pytest.mark.dependency()
-@pytest.fixture(scope="session")
-def aura_index(nft_app_client: ApplicationClient) -> int:
-    result = nft_app_client.call(
-        nft_contract.create_aura_tokens,
-        boxes=[(nft_app_client.app_id, "aura".encode())],
-    )
-    assert list(result.return_value)[1] == "aura"
-    return list(result.return_value)[0]
 
 
 @pytest.mark.dependency()

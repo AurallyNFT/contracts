@@ -3,6 +3,7 @@ import pyteal as P
 
 class Proposal(P.abi.NamedTuple):
     key: P.abi.Field[P.abi.String]
+    asset_id: P.abi.Field[P.abi.Uint64]
     title: P.abi.Field[P.abi.String]
     details: P.abi.Field[P.abi.String]
     yes_votes: P.abi.Field[P.abi.Uint64]

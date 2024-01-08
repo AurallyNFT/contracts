@@ -26,6 +26,18 @@
             }
         },
         {
+            "name": "set_aura_token",
+            "args": [
+                {
+                    "type": "asset",
+                    "name": "aura"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "create_proposal",
             "args": [
                 {
@@ -50,7 +62,55 @@
                 }
             ],
             "returns": {
-                "type": "(string,string,string,uint64,uint64,uint64,bool)"
+                "type": "(string,uint64,string,string,uint64,uint64,uint64,bool)"
+            }
+        },
+        {
+            "name": "vote_on_proposal",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "account",
+                    "name": "voter"
+                },
+                {
+                    "type": "bool",
+                    "name": "vote_for"
+                },
+                {
+                    "type": "asset",
+                    "name": "aura"
+                },
+                {
+                    "type": "asset",
+                    "name": "proposal_asset"
+                },
+                {
+                    "type": "string",
+                    "name": "proposal_key"
+                }
+            ],
+            "returns": {
+                "type": "(string,uint64,string,string,uint64,uint64,uint64,bool)"
+            }
+        },
+        {
+            "name": "close_proposal",
+            "args": [
+                {
+                    "type": "pay",
+                    "name": "txn"
+                },
+                {
+                    "type": "string",
+                    "name": "proposal_key"
+                }
+            ],
+            "returns": {
+                "type": "(string,uint64,string,string,uint64,uint64,uint64,bool)"
             }
         }
     ],
