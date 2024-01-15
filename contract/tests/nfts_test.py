@@ -1,6 +1,7 @@
-import pytest
 from datetime import datetime, timedelta
 from typing import List, Tuple
+
+import pytest
 from algosdk import atomic_transaction_composer, encoding, transaction
 from algosdk.v2client.algod import AlgodClient
 from beaker.client import ApplicationClient
@@ -63,15 +64,13 @@ def test_create_sound_nft(
         genre="Pop",
         description="Some song description",
         price=20000,
-        cover_image_ipfs="some_id",
-        audio_sample_ipfs="some_other_id",
-        full_track_ipfs="yet_another_id",
+        cover_image_url="some_id",
         aura=aura_index,
         creator=test_account.address,
         supply=20,
         boxes=[
             (nft_app_client.app_id, asset_key.encode()),
-            (nft_app_client.app_id, "aura".encode()),
+            (nft_app_client.app_id, b"aura"),
             (nft_app_client.app_id, encoding.decode_address(txn.txn.sender)),
         ],
     )
@@ -107,13 +106,13 @@ def test_create_art_nft(
         asset_key=url,
         name=nft_name,
         description="Gear 5 Luffy",
-        ipfs_location=url,
+        image_url=url,
         price=20000,
         aura=aura_index,
         creator=test_account.address,
         boxes=[
             (nft_app_client.app_id, url.encode()),
-            (nft_app_client.app_id, "aura".encode()),
+            (nft_app_client.app_id, b"aura"),
             (nft_app_client.app_id, encoding.decode_address(txn.txn.sender)),
         ],
     )
@@ -367,6 +366,7 @@ def test_purchase_nft(
             (nft_app_client.app_id, test_create_sound_nft[1].encode()),
         ],
     )
+
 
 def test_update_aura_rewards(
     nft_app_client: ApplicationClient,

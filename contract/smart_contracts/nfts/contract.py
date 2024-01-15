@@ -1,6 +1,5 @@
-import beaker as B
-import pyteal as P
-
+import beaker as B  # noqa: N812
+import pyteal as P  # noqa: N812
 from smart_contracts.nfts.boxes import (
     ArtAuctionItem,
     ArtNFT,
@@ -9,6 +8,7 @@ from smart_contracts.nfts.boxes import (
     AurallyVals,
     SoundNFT,
 )
+
 from .state import AppState
 
 app = B.Application("Aurally_NFT", state=AppState()).apply(
@@ -27,7 +27,7 @@ def delete() -> P.Expr:
 
 
 @app.external(authorize=B.Authorize.only_creator())
-def withdraw_profits(amt: P.abi.Uint64, to: P.abi.Account):
+def withdraw_profits(amt: P.abi.Uint64, to: P.abi.Account) -> P.Expr:
     return P.Seq(
         P.InnerTxnBuilder.Execute(
             {
@@ -41,12 +41,12 @@ def withdraw_profits(amt: P.abi.Uint64, to: P.abi.Account):
 
 
 @app.external(authorize=B.Authorize.only_creator())
-def update_min_charge_price(price: P.abi.Uint64):
+def update_min_charge_price(price: P.abi.Uint64) -> P.Expr:
     return app.state.min_charge_price.set(price.get())
 
 
 @app.external(authorize=B.Authorize.only_creator())
-def create_aura_tokens(*, output: AurallyToken):
+def create_aura_tokens(*, output: AurallyToken) -> P.Expr:
     from .subroutines.tokens import bootstrap_token
 
     return P.Seq(
@@ -68,7 +68,9 @@ def create_aura_tokens(*, output: AurallyToken):
 
 
 @app.external(authorize=B.Authorize.only_creator())
-def claim_aura_percentage(percent_reciever: P.abi.Account, *, output: AurallyToken):
+def claim_aura_percentage(
+    percent_reciever: P.abi.Account, *, output: AurallyToken
+) -> P.Expr:
     return P.Seq(
         (token_key := P.abi.String()).set("aura"),
         (token := AurallyToken()).decode(
@@ -85,7 +87,7 @@ def claim_aura_percentage(percent_reciever: P.abi.Account, *, output: AurallyTok
                 - rewardable.get(),
             }
         ),
-        (claimed := P.abi.Bool()).set(True),
+        (claimed := P.abi.Bool()).set(True),  # noqa: FBT003
         token.set(asset_id, token_key, rewardable, claimed),
         app.state.registered_asa[token_key.get()].set(token),
         output.decode(app.state.registered_asa[token_key.get()].get()),
@@ -93,7 +95,7 @@ def claim_aura_percentage(percent_reciever: P.abi.Account, *, output: AurallyTok
 
 
 @app.external
-def update_aura_rewards(*, output: AurallyVals):
+def update_aura_rewards(*, output: AurallyVals) -> P.Expr:
     from .subroutines.utils import calculate_and_update_reward
 
     return P.Seq(
@@ -106,11 +108,7 @@ def update_aura_rewards(*, output: AurallyVals):
 
 
 @app.external
-def register_creator(
-    txn: P.abi.Transaction,
-    *,
-    output: AurallyCreative,
-):
+def register_creator(txn: P.abi.Transaction, *, output: AurallyCreative) -> P.Expr:
     from .subroutines.records import create_nft_owner
 
     return P.Seq(
@@ -134,24 +132,22 @@ def create_sound_nft(
     genre: P.abi.String,
     description: P.abi.String,
     price: P.abi.Uint64,
-    cover_image_ipfs: P.abi.String,
-    audio_sample_ipfs: P.abi.String,
-    full_track_ipfs: P.abi.String,
+    cover_image_url: P.abi.String,
     supply: P.abi.Uint64,
     aura: P.abi.Asset,
     creator: P.abi.Account,
     *,
     output: SoundNFT,
-):
+) -> P.Expr:
     from .subroutines.records import (
-        increment_creator_nft_count,
         increase_app_nft_transaction_count,
+        increment_creator_nft_count,
     )
     from .subroutines.transactions import reward_with_aura_tokens
     from .subroutines.validators import (
+        ensure_asset_is_aura,
         ensure_sender_is_registered_creative,
         ensure_zero_payment,
-        ensure_asset_is_aura,
     )
 
     opup = P.OpUp(P.OpUpMode.OnCall)
@@ -174,13 +170,13 @@ def create_sound_nft(
                 P.TxnField.type_enum: P.TxnType.AssetConfig,
                 P.TxnField.config_asset_name: nft_name.get(),
                 P.TxnField.config_asset_total: supply.get(),
-                P.TxnField.config_asset_url: cover_image_ipfs.get(),
+                P.TxnField.config_asset_url: cover_image_url.get(),
                 P.TxnField.config_asset_manager: creators_address.get(),
             }
         ),
         (asset_id := P.abi.Uint64()).set(P.InnerTxn.created_asset_id()),
-        (for_sale := P.abi.Bool()).set(True),
-        (claimed := P.abi.Bool()).set(False),
+        (for_sale := P.abi.Bool()).set(True),  # noqa: FBT003
+        (claimed := P.abi.Bool()).set(False),  # noqa: FBT003
         (sound_nft := SoundNFT()).set(
             asset_id,
             asset_key,
@@ -192,9 +188,7 @@ def create_sound_nft(
             genre,
             description,
             price,
-            cover_image_ipfs,
-            audio_sample_ipfs,
-            full_track_ipfs,
+            cover_image_url,
             creators_address,
             for_sale,
             claimed,
@@ -215,22 +209,22 @@ def create_art_nft(
     title: P.abi.String,
     name: P.abi.String,
     description: P.abi.String,
-    ipfs_location: P.abi.String,
+    image_url: P.abi.String,
     price: P.abi.Uint64,
     aura: P.abi.Asset,
     creator: P.abi.Account,
     *,
     output: ArtNFT,
-):
-    from .subroutines.validators import (
-        ensure_zero_payment,
-        ensure_asset_is_aura,
-        ensure_sender_is_registered_creative,
+) -> P.Expr:
+    from .subroutines.records import (
+        increase_app_nft_transaction_count,
+        increment_creator_nft_count,
     )
     from .subroutines.transactions import reward_with_aura_tokens
-    from .subroutines.records import (
-        increment_creator_nft_count,
-        increase_app_nft_transaction_count,
+    from .subroutines.validators import (
+        ensure_asset_is_aura,
+        ensure_sender_is_registered_creative,
+        ensure_zero_payment,
     )
 
     opup = P.OpUp(P.OpUpMode.OnCall)
@@ -253,23 +247,23 @@ def create_art_nft(
                 P.TxnField.type_enum: P.TxnType.AssetConfig,
                 P.TxnField.config_asset_name: nft_name.get(),
                 P.TxnField.config_asset_total: P.Int(1),
-                P.TxnField.config_asset_url: ipfs_location.get(),
+                P.TxnField.config_asset_url: image_url.get(),
                 P.TxnField.config_asset_manager: creators_address.get(),
             }
         ),
         (asset_id := P.abi.Uint64()).set(P.InnerTxn.created_asset_id()),
         (sold_price := P.abi.Uint64()).set(0),
-        (for_sale := P.abi.Bool()).set(False),
-        (on_auction := P.abi.Bool()).set(False),
+        (for_sale := P.abi.Bool()).set(False),  # noqa: FBT003
+        (on_auction := P.abi.Bool()).set(False),  # noqa: FBT003
         (owners_address := P.abi.Address()).set(P.Global.current_application_address()),
-        (claimed := P.abi.Bool()).set(False),
+        (claimed := P.abi.Bool()).set(False),  # noqa: FBT003
         (art_nft := ArtNFT()).set(
             asset_id,
             asset_key,
             title,
             name,
             description,
-            ipfs_location,
+            image_url,
             price,
             sold_price,
             creators_address,
@@ -294,7 +288,7 @@ def claim_created_art(
     asset: P.abi.Asset,
     *,
     output: ArtNFT,
-):
+) -> P.Expr:
     from .subroutines.transactions import transfer_asset_from_contract
     from .subroutines.validators import ensure_art_nft_exists
 
@@ -330,7 +324,7 @@ def claim_created_art(
         (amt := P.abi.Uint64()).set(1),
         transfer_asset_from_contract(asset_id, amt, creator),
         owner.set(txn.get().sender()),
-        claimed.set(True),
+        claimed.set(True),  # noqa: FBT003
         art_nft.set(
             asset_id,
             asset_key,
@@ -362,9 +356,9 @@ def create_art_auction(
     description: P.abi.String,
     *,
     output: ArtAuctionItem,
-):
-    from .subroutines.validators import ensure_zero_payment, ensure_can_market_art
+) -> P.Expr:
     from .subroutines.records import new_art_auction
+    from .subroutines.validators import ensure_can_market_art, ensure_zero_payment
 
     return P.Seq(
         P.Assert(
@@ -388,7 +382,7 @@ def create_art_auction(
         (creator := P.abi.Address()).set(art_nft.creator),
         (owner := P.abi.Address()).set(art_nft.owner),
         (for_sale := P.abi.Bool()).set(art_nft.for_sale),
-        (on_auction := P.abi.Bool()).set(True),
+        (on_auction := P.abi.Bool()).set(True),  # noqa: FBT003
         (claimed := P.abi.Bool()).set(art_nft.claimed),
         (nft_name := P.abi.String()).set(art_nft.name),
         art_nft.set(
@@ -434,9 +428,9 @@ def bid_on_art_auction(
     aura_optin_txn: P.abi.AssetTransferTransaction,
     *,
     output: ArtAuctionItem,
-):
-    from .subroutines.transactions import refund_last_bidder
+) -> P.Expr:
     from .subroutines.records import record_auction_bid
+    from .subroutines.transactions import refund_last_bidder
     from .subroutines.validators import ensure_art_auction_exists
 
     return P.Seq(
@@ -504,10 +498,10 @@ def complete_art_auction(
     highest_bidder_account: P.abi.Account,
     *,
     output: ArtNFT,
-):
-    from .subroutines.validators import ensure_art_auction_exists
+) -> P.Expr:
     from .subroutines.records import increase_app_nft_transaction_count
-    from .subroutines.transactions import reward_with_aura_tokens, pay_95_percent
+    from .subroutines.transactions import pay_95_percent, reward_with_aura_tokens
+    from .subroutines.validators import ensure_art_auction_exists
 
     return P.Seq(
         ensure_art_auction_exists(auction_key),
@@ -531,8 +525,8 @@ def complete_art_auction(
         (sold_price := P.abi.Uint64()).set(art_nft.sold_price),
         (creator := P.abi.Address()).set(art_nft.creator),
         (owner := P.abi.Address()).set(highest_bidder),  # update the owner
-        (for_sale := P.abi.Bool()).set(False),  # update the sale status
-        (on_auction := P.abi.Bool()).set(False),  # update the auction status
+        (for_sale := P.abi.Bool()).set(False),  # noqa: FBT003
+        (on_auction := P.abi.Bool()).set(False),  # noqa: FBT003
         (claimed := P.abi.Bool()).set(art_nft.claimed),
         (aura_token := AurallyToken()).decode(
             app.state.registered_asa[P.Bytes("aura")].get()
@@ -541,7 +535,7 @@ def complete_art_auction(
         P.Assert(auctioneer_account.address() == auctioneer.get()),
         P.Assert(
             highest_bidder_account.address() == highest_bidder.get(),
-            comment="The passed highest_bidder_account must have the same address as the address of the highest_bidder",
+            comment="The passed highest_bidder_account must have the same address as the address of the highest_bidder",  # noqa: E501
         ),
         P.Assert(
             aura.asset_id() == aura_id.get(), comment="The passed asset must be aura"
@@ -593,7 +587,7 @@ def place_art_on_sale(
     sale_price: P.abi.Uint64,
     *,
     output: ArtNFT,
-):
+) -> P.Expr:
     from .subroutines.validators import (
         ensure_asset_reciver_is_application,
         ensure_can_market_art,
@@ -612,7 +606,7 @@ def place_art_on_sale(
         (sold_price := P.abi.Uint64()).set(art_nft.sold_price),
         (creator := P.abi.Address()).set(art_nft.creator),
         (owner := P.abi.Address()).set(art_nft.owner),
-        (for_sale := P.abi.Bool()).set(True),
+        (for_sale := P.abi.Bool()).set(True),  # noqa: FBT003
         (on_auction := P.abi.Bool()).set(art_nft.on_auction),
         (claimed := P.abi.Bool()).set(art_nft.claimed),
         art_nft.set(
@@ -633,7 +627,7 @@ def place_art_on_sale(
         app.state.art_nfts[asset_key.get()].set(art_nft),
         P.Assert(
             txn.get().xfer_asset() == asset_id.get(),
-            comment="The asset being transfered is not the same as the specified asset_key",
+            comment="The asset being transfered is not the same as the specified asset_key",  # noqa: E501
         ),
         output.decode(app.state.art_nfts[asset_key.get()].get()),
     )
@@ -650,16 +644,16 @@ def purchase_nft(
     aura: P.abi.Asset,
     seller_account: P.abi.Account,
     aura_optin_txn: P.abi.AssetTransferTransaction,
-):
-    from .subroutines.validators import (
-        ensure_valid_nft_type,
-        ensure_sound_nft_exists,
-        ensure_art_nft_exists,
-    )
-
+) -> P.Expr:
     from .subroutines.records import increase_app_nft_transaction_count
-    from .subroutines.transactions import reward_with_aura_tokens, pay_95_percent
-    from .subroutines.validators import ensure_asset_is_aura, ensure_txn_is_aura_optin
+    from .subroutines.transactions import pay_95_percent, reward_with_aura_tokens
+    from .subroutines.validators import (
+        ensure_art_nft_exists,
+        ensure_asset_is_aura,
+        ensure_sound_nft_exists,
+        ensure_txn_is_aura_optin,
+        ensure_valid_nft_type,
+    )
 
     asset_id = P.abi.Uint64()
     price = P.abi.Uint64()
@@ -687,8 +681,6 @@ def purchase_nft(
                 (genre := P.abi.String()).set(nft.genre),
                 (description := P.abi.String()).set(nft.description),
                 (cover_image_url := P.abi.String()).set(nft.cover_image_url),
-                (audio_sample_url := P.abi.String()).set(nft.audio_sample_id),
-                (full_track_url := P.abi.String()).set(nft.full_track_id),
                 (creator := P.abi.Address()).set(nft.creator),
                 (for_sale := P.abi.Bool()).set(nft.for_sale),
                 (claimed := P.abi.Bool()).set(nft.claimed),
@@ -707,8 +699,6 @@ def purchase_nft(
                     description,
                     price,
                     cover_image_url,
-                    audio_sample_url,
-                    full_track_url,
                     creator,
                     for_sale,
                     claimed,
@@ -724,8 +714,8 @@ def purchase_nft(
                 (image_url := P.abi.String()).set(nft.image_url),
                 (sold_price := P.abi.Uint64()).set(nft.sold_price),
                 (creator := P.abi.Address()).set(nft.creator),
-                (for_sale := P.abi.Bool()).set(False),
-                (on_auction := P.abi.Bool()).set(False),
+                (for_sale := P.abi.Bool()).set(False),  # noqa: FBT003
+                (on_auction := P.abi.Bool()).set(False),  # noqa: FBT003
                 (claimed := P.abi.Bool()).set(nft.claimed),
                 asset_id.set(nft.asset_id),
                 price.set(nft.price),

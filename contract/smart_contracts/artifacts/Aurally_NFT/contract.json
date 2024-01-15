@@ -112,15 +112,7 @@
                 },
                 {
                     "type": "string",
-                    "name": "cover_image_ipfs"
-                },
-                {
-                    "type": "string",
-                    "name": "audio_sample_ipfs"
-                },
-                {
-                    "type": "string",
-                    "name": "full_track_ipfs"
+                    "name": "cover_image_url"
                 },
                 {
                     "type": "uint64",
@@ -136,7 +128,7 @@
                 }
             ],
             "returns": {
-                "type": "(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
+                "type": "(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,address,bool,bool)"
             }
         },
         {
@@ -168,7 +160,7 @@
                 },
                 {
                     "type": "string",
-                    "name": "ipfs_location"
+                    "name": "image_url"
                 },
                 {
                     "type": "uint64",

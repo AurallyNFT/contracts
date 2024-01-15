@@ -30,7 +30,7 @@ pushbytes 0x365d9c5b // "register_creator(txn)(address,uint64,uint64)"
 ==
 bnz main_l24
 txna ApplicationArgs 0
-pushbytes 0x58affa05 // "create_sound_nft(pay,string,string,string,string,string,uint64,string,string,uint64,string,string,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,string,string,address,bool,bool)"
+pushbytes 0xef4af010 // "create_sound_nft(pay,string,string,string,string,string,uint64,string,string,uint64,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,address,bool,bool)"
 ==
 bnz main_l23
 txna ApplicationArgs 0
@@ -572,7 +572,7 @@ retsub
 
 // create_sound_nft
 createsoundnft_9:
-proto 16 1
+proto 14 1
 bytec_0 // ""
 dup
 intc_0 // 0
@@ -607,20 +607,20 @@ intc_1 // 1
 store 18
 b createsoundnft_9_l1
 createsoundnft_9_l3:
-frame_dig -16
+frame_dig -14
 callsub ensurezeropayment_37
 frame_dig -2
 callsub ensureassetisaura_39
-frame_dig -16
+frame_dig -14
 callsub ensuresenderisregisteredcreative_36
 frame_dig -1
 txnas Accounts
-frame_dig -16
+frame_dig -14
 gtxns Sender
 ==
 // The creator must be the same as the transaction sender
 assert
-frame_dig -14
+frame_dig -12
 extract 2 0
 box_len
 store 20
@@ -629,7 +629,7 @@ load 20
 !
 // An asset with this key already exists
 assert
-frame_dig -16
+frame_dig -14
 gtxns Sender
 frame_bury 1
 frame_dig 1
@@ -640,12 +640,12 @@ assert
 itxn_begin
 pushint 3 // acfg
 itxn_field TypeEnum
-frame_dig -15
+frame_dig -13
 extract 2 0
 itxn_field ConfigAssetName
 frame_dig -3
 itxn_field ConfigAssetTotal
-frame_dig -6
+frame_dig -4
 extract 2 0
 itxn_field ConfigAssetURL
 frame_dig 1
@@ -659,11 +659,11 @@ intc_0 // 0
 frame_bury 4
 frame_dig 2
 itob
-frame_dig -14
+frame_dig -12
 frame_bury 9
 frame_dig 9
 frame_bury 8
-pushint 83 // 83
+pushint 79 // 79
 frame_bury 6
 frame_dig 6
 frame_dig 9
@@ -680,48 +680,6 @@ extract 6 0
 concat
 frame_dig -3
 itob
-concat
-frame_dig -13
-frame_bury 9
-frame_dig 8
-frame_dig 9
-concat
-frame_bury 8
-frame_dig 7
-frame_bury 6
-frame_dig 6
-frame_dig 9
-len
-+
-frame_bury 7
-frame_dig 7
-intc_2 // 65536
-<
-assert
-frame_dig 6
-itob
-extract 6 0
-concat
-frame_dig -12
-frame_bury 9
-frame_dig 8
-frame_dig 9
-concat
-frame_bury 8
-frame_dig 7
-frame_bury 6
-frame_dig 6
-frame_dig 9
-len
-+
-frame_bury 7
-frame_dig 7
-intc_2 // 65536
-<
-assert
-frame_dig 6
-itob
-extract 6 0
 concat
 frame_dig -11
 frame_bury 9
@@ -745,7 +703,25 @@ itob
 extract 6 0
 concat
 frame_dig -10
+frame_bury 9
+frame_dig 8
+frame_dig 9
+concat
+frame_bury 8
+frame_dig 7
+frame_bury 6
+frame_dig 6
+frame_dig 9
+len
++
+frame_bury 7
+frame_dig 7
+intc_2 // 65536
+<
+assert
+frame_dig 6
 itob
+extract 6 0
 concat
 frame_dig -9
 frame_bury 9
@@ -769,6 +745,9 @@ itob
 extract 6 0
 concat
 frame_dig -8
+itob
+concat
+frame_dig -7
 frame_bury 9
 frame_dig 8
 frame_dig 9
@@ -788,9 +767,6 @@ assert
 frame_dig 6
 itob
 extract 6 0
-concat
-frame_dig -7
-itob
 concat
 frame_dig -6
 frame_bury 9
@@ -814,25 +790,7 @@ itob
 extract 6 0
 concat
 frame_dig -5
-frame_bury 9
-frame_dig 8
-frame_dig 9
-concat
-frame_bury 8
-frame_dig 7
-frame_bury 6
-frame_dig 6
-frame_dig 9
-len
-+
-frame_bury 7
-frame_dig 7
-intc_2 // 65536
-<
-assert
-frame_dig 6
 itob
-extract 6 0
 concat
 frame_dig -4
 frame_bury 9
@@ -859,11 +817,11 @@ concat
 frame_dig 8
 concat
 frame_bury 5
-frame_dig -14
+frame_dig -12
 extract 2 0
 box_del
 pop
-frame_dig -14
+frame_dig -12
 extract 2 0
 frame_dig 5
 box_put
@@ -872,7 +830,7 @@ callsub incrementcreatornftcount_28
 callsub increaseappnfttransactioncount_26
 frame_dig 1
 callsub rewardwithauratokens_32
-frame_dig -14
+frame_dig -12
 extract 2 0
 box_get
 store 22
@@ -2437,7 +2395,7 @@ bytec_0 // ""
 dup
 intc_0 // 0
 bytec_0 // ""
-dupn 5
+dupn 3
 intc_0 // 0
 dupn 3
 bytec_0 // ""
@@ -2480,195 +2438,195 @@ store 79
 load 80
 assert
 load 79
-frame_bury 21
-frame_dig 21
-frame_dig 21
+frame_bury 19
+frame_dig 19
+frame_dig 19
 pushint 10 // 10
 extract_uint16
-frame_dig 21
+frame_dig 19
 pushint 12 // 12
 extract_uint16
 substring3
-frame_bury 22
-frame_dig 21
-frame_dig 21
+frame_bury 20
+frame_dig 19
+frame_dig 19
 pushint 12 // 12
 extract_uint16
-frame_dig 21
+frame_dig 19
 pushint 14 // 14
 extract_uint16
 substring3
 frame_bury 3
-frame_dig 21
-frame_dig 21
+frame_dig 19
+frame_dig 19
 pushint 14 // 14
 extract_uint16
-frame_dig 21
+frame_dig 19
 pushint 16 // 16
 extract_uint16
 substring3
-frame_bury 23
-frame_dig 21
-frame_dig 21
+frame_bury 21
+frame_dig 19
+frame_dig 19
 pushint 16 // 16
 extract_uint16
 dig 1
 len
 substring3
-frame_bury 24
-frame_dig 21
+frame_bury 22
+frame_dig 19
 pushint 26 // 26
 extract_uint64
-frame_bury 25
-frame_dig 21
+frame_bury 23
+frame_dig 19
 extract 34 32
+frame_bury 24
+intc_0 // 0
+frame_bury 25
+intc_0 // 0
 frame_bury 26
-intc_0 // 0
-frame_bury 27
-intc_0 // 0
-frame_bury 28
-frame_dig 21
+frame_dig 19
 intc 4 // 786
 getbit
-frame_bury 29
-frame_dig 21
+frame_bury 27
+frame_dig 19
 intc_0 // 0
 extract_uint64
 frame_bury 0
-frame_dig 21
+frame_dig 19
 pushint 18 // 18
 extract_uint64
 frame_bury 1
-frame_dig 21
+frame_dig 19
 extract 66 32
 frame_bury 2
 frame_dig 0
 itob
 frame_dig -7
-frame_bury 33
-frame_dig 33
-frame_bury 32
-pushint 99 // 99
-frame_bury 30
-frame_dig 30
-frame_dig 33
-len
-+
 frame_bury 31
 frame_dig 31
+frame_bury 30
+pushint 99 // 99
+frame_bury 28
+frame_dig 28
+frame_dig 31
+len
++
+frame_bury 29
+frame_dig 29
 intc_2 // 65536
 <
 assert
-frame_dig 30
+frame_dig 28
 itob
 extract 6 0
 concat
-frame_dig 22
-frame_bury 33
-frame_dig 32
-frame_dig 33
-concat
-frame_bury 32
-frame_dig 31
-frame_bury 30
+frame_dig 20
+frame_bury 31
 frame_dig 30
-frame_dig 33
+frame_dig 31
+concat
+frame_bury 30
+frame_dig 29
+frame_bury 28
+frame_dig 28
+frame_dig 31
 len
 +
-frame_bury 31
-frame_dig 31
+frame_bury 29
+frame_dig 29
 intc_2 // 65536
 <
 assert
-frame_dig 30
+frame_dig 28
 itob
 extract 6 0
 concat
 frame_dig 3
-frame_bury 33
-frame_dig 32
-frame_dig 33
-concat
-frame_bury 32
-frame_dig 31
-frame_bury 30
+frame_bury 31
 frame_dig 30
-frame_dig 33
+frame_dig 31
+concat
+frame_bury 30
+frame_dig 29
+frame_bury 28
+frame_dig 28
+frame_dig 31
 len
 +
-frame_bury 31
-frame_dig 31
+frame_bury 29
+frame_dig 29
 intc_2 // 65536
 <
 assert
-frame_dig 30
+frame_dig 28
 itob
 extract 6 0
 concat
-frame_dig 23
-frame_bury 33
-frame_dig 32
-frame_dig 33
-concat
-frame_bury 32
-frame_dig 31
-frame_bury 30
+frame_dig 21
+frame_bury 31
 frame_dig 30
-frame_dig 33
+frame_dig 31
+concat
+frame_bury 30
+frame_dig 29
+frame_bury 28
+frame_dig 28
+frame_dig 31
 len
 +
-frame_bury 31
-frame_dig 31
+frame_bury 29
+frame_dig 29
 intc_2 // 65536
 <
 assert
-frame_dig 30
+frame_dig 28
 itob
 extract 6 0
 concat
-frame_dig 24
-frame_bury 33
-frame_dig 32
-frame_dig 33
-concat
-frame_bury 32
-frame_dig 31
-frame_bury 30
+frame_dig 22
+frame_bury 31
 frame_dig 30
+frame_dig 31
+concat
+frame_bury 30
+frame_dig 29
+frame_bury 28
+frame_dig 28
 itob
 extract 6 0
 concat
 frame_dig 1
 itob
 concat
-frame_dig 25
+frame_dig 23
 itob
 concat
-frame_dig 26
+frame_dig 24
 concat
 frame_dig 2
 concat
 bytec_1 // 0x00
 intc_0 // 0
-frame_dig 27
+frame_dig 25
 setbit
 intc_1 // 1
-frame_dig 28
+frame_dig 26
 setbit
 pushint 2 // 2
-frame_dig 29
+frame_dig 27
 setbit
 concat
-frame_dig 32
+frame_dig 30
 concat
-frame_bury 21
+frame_bury 19
 frame_dig -7
 extract 2 0
 box_del
 pop
 frame_dig -7
 extract 2 0
-frame_dig 21
+frame_dig 19
 box_put
 purchasenft_16_l4:
 frame_dig -2
@@ -2697,8 +2655,8 @@ gtxns Sender
 assert
 frame_dig -9
 gtxns Sender
-frame_bury 34
-frame_dig 34
+frame_bury 32
+frame_dig 32
 len
 pushint 32 // 32
 ==
@@ -2716,22 +2674,22 @@ frame_dig 0
 // The passed asset must be the same a the asset being purchased
 assert
 intc_1 // 1
-frame_bury 35
+frame_bury 33
 pushbytes 0x5061796d656e7420666f72207075726368617365206f6620796f75722061737365743a20 // "Payment for purchase of your asset: "
 frame_dig 3
 extract 2 0
 concat
-frame_bury 36
-frame_dig 36
+frame_bury 34
+frame_dig 34
 len
 itob
 extract 6 0
-frame_dig 36
+frame_dig 34
 concat
-frame_bury 36
+frame_bury 34
 frame_dig 1
 frame_dig 2
-frame_dig 36
+frame_dig 34
 callsub pay95percent_35
 itxn_begin
 intc_3 // axfer
@@ -2743,7 +2701,7 @@ gtxns Sender
 itxn_field AssetReceiver
 pushbytes 0x596f75206173736574207075726368617365 // "You asset purchase"
 itxn_field Note
-frame_dig 35
+frame_dig 33
 itxn_field AssetAmount
 itxn_submit
 frame_dig 1
@@ -2773,7 +2731,7 @@ pushint 36 // 36
 extract_uint64
 frame_bury 1
 frame_dig 4
-extract 50 32
+extract 46 32
 frame_bury 2
 frame_dig 4
 pushint 10 // 10
@@ -2832,45 +2790,27 @@ frame_dig 4
 frame_dig 4
 pushint 44 // 44
 extract_uint16
-frame_dig 4
-pushint 46 // 46
-extract_uint16
-substring3
-frame_bury 11
-frame_dig 4
-frame_dig 4
-pushint 46 // 46
-extract_uint16
-frame_dig 4
-pushint 48 // 48
-extract_uint16
-substring3
-frame_bury 12
-frame_dig 4
-frame_dig 4
-pushint 48 // 48
-extract_uint16
 dig 1
 len
 substring3
+frame_bury 11
+frame_dig 4
+extract 46 32
+frame_bury 12
+frame_dig 4
+pushint 624 // 624
+getbit
 frame_bury 13
 frame_dig 4
-extract 50 32
+pushint 625 // 625
+getbit
 frame_bury 14
-frame_dig 4
-pushint 656 // 656
-getbit
-frame_bury 15
-frame_dig 4
-pushint 657 // 657
-getbit
-frame_bury 16
 frame_dig 5
 intc_0 // 0
 >
 // The supply is exhausted
 assert
-frame_dig 15
+frame_dig 13
 // The asset is not for sale
 assert
 frame_dig 5
@@ -2880,21 +2820,21 @@ frame_bury 5
 frame_dig 0
 itob
 frame_dig -7
-frame_bury 20
-frame_dig 20
-frame_bury 19
-pushint 83 // 83
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
 frame_dig 18
+frame_bury 17
+pushint 79 // 79
+frame_bury 15
+frame_dig 15
+frame_dig 18
+len
++
+frame_bury 16
+frame_dig 16
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 15
 itob
 extract 6 0
 concat
@@ -2902,65 +2842,65 @@ frame_dig 5
 itob
 concat
 frame_dig 3
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
+frame_bury 18
 frame_dig 17
-frame_dig 20
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
 len
 +
-frame_bury 18
-frame_dig 18
+frame_bury 16
+frame_dig 16
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 15
 itob
 extract 6 0
 concat
 frame_dig 6
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
+frame_bury 18
 frame_dig 17
-frame_dig 20
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
 len
 +
-frame_bury 18
-frame_dig 18
+frame_bury 16
+frame_dig 16
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 15
 itob
 extract 6 0
 concat
 frame_dig 7
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
+frame_bury 18
 frame_dig 17
-frame_dig 20
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
 len
 +
-frame_bury 18
-frame_dig 18
+frame_bury 16
+frame_dig 16
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 15
 itob
 extract 6 0
 concat
@@ -2968,44 +2908,44 @@ frame_dig 8
 itob
 concat
 frame_dig 9
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
+frame_bury 18
 frame_dig 17
-frame_dig 20
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
 len
 +
-frame_bury 18
-frame_dig 18
+frame_bury 16
+frame_dig 16
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 15
 itob
 extract 6 0
 concat
 frame_dig 10
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
+frame_bury 18
 frame_dig 17
-frame_dig 20
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
+frame_dig 18
 len
 +
-frame_bury 18
-frame_dig 18
+frame_bury 16
+frame_dig 16
 intc_2 // 65536
 <
 assert
-frame_dig 17
+frame_dig 15
 itob
 extract 6 0
 concat
@@ -3013,70 +2953,28 @@ frame_dig 1
 itob
 concat
 frame_dig 11
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
 frame_bury 18
-frame_dig 18
-intc_2 // 65536
-<
-assert
 frame_dig 17
+frame_dig 18
+concat
+frame_bury 17
+frame_dig 16
+frame_bury 15
+frame_dig 15
 itob
 extract 6 0
 concat
 frame_dig 12
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-frame_dig 20
-len
-+
-frame_bury 18
-frame_dig 18
-intc_2 // 65536
-<
-assert
-frame_dig 17
-itob
-extract 6 0
-concat
-frame_dig 13
-frame_bury 20
-frame_dig 19
-frame_dig 20
-concat
-frame_bury 19
-frame_dig 18
-frame_bury 17
-frame_dig 17
-itob
-extract 6 0
-concat
-frame_dig 14
 concat
 bytec_1 // 0x00
 intc_0 // 0
-frame_dig 15
+frame_dig 13
 setbit
 intc_1 // 1
-frame_dig 16
+frame_dig 14
 setbit
 concat
-frame_dig 19
+frame_dig 17
 concat
 frame_bury 4
 frame_dig -7
@@ -3105,7 +3003,7 @@ intc_1 // 1
 store 76
 b purchasenft_16_l1
 purchasenft_16_l8:
-frame_dig 34
+frame_dig 32
 callsub rewardwithauratokens_32
 retsub
 
@@ -4229,7 +4127,6 @@ bytec_0 // ""
 dup
 intc_0 // 0
 bytec_0 // ""
-dupn 2
 intc_0 // 0
 dupn 2
 txna ApplicationArgs 1
@@ -4255,20 +4152,16 @@ frame_bury 10
 txna ApplicationArgs 10
 frame_bury 11
 txna ApplicationArgs 11
+btoi
 frame_bury 12
 txna ApplicationArgs 12
+intc_0 // 0
+getbyte
 frame_bury 13
 txna ApplicationArgs 13
-btoi
+intc_0 // 0
+getbyte
 frame_bury 14
-txna ApplicationArgs 14
-intc_0 // 0
-getbyte
-frame_bury 15
-txna ApplicationArgs 15
-intc_0 // 0
-getbyte
-frame_bury 16
 txn GroupIndex
 intc_1 // 1
 -
@@ -4292,8 +4185,6 @@ frame_dig 11
 frame_dig 12
 frame_dig 13
 frame_dig 14
-frame_dig 15
-frame_dig 16
 callsub createsoundnft_9
 frame_bury 0
 bytec_2 // 0x151f7c75

@@ -1,4 +1,4 @@
-import pyteal as P
+import pyteal as P  # noqa: N812
 
 
 class AurallyVals(P.abi.NamedTuple):
@@ -29,8 +29,6 @@ class SoundNFT(P.abi.NamedTuple):
     description: P.abi.Field[P.abi.String]
     price: P.abi.Field[P.abi.Uint64]
     cover_image_url: P.abi.Field[P.abi.String]
-    audio_sample_id: P.abi.Field[P.abi.String]
-    full_track_id: P.abi.Field[P.abi.String]
     creator: P.abi.Field[P.abi.Address]
     for_sale: P.abi.Field[P.abi.Bool]
     claimed: P.abi.Field[P.abi.Bool]
