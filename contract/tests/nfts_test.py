@@ -9,6 +9,12 @@ from beaker.localnet import LocalAccount
 from smart_contracts.nfts import contract as nft_contract
 
 
+def test_update_commission_percentage(nft_app_client: ApplicationClient):
+    result = nft_app_client.call(nft_contract.update_commission_percentage, amt=20)
+    print(result.return_value)
+    assert result.return_value == 20
+
+
 @pytest.mark.dependency()
 def test_register_creator(
     nft_app_client: ApplicationClient,
@@ -58,7 +64,7 @@ def test_create_sound_nft(
         nft_name=nft_name,
         asset_key=asset_key,
         title="Dev Tokens",
-        label="Dev Reccords",
+        label="Dev Records",
         artist="GigaChad",
         release_date=200023021,
         genre="Pop",
@@ -362,7 +368,7 @@ def test_purchase_nft(
         asset=test_create_sound_nft[0],
         aura_optin_txn=aura_optin_txn,
         boxes=[
-            (nft_app_client.app_id, "aura".encode()),
+            (nft_app_client.app_id, b"aura"),
             (nft_app_client.app_id, test_create_sound_nft[1].encode()),
         ],
     )

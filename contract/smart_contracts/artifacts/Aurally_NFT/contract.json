@@ -2,6 +2,18 @@
     "name": "Aurally_NFT",
     "methods": [
         {
+            "name": "update_commission_percentage",
+            "args": [
+                {
+                    "type": "uint8",
+                    "name": "amt"
+                }
+            ],
+            "returns": {
+                "type": "uint8"
+            }
+        },
+        {
             "name": "withdraw_profits",
             "args": [
                 {

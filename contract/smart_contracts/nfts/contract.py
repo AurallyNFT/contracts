@@ -1,13 +1,8 @@
 import beaker as B  # noqa: N812
 import pyteal as P  # noqa: N812
-from smart_contracts.nfts.boxes import (
-    ArtAuctionItem,
-    ArtNFT,
-    AurallyCreative,
-    AurallyToken,
-    AurallyVals,
-    SoundNFT,
-)
+from smart_contracts.nfts.boxes import (ArtAuctionItem, ArtNFT,
+                                        AurallyCreative, AurallyToken,
+                                        AurallyVals, SoundNFT)
 
 from .state import AppState
 
@@ -24,6 +19,18 @@ def update() -> P.Expr:
 @app.delete(authorize=B.Authorize.only_creator(), bare=True)
 def delete() -> P.Expr:
     return P.Approve()
+
+
+@app.external(authorize=B.Authorize.only_creator())
+def update_commission_percentage(amt: P.abi.Uint8, *, output: P.abi.Uint8) -> P.Expr:
+    return P.Seq(
+        app.state.commission_percentage.set(amt.get()),
+        P.Assert(
+            amt.get() <= P.Int(100),
+            comment="The commission_percentage must be less that 100%",
+        ),
+        output.set(app.state.commission_percentage.get()),
+    )
 
 
 @app.external(authorize=B.Authorize.only_creator())
@@ -139,16 +146,12 @@ def create_sound_nft(
     *,
     output: SoundNFT,
 ) -> P.Expr:
-    from .subroutines.records import (
-        increase_app_nft_transaction_count,
-        increment_creator_nft_count,
-    )
+    from .subroutines.records import (increase_app_nft_transaction_count,
+                                      increment_creator_nft_count)
     from .subroutines.transactions import reward_with_aura_tokens
-    from .subroutines.validators import (
-        ensure_asset_is_aura,
-        ensure_sender_is_registered_creative,
-        ensure_zero_payment,
-    )
+    from .subroutines.validators import (ensure_asset_is_aura,
+                                         ensure_sender_is_registered_creative,
+                                         ensure_zero_payment)
 
     opup = P.OpUp(P.OpUpMode.OnCall)
     return P.Seq(
@@ -216,16 +219,12 @@ def create_art_nft(
     *,
     output: ArtNFT,
 ) -> P.Expr:
-    from .subroutines.records import (
-        increase_app_nft_transaction_count,
-        increment_creator_nft_count,
-    )
+    from .subroutines.records import (increase_app_nft_transaction_count,
+                                      increment_creator_nft_count)
     from .subroutines.transactions import reward_with_aura_tokens
-    from .subroutines.validators import (
-        ensure_asset_is_aura,
-        ensure_sender_is_registered_creative,
-        ensure_zero_payment,
-    )
+    from .subroutines.validators import (ensure_asset_is_aura,
+                                         ensure_sender_is_registered_creative,
+                                         ensure_zero_payment)
 
     opup = P.OpUp(P.OpUpMode.OnCall)
     return P.Seq(
@@ -358,7 +357,8 @@ def create_art_auction(
     output: ArtAuctionItem,
 ) -> P.Expr:
     from .subroutines.records import new_art_auction
-    from .subroutines.validators import ensure_can_market_art, ensure_zero_payment
+    from .subroutines.validators import (ensure_can_market_art,
+                                         ensure_zero_payment)
 
     return P.Seq(
         P.Assert(
@@ -468,7 +468,7 @@ def bid_on_art_auction(
             highest_bid.get() == P.Int(0),
             P.Assert(
                 txn.get().amount() > min_bid.get(),
-                comment="Bid amount has to be greated than the minimum bid",
+                comment="Bid amount has to be greater than the minimum bid",
             ),
             P.Assert(
                 txn.get().amount() > highest_bid.get(),
@@ -500,7 +500,8 @@ def complete_art_auction(
     output: ArtNFT,
 ) -> P.Expr:
     from .subroutines.records import increase_app_nft_transaction_count
-    from .subroutines.transactions import pay_95_percent, reward_with_aura_tokens
+    from .subroutines.transactions import (pay_price_minus_commission,
+                                           reward_with_aura_tokens)
     from .subroutines.validators import ensure_art_auction_exists
 
     return P.Seq(
@@ -573,7 +574,7 @@ def complete_art_auction(
                 P.Bytes("Payment for your completed auction on: "), item_name.get()
             )
         ),
-        pay_95_percent(highest_bid, auctioneer, note),
+        pay_price_minus_commission(highest_bid, auctioneer, note),
         P.If(highest_bid.get() > P.Int(0), increase_app_nft_transaction_count()),
         reward_with_aura_tokens(highest_bidder),
         output.decode(app.state.art_nfts[item_asset_key.get()].get()),
@@ -588,10 +589,8 @@ def place_art_on_sale(
     *,
     output: ArtNFT,
 ) -> P.Expr:
-    from .subroutines.validators import (
-        ensure_asset_reciver_is_application,
-        ensure_can_market_art,
-    )
+    from .subroutines.validators import (ensure_asset_reciver_is_application,
+                                         ensure_can_market_art)
 
     return P.Seq(
         ensure_asset_reciver_is_application(txn),
@@ -646,14 +645,13 @@ def purchase_nft(
     aura_optin_txn: P.abi.AssetTransferTransaction,
 ) -> P.Expr:
     from .subroutines.records import increase_app_nft_transaction_count
-    from .subroutines.transactions import pay_95_percent, reward_with_aura_tokens
-    from .subroutines.validators import (
-        ensure_art_nft_exists,
-        ensure_asset_is_aura,
-        ensure_sound_nft_exists,
-        ensure_txn_is_aura_optin,
-        ensure_valid_nft_type,
-    )
+    from .subroutines.transactions import (pay_price_minus_commission,
+                                           reward_with_aura_tokens)
+    from .subroutines.validators import (ensure_art_nft_exists,
+                                         ensure_asset_is_aura,
+                                         ensure_sound_nft_exists,
+                                         ensure_txn_is_aura_optin,
+                                         ensure_valid_nft_type)
 
     asset_id = P.abi.Uint64()
     price = P.abi.Uint64()
@@ -754,7 +752,7 @@ def purchase_nft(
         (buyers_address := P.abi.Address()).set(txn.get().sender()),
         P.Assert(
             optin_txn.get().xfer_asset() == asset_id.get(),
-            comment="The optin_txn should be for the asset being purchased",
+            comment="The opt-in_txn should be for the asset being purchased",
         ),
         P.Assert(
             asset.asset_id() == asset_id.get(),
@@ -764,7 +762,7 @@ def purchase_nft(
         (note := P.abi.String()).set(
             P.Concat(P.Bytes("Payment for purchase of your asset: "), nft_name.get())
         ),
-        pay_95_percent(price, seller, note),
+        pay_price_minus_commission(price, seller, note),
         P.InnerTxnBuilder.Execute(
             {
                 P.TxnField.type_enum: P.TxnType.AssetTransfer,

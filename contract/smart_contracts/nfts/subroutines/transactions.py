@@ -1,5 +1,4 @@
 import pyteal as P
-
 from smart_contracts.nfts.boxes import AurallyToken
 
 
@@ -82,19 +81,28 @@ def refund_last_bidder(account: P.abi.Account, amt: P.abi.Uint64, note: P.abi.St
 
 
 @P.Subroutine(P.TealType.none)
-def pay_95_percent(amt: P.abi.Uint64, to: P.abi.Address, note: P.abi.String):
+def pay_price_minus_commission(
+    amt: P.abi.Uint64, to: P.abi.Address, note: P.abi.String
+):
     from smart_contracts.nfts.contract import app
+
     return P.Seq(
         P.If(
             amt.get() <= app.state.min_charge_price.get(),
-            P.InnerTxnBuilder.Execute({
-                P.TxnField.type_enum: P.TxnType.Payment,
-                P.TxnField.amount: amt.get(),
-                P.TxnField.receiver: to.get(),
-                P.TxnField.note: note.get(),
-            }),
+            P.InnerTxnBuilder.Execute(
+                {
+                    P.TxnField.type_enum: P.TxnType.Payment,
+                    P.TxnField.amount: amt.get(),
+                    P.TxnField.receiver: to.get(),
+                    P.TxnField.note: note.get(),
+                }
+            ),
             P.Seq(
-                (to_pay := P.abi.Uint64()).set(amt.get() * P.Int(95) / P.Int(100)),
+                (to_pay := P.abi.Uint64()).set(
+                    amt.get()
+                    * (P.Int(100) - app.state.commission_percentage.get())
+                    / P.Int(100)
+                ),
                 P.InnerTxnBuilder.Execute(
                     {
                         P.TxnField.type_enum: P.TxnType.Payment,
