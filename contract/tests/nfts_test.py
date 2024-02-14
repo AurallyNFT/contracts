@@ -150,7 +150,7 @@ def test_claim_created_art(
         nft_contract.claim_created_art,
         txn=txn,
         asset_key=test_create_art_nft[1],
-        reciever=test_account.address,
+        receiver=test_account.address,
         asset=test_create_art_nft[0],
         boxes=[(nft_app_client.app_id, test_create_art_nft[1].encode())],
     )

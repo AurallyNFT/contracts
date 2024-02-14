@@ -1,8 +1,13 @@
 import beaker as B  # noqa: N812
 import pyteal as P  # noqa: N812
-from smart_contracts.nfts.boxes import (ArtAuctionItem, ArtNFT,
-                                        AurallyCreative, AurallyToken,
-                                        AurallyVals, SoundNFT)
+from smart_contracts.nfts.boxes import (
+    ArtAuctionItem,
+    ArtNFT,
+    AurallyCreative,
+    AurallyToken,
+    AurallyVals,
+    SoundNFT,
+)
 
 from .state import AppState
 
@@ -76,7 +81,7 @@ def create_aura_tokens(*, output: AurallyToken) -> P.Expr:
 
 @app.external(authorize=B.Authorize.only_creator())
 def claim_aura_percentage(
-    percent_reciever: P.abi.Account, *, output: AurallyToken
+    percent_receiver: P.abi.Account, *, output: AurallyToken
 ) -> P.Expr:
     return P.Seq(
         (token_key := P.abi.String()).set("aura"),
@@ -89,7 +94,7 @@ def claim_aura_percentage(
             {
                 P.TxnField.type_enum: P.TxnType.AssetTransfer,
                 P.TxnField.xfer_asset: asset_id.get(),
-                P.TxnField.asset_receiver: percent_reciever.address(),
+                P.TxnField.asset_receiver: percent_receiver.address(),
                 P.TxnField.asset_amount: app.state.total_aurally_tokens.get()
                 - rewardable.get(),
             }
@@ -146,12 +151,16 @@ def create_sound_nft(
     *,
     output: SoundNFT,
 ) -> P.Expr:
-    from .subroutines.records import (increase_app_nft_transaction_count,
-                                      increment_creator_nft_count)
+    from .subroutines.records import (
+        increase_app_nft_transaction_count,
+        increment_creator_nft_count,
+    )
     from .subroutines.transactions import reward_with_aura_tokens
-    from .subroutines.validators import (ensure_asset_is_aura,
-                                         ensure_sender_is_registered_creative,
-                                         ensure_zero_payment)
+    from .subroutines.validators import (
+        ensure_asset_is_aura,
+        ensure_sender_is_registered_creative,
+        ensure_zero_payment,
+    )
 
     opup = P.OpUp(P.OpUpMode.OnCall)
     return P.Seq(
@@ -219,12 +228,16 @@ def create_art_nft(
     *,
     output: ArtNFT,
 ) -> P.Expr:
-    from .subroutines.records import (increase_app_nft_transaction_count,
-                                      increment_creator_nft_count)
+    from .subroutines.records import (
+        increase_app_nft_transaction_count,
+        increment_creator_nft_count,
+    )
     from .subroutines.transactions import reward_with_aura_tokens
-    from .subroutines.validators import (ensure_asset_is_aura,
-                                         ensure_sender_is_registered_creative,
-                                         ensure_zero_payment)
+    from .subroutines.validators import (
+        ensure_asset_is_aura,
+        ensure_sender_is_registered_creative,
+        ensure_zero_payment,
+    )
 
     opup = P.OpUp(P.OpUpMode.OnCall)
     return P.Seq(
@@ -283,7 +296,7 @@ def create_art_nft(
 def claim_created_art(
     txn: P.abi.AssetTransferTransaction,
     asset_key: P.abi.String,
-    reciever: P.abi.Account,
+    receiver: P.abi.Account,
     asset: P.abi.Asset,
     *,
     output: ArtNFT,
@@ -309,8 +322,8 @@ def claim_created_art(
         (claimed := P.abi.Bool()).set(art_nft.claimed),
         P.Assert(P.Not(claimed.get()), comment="This art nft has already been claimed"),
         P.Assert(
-            reciever.address() == creator.get(),
-            comment="The reciever must be the creator of the nft",
+            receiver.address() == creator.get(),
+            comment="The receiver must be the creator of the nft",
         ),
         P.Assert(
             creator.get() == txn.get().sender(),
@@ -357,8 +370,7 @@ def create_art_auction(
     output: ArtAuctionItem,
 ) -> P.Expr:
     from .subroutines.records import new_art_auction
-    from .subroutines.validators import (ensure_can_market_art,
-                                         ensure_zero_payment)
+    from .subroutines.validators import ensure_can_market_art, ensure_zero_payment
 
     return P.Seq(
         P.Assert(
@@ -500,8 +512,10 @@ def complete_art_auction(
     output: ArtNFT,
 ) -> P.Expr:
     from .subroutines.records import increase_app_nft_transaction_count
-    from .subroutines.transactions import (pay_price_minus_commission,
-                                           reward_with_aura_tokens)
+    from .subroutines.transactions import (
+        pay_price_minus_commission,
+        reward_with_aura_tokens,
+    )
     from .subroutines.validators import ensure_art_auction_exists
 
     return P.Seq(
@@ -543,7 +557,7 @@ def complete_art_auction(
         ),
         P.Assert(
             txn.get().xfer_asset() == asset_id.get(),
-            comment="The asset transfered must be the auctioned asset",
+            comment="The asset transferred must be the auctioned asset",
         ),
         P.Assert(
             auctioneer.get() == txn.get().sender(),
@@ -589,11 +603,13 @@ def place_art_on_sale(
     *,
     output: ArtNFT,
 ) -> P.Expr:
-    from .subroutines.validators import (ensure_asset_reciver_is_application,
-                                         ensure_can_market_art)
+    from .subroutines.validators import (
+        ensure_asset_receiver_is_application,
+        ensure_can_market_art,
+    )
 
     return P.Seq(
-        ensure_asset_reciver_is_application(txn),
+        ensure_asset_receiver_is_application(txn),
         ensure_can_market_art(asset_key),
         (art_nft := ArtNFT()).decode(app.state.art_nfts[asset_key.get()].get()),
         (asset_id := P.abi.Uint64()).set(art_nft.asset_id),
@@ -626,7 +642,7 @@ def place_art_on_sale(
         app.state.art_nfts[asset_key.get()].set(art_nft),
         P.Assert(
             txn.get().xfer_asset() == asset_id.get(),
-            comment="The asset being transfered is not the same as the specified asset_key",  # noqa: E501
+            comment="The asset being transferred is not the same as the specified asset_key",  # noqa: E501
         ),
         output.decode(app.state.art_nfts[asset_key.get()].get()),
     )
@@ -645,13 +661,17 @@ def purchase_nft(
     aura_optin_txn: P.abi.AssetTransferTransaction,
 ) -> P.Expr:
     from .subroutines.records import increase_app_nft_transaction_count
-    from .subroutines.transactions import (pay_price_minus_commission,
-                                           reward_with_aura_tokens)
-    from .subroutines.validators import (ensure_art_nft_exists,
-                                         ensure_asset_is_aura,
-                                         ensure_sound_nft_exists,
-                                         ensure_txn_is_aura_optin,
-                                         ensure_valid_nft_type)
+    from .subroutines.transactions import (
+        pay_price_minus_commission,
+        reward_with_aura_tokens,
+    )
+    from .subroutines.validators import (
+        ensure_art_nft_exists,
+        ensure_asset_is_aura,
+        ensure_sound_nft_exists,
+        ensure_txn_is_aura_optin,
+        ensure_valid_nft_type,
+    )
 
     asset_id = P.abi.Uint64()
     price = P.abi.Uint64()
@@ -683,7 +703,6 @@ def purchase_nft(
                 (for_sale := P.abi.Bool()).set(nft.for_sale),
                 (claimed := P.abi.Bool()).set(nft.claimed),
                 P.Assert(supply.get() > P.Int(0), comment="The supply is exhausted"),
-                P.Assert(for_sale.get(), comment="The asset is not for sale"),
                 supply.set(supply.get() - P.Int(1)),
                 nft.set(
                     asset_id,
@@ -743,7 +762,7 @@ def purchase_nft(
         ),
         P.Assert(
             txn.get().receiver() == P.Global.current_application_address(),
-            comment="The payment reciever must be the current_application_address",
+            comment="The payment receiver must be the current_application_address",
         ),
         P.Assert(
             buyer.address() == txn.get().sender(),

@@ -53,7 +53,7 @@
             "args": [
                 {
                     "type": "account",
-                    "name": "percent_reciever"
+                    "name": "percent_receiver"
                 }
             ],
             "returns": {
@@ -204,7 +204,7 @@
                 },
                 {
                     "type": "account",
-                    "name": "reciever"
+                    "name": "receiver"
                 },
                 {
                     "type": "asset",

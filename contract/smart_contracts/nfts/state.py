@@ -29,10 +29,10 @@ class AppState:
         P.TealType.uint64, default=P.Int(1600000000)
     )
     total_aurally_tokens = GlobalStateValue(
-        P.TealType.uint64, default=P.Int(100000000), static=True
+        P.TealType.uint64, default=P.Int(100000000000000), static=True
     )
     rewardable_tokens_supply = GlobalStateValue(
-        P.TealType.uint64, default=P.Int(80000000)
+        P.TealType.uint64, default=P.Int(80000000000000)
     )
 
     min_aural_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(1))

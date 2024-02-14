@@ -316,7 +316,7 @@ bytec 4 // "network_difficulty"
 intc_1 // 1
 app_global_put
 bytec 12 // "rewardable_tokens_supply"
-pushint 80000000 // 80000000
+pushint 80000000000000 // 80000000000000
 app_global_put
 intc_0 // 0
 bytec 10 // "total_aurally_tokens"
@@ -327,7 +327,7 @@ load 1
 !
 assert
 bytec 10 // "total_aurally_tokens"
-pushint 100000000 // 100000000
+pushint 100000000000000 // 100000000000000
 app_global_put
 bytec 13 // "total_nft_transactions"
 intc_0 // 0
@@ -1239,7 +1239,7 @@ frame_dig -2
 txnas Accounts
 frame_dig 10
 ==
-// The reciever must be the creator of the nft
+// The receiver must be the creator of the nft
 assert
 frame_dig 10
 frame_dig -4
@@ -2010,7 +2010,7 @@ frame_dig -5
 gtxns XferAsset
 frame_dig 8
 ==
-// The asset transfered must be the auctioned asset
+// The asset transferred must be the auctioned asset
 assert
 frame_dig 4
 frame_dig -5
@@ -2203,7 +2203,7 @@ dupn 4
 bytec_0 // ""
 dup
 frame_dig -3
-callsub ensureassetreciverisapplication_46
+callsub ensureassetreceiverisapplication_46
 frame_dig -2
 callsub ensurecanmarketart_47
 frame_dig -2
@@ -2415,7 +2415,7 @@ frame_dig -3
 gtxns XferAsset
 frame_dig 2
 ==
-// The asset being transfered is not the same as the specified asset_key
+// The asset being transferred is not the same as the specified asset_key
 assert
 frame_dig 3
 extract 2 0
@@ -2689,7 +2689,7 @@ frame_dig -9
 gtxns Receiver
 global CurrentApplicationAddress
 ==
-// The payment reciever must be the current_application_address
+// The payment receiver must be the current_application_address
 assert
 frame_dig -5
 txnas Accounts
@@ -2854,9 +2854,6 @@ frame_dig 5
 intc_0 // 0
 >
 // The supply is exhausted
-assert
-frame_dig 13
-// The asset is not for sale
 assert
 frame_dig 5
 intc_1 // 1
@@ -3134,6 +3131,8 @@ itxn_field ConfigAssetUnitName
 frame_dig -1
 extract 2 0
 itxn_field ConfigAssetURL
+pushint 6 // 6
+itxn_field ConfigAssetDecimals
 global CurrentApplicationAddress
 itxn_field ConfigAssetFreeze
 global CurrentApplicationAddress
@@ -4138,8 +4137,8 @@ load 41
 assert
 retsub
 
-// ensure_asset_reciver_is_application
-ensureassetreciverisapplication_46:
+// ensure_asset_receiver_is_application
+ensureassetreceiverisapplication_46:
 proto 1 0
 frame_dig -1
 gtxns AssetReceiver

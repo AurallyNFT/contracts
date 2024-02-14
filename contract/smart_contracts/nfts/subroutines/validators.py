@@ -99,7 +99,7 @@ def ensure_art_nft_exists(asset_key: P.abi.String):
 
 
 @P.Subroutine(P.TealType.none)
-def ensure_asset_reciver_is_application(txn: P.abi.AssetTransferTransaction):
+def ensure_asset_receiver_is_application(txn: P.abi.AssetTransferTransaction):
     return P.Assert(
         txn.get().asset_receiver() == P.Global.current_application_address(),
         comment="The asset_receiver must be the current_application_address",
