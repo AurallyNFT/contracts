@@ -2678,6 +2678,7 @@ frame_dig -2
 txnas Accounts
 frame_dig 2
 ==
+// Ensure seller is nft owner
 assert
 frame_dig -9
 gtxns Amount

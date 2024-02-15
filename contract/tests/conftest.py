@@ -1,21 +1,18 @@
 import os
 from pathlib import Path
 from typing import List
-from beaker import localnet
-from beaker.localnet import LocalAccount
-from beaker.client import ApplicationClient
-from beaker.consts import algo
-from tests.utils import build_contract
-from smart_contracts.nfts import contract as nft_contract
-from smart_contracts.community import contract as community_contract
 
 import pytest
-from algokit_utils import (
-    get_algod_client,
-    is_localnet,
-)
+from algokit_utils import get_algod_client, is_localnet
 from algosdk.v2client.algod import AlgodClient
+from beaker import localnet
+from beaker.client import ApplicationClient
+from beaker.consts import algo
+from beaker.localnet import LocalAccount
 from dotenv import load_dotenv
+from smart_contracts.community import contract as community_contract
+from smart_contracts.nfts import contract as nft_contract
+from tests.utils import build_contract
 
 
 @pytest.fixture(scope="session")
@@ -25,7 +22,7 @@ def test_accounts() -> List[LocalAccount]:
 
 @pytest.fixture(scope="session")
 def test_account(test_accounts: List[LocalAccount]) -> LocalAccount:
-    return test_accounts[-1]
+    return test_accounts[0]
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -50,7 +47,7 @@ def algod_client() -> AlgodClient:
 def nft_app_client(test_accounts: List[LocalAccount]) -> ApplicationClient:
     build_contract("Aurally_NFT", "NFT")
 
-    app_creator_account = test_accounts[0]
+    app_creator_account = test_accounts[1]
 
     client = ApplicationClient(
         app=nft_contract.app,

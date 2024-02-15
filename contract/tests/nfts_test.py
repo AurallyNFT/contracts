@@ -333,7 +333,7 @@ def test_purchase_nft(
     test_create_sound_nft: Tuple[int, str],
     aura_index: int,
 ):
-    buyer_account = test_accounts[1]
+    buyer_account = test_accounts[-1]
     sp = algod_client.suggested_params()
 
     raw_txn = transaction.PaymentTxn(
