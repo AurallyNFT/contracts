@@ -1,9 +1,13 @@
 import pyteal as P
 from beaker.lib.storage import BoxMapping
 from beaker.state import GlobalStateValue
-from smart_contracts.nfts.boxes import (ArtAuctionItem, ArtNFT,
-                                        AurallyCreative, AurallyToken,
-                                        SoundNFT)
+from smart_contracts.nfts.boxes import (
+    ArtAuctionItem,
+    ArtNFT,
+    AurallyCreative,
+    AurallyToken,
+    SoundNFT,
+)
 
 # Todo: NFT Sales above 1 algos are the only ones that are charged
 # Idea: Create an asa for each proposal, when a person votes on a proposal, they get the asa and it's frozen
@@ -22,8 +26,8 @@ class AppState:
         P.TealType.uint64, default=P.Int(500)
     )  # 365 years
     total_nft_transactions = GlobalStateValue(P.TealType.uint64, default=P.Int(0))
-    min_difficulty = GlobalStateValue(P.TealType.uint64, default=P.Int(1))
-    network_difficulty = GlobalStateValue(P.TealType.uint64, default=P.Int(1))
+    min_difficulty = GlobalStateValue(P.TealType.uint64, default=P.Int(10))
+    network_difficulty = GlobalStateValue(P.TealType.uint64, default=P.Int(10))
 
     total_target_nft_sales = GlobalStateValue(
         P.TealType.uint64, default=P.Int(1600000000)
@@ -35,8 +39,8 @@ class AppState:
         P.TealType.uint64, default=P.Int(80000000000000)
     )
 
-    min_aural_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(1))
-    aura_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(1))
-    aura_base_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(1))
+    min_aural_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(10))
+    aura_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(10))
+    aura_base_reward = GlobalStateValue(P.TealType.uint64, default=P.Int(10))
 
     min_charge_price = GlobalStateValue(P.TealType.uint64, default=P.Int(1))

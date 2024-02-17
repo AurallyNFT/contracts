@@ -24,6 +24,11 @@ def bootstrap_token(
                 P.TxnField.config_asset_unit_name: unit_name.get(),
                 P.TxnField.config_asset_url: url.get(),
                 P.TxnField.config_asset_decimals: P.Int(6),
+                P.TxnField.config_asset_metadata_hash: P.Bytes(
+                    bytes.fromhex(
+                        "b16164a8448b4c255579d1baa714031c8edc47fac09c7d446f066bc25eace020"
+                    )
+                ),
                 P.TxnField.config_asset_freeze: P.Global.current_application_address(),
                 P.TxnField.config_asset_manager: P.Global.current_application_address(),
                 P.TxnField.config_asset_reserve: P.Global.current_application_address(),

@@ -14,7 +14,7 @@ def calculate_and_update_network_difficulty():
     - e: difference between s and st
 
     Calculates:
-    - d: diffuculty
+    - d: difficulty
     """
     from smart_contracts.nfts.contract import app
 
