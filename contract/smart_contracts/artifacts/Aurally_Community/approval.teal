@@ -4,44 +4,36 @@ bytecblock 0x 0x617572615f696e646578 0x00 0x151f7c75
 txn NumAppArgs
 intc_0 // 0
 ==
-bnz main_l14
+bnz main_l16
 txna ApplicationArgs 0
 pushbytes 0xbcfea105 // "promote_to_admin(account)void"
 ==
-bnz main_l13
+bnz main_l15
 txna ApplicationArgs 0
 pushbytes 0x2ad26dee // "demote_from_admin(account)void"
 ==
-bnz main_l12
+bnz main_l14
+txna ApplicationArgs 0
+pushbytes 0x2ff0869c // "set_nft_app(uint64)void"
+==
+bnz main_l13
 txna ApplicationArgs 0
 pushbytes 0x06e07987 // "set_aura_token(asset)void"
 ==
-bnz main_l11
+bnz main_l12
 txna ApplicationArgs 0
 pushbytes 0x4b106a79 // "create_proposal(pay,string,string,string,uint64)(string,uint64,string,string,uint64,uint64,uint64,bool)"
 ==
-bnz main_l10
+bnz main_l11
 txna ApplicationArgs 0
 pushbytes 0x89cfb596 // "vote_on_proposal(pay,account,bool,asset,asset,string)(string,uint64,string,string,uint64,uint64,uint64,bool)"
 ==
-bnz main_l9
+bnz main_l10
 txna ApplicationArgs 0
 pushbytes 0x656379b6 // "close_proposal(pay,string)(string,uint64,string,string,uint64,uint64,uint64,bool)"
 ==
-bnz main_l8
+bnz main_l9
 err
-main_l8:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub closeproposalcaster_14
-intc_1 // 1
-return
 main_l9:
 txn OnCompletion
 intc_0 // NoOp
@@ -51,7 +43,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub voteonproposalcaster_13
+callsub closeproposalcaster_16
 intc_1 // 1
 return
 main_l10:
@@ -63,7 +55,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createproposalcaster_12
+callsub voteonproposalcaster_15
 intc_1 // 1
 return
 main_l11:
@@ -75,7 +67,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub setauratokencaster_8
+callsub createproposalcaster_14
 intc_1 // 1
 return
 main_l12:
@@ -87,7 +79,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub demotefromadmincaster_7
+callsub setauratokencaster_10
 intc_1 // 1
 return
 main_l13:
@@ -99,16 +91,40 @@ intc_0 // 0
 !=
 &&
 assert
-callsub promotetoadmincaster_6
+callsub setnftappcaster_9
 intc_1 // 1
 return
 main_l14:
 txn OnCompletion
 intc_0 // NoOp
 ==
-bnz main_l16
-err
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub demotefromadmincaster_8
+intc_1 // 1
+return
+main_l15:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub promotetoadmincaster_7
+intc_1 // 1
+return
 main_l16:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l18
+err
+main_l18:
 txn ApplicationID
 intc_0 // 0
 ==
@@ -156,8 +172,21 @@ frame_dig 0
 assert
 retsub
 
+// set_nft_app
+setnftapp_2:
+proto 1 0
+txn Sender
+global CreatorAddress
+==
+// unauthorized
+assert
+pushbytes 0x6e66745f6170706c69636174696f6e // "nft_application"
+frame_dig -1
+app_global_put
+retsub
+
 // set_aura_token
-setauratoken_2:
+setauratoken_3:
 proto 1 0
 intc_0 // 0
 txn Sender
@@ -174,7 +203,7 @@ app_global_put
 retsub
 
 // create_proposal
-createproposal_3:
+createproposal_4:
 proto 5 1
 bytec_0 // ""
 dup
@@ -202,9 +231,9 @@ load 1
 // Proposals can't be created until aura token is set
 assert
 frame_dig 1
-callsub ensureisadminorappcreator_10
+callsub ensureisadminorappcreator_12
 frame_dig -5
-callsub ensurezeropayment_9
+callsub ensurezeropayment_11
 frame_dig -3
 extract 2 0
 box_len
@@ -330,7 +359,7 @@ frame_bury 0
 retsub
 
 // vote_on_proposal
-voteonproposal_4:
+voteonproposal_5:
 proto 6 1
 bytec_0 // ""
 dupn 2
@@ -350,9 +379,9 @@ load 9
 // Voting can commence until aura token is set
 assert
 frame_dig -6
-callsub ensurezeropayment_9
+callsub ensurezeropayment_11
 frame_dig -1
-callsub ensureproposalexists_11
+callsub ensureproposalexists_13
 frame_dig -3
 txnas Assets
 bytec_1 // "aura_index"
@@ -461,18 +490,18 @@ load 15
 // You've already voted on this proposal
 assert
 frame_dig -4
-bnz voteonproposal_4_l2
+bnz voteonproposal_5_l2
 frame_dig 7
 intc_1 // 1
 +
 frame_bury 7
-b voteonproposal_4_l3
-voteonproposal_4_l2:
+b voteonproposal_5_l3
+voteonproposal_5_l2:
 frame_dig 6
 intc_1 // 1
 +
 frame_bury 6
-voteonproposal_4_l3:
+voteonproposal_5_l3:
 frame_dig 2
 frame_bury 13
 frame_dig 13
@@ -588,7 +617,7 @@ frame_bury 0
 retsub
 
 // close_proposal
-closeproposal_5:
+closeproposal_6:
 proto 2 1
 bytec_0 // ""
 dupn 3
@@ -600,7 +629,7 @@ dupn 5
 bytec_0 // ""
 dup
 frame_dig -2
-callsub ensurezeropayment_9
+callsub ensurezeropayment_11
 frame_dig -2
 gtxns Sender
 frame_bury 1
@@ -610,9 +639,9 @@ pushint 32 // 32
 ==
 assert
 frame_dig 1
-callsub ensureisadminorappcreator_10
+callsub ensureisadminorappcreator_12
 frame_dig -1
-callsub ensureproposalexists_11
+callsub ensureproposalexists_13
 frame_dig -1
 extract 2 0
 box_get
@@ -761,7 +790,7 @@ frame_bury 0
 retsub
 
 // promote_to_admin_caster
-promotetoadmincaster_6:
+promotetoadmincaster_7:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -773,7 +802,7 @@ callsub promotetoadmin_0
 retsub
 
 // demote_from_admin_caster
-demotefromadmincaster_7:
+demotefromadmincaster_8:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -784,8 +813,19 @@ frame_dig 0
 callsub demotefromadmin_1
 retsub
 
+// set_nft_app_caster
+setnftappcaster_9:
+proto 0 0
+intc_0 // 0
+txna ApplicationArgs 1
+btoi
+frame_bury 0
+frame_dig 0
+callsub setnftapp_2
+retsub
+
 // set_aura_token_caster
-setauratokencaster_8:
+setauratokencaster_10:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -793,11 +833,11 @@ intc_0 // 0
 getbyte
 frame_bury 0
 frame_dig 0
-callsub setauratoken_2
+callsub setauratoken_3
 retsub
 
 // ensure_zero_payment
-ensurezeropayment_9:
+ensurezeropayment_11:
 proto 1 0
 frame_dig -1
 gtxns Amount
@@ -808,7 +848,7 @@ assert
 retsub
 
 // ensure_is_admin_or_app_creator
-ensureisadminorappcreator_10:
+ensureisadminorappcreator_12:
 proto 1 0
 frame_dig -1
 global CreatorAddress
@@ -824,7 +864,7 @@ assert
 retsub
 
 // ensure_proposal_exists
-ensureproposalexists_11:
+ensureproposalexists_13:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -837,7 +877,7 @@ assert
 retsub
 
 // create_proposal_caster
-createproposalcaster_12:
+createproposalcaster_14:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -867,7 +907,7 @@ frame_dig 2
 frame_dig 3
 frame_dig 4
 frame_dig 5
-callsub createproposal_3
+callsub createproposal_4
 frame_bury 0
 bytec_3 // 0x151f7c75
 frame_dig 0
@@ -876,7 +916,7 @@ log
 retsub
 
 // vote_on_proposal_caster
-voteonproposalcaster_13:
+voteonproposalcaster_15:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -917,7 +957,7 @@ frame_dig 3
 frame_dig 4
 frame_dig 5
 frame_dig 6
-callsub voteonproposal_4
+callsub voteonproposal_5
 frame_bury 0
 bytec_3 // 0x151f7c75
 frame_dig 0
@@ -926,7 +966,7 @@ log
 retsub
 
 // close_proposal_caster
-closeproposalcaster_14:
+closeproposalcaster_16:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -944,7 +984,7 @@ intc_1 // pay
 assert
 frame_dig 1
 frame_dig 2
-callsub closeproposal_5
+callsub closeproposal_6
 frame_bury 0
 bytec_3 // 0x151f7c75
 frame_dig 0

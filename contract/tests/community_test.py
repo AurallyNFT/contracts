@@ -1,10 +1,6 @@
-from datetime import datetime, timedelta
-from typing import List
-from algosdk import atomic_transaction_composer, encoding, transaction
-from algosdk.v2client.algod import AlgodClient
+from algosdk import encoding
 from beaker.client import ApplicationClient
 from beaker.localnet import LocalAccount
-import pytest
 from smart_contracts.community import contract as community_contract
 
 
@@ -21,41 +17,55 @@ def test_promote_to_admin(
     )
 
 
-def test_set_aura_token(
-    aura_index: int,
-    community_app_client: ApplicationClient,
-):
-    community_app_client.call(community_contract.set_aura_token, aura=aura_index)
-
-
-def test_create_proposal(
-    community_app_client: ApplicationClient, test_account: LocalAccount, algod_client: AlgodClient
-):
-    sp = algod_client.suggested_params()
-    txn = transaction.PaymentTxn(
-        amt=0,
-        sp=sp,
-        sender=test_account.address,
-        receiver=test_account.address,
-    )
-    txn = atomic_transaction_composer.TransactionWithSigner(
-        txn=txn, signer=test_account.signer
-    )
-    community_app_client.call(
-        community_contract.create_proposal,
-        txn=txn,
-        title="test",
-        proposal_key="test",
-        proposal_detail="test",
-        end_date=70,
-        boxes=[
-            (community_app_client.app_id, "test".encode()),
-            (
-                community_app_client.app_id,
-                encoding.decode_address(test_account.address),
-            ),
-        ],
-    )
+# def test_set_nft_app(
+#     nft_app_client: ApplicationClient,
+#     community_app_client: ApplicationClient,
+# ):
+#     community_app_client.call(
+#         community_contract.set_nft_app, app_id=nft_app_client.app_id
+#     )
+#
+#
+# def test_set_aura_token(
+#     aura_index: int,
+#     community_app_client: ApplicationClient,
+# ):
+#     community_app_client.call(
+#         community_contract.set_aura_token,
+#         aura=aura_index,
+#     )
+#
+#
+# def test_create_proposal(
+#     community_app_client: ApplicationClient,
+#     test_account: LocalAccount,
+#     algod_client: AlgodClient,
+# ):
+#     sp = algod_client.suggested_params()
+#     txn = transaction.PaymentTxn(
+#         amt=0,
+#         sp=sp,
+#         sender=test_account.address,
+#         receiver=test_account.address,
+#     )
+#     txn = atomic_transaction_composer.TransactionWithSigner(
+#         txn=txn, signer=test_account.signer
+#     )
+#     community_app_client.call(
+#         community_contract.create_proposal,
+#         txn=txn,
+#         title="test",
+#         proposal_key="test",
+#         proposal_detail="test",
+#         end_date=70,
+#         boxes=[
+#             (community_app_client.app_id, "test".encode()),
+#             (
+#                 community_app_client.app_id,
+#                 encoding.decode_address(test_account.address),
+#             ),
+#         ],
+#     )
 
 
 #

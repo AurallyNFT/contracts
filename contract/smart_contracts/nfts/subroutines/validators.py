@@ -13,11 +13,6 @@ def ensure_sender_is_registered_creative(txn: P.abi.Transaction):
 
 
 @P.Subroutine(P.TealType.none)
-def ensure_zero_payment(txn: P.abi.PaymentTransaction):
-    return P.Assert(txn.get().amount() == P.Int(0), comment="Payment amount must be 0")
-
-
-@P.Subroutine(P.TealType.none)
 def ensure_auras_exist():
     from smart_contracts.nfts.contract import app
 

@@ -26,6 +26,18 @@
             }
         },
         {
+            "name": "set_nft_app",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "app_id"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "set_aura_token",
             "args": [
                 {

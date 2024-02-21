@@ -1,10 +1,8 @@
 import beaker as B
 import pyteal as P
-
 from smart_contracts.community.boxes import Proposal
 
 from .state import AppState
-
 
 app = B.Application("Aurally_Community", state=AppState())
 
@@ -20,9 +18,14 @@ def promote_to_admin(acc: P.abi.Account):
 @app.external(authorize=B.Authorize.only_creator())
 def demote_from_admin(acc: P.abi.Account):
     return P.Seq(
-        (succes := P.abi.Bool()).set(app.state.admins[acc.address()].delete()),
-        P.Assert(succes.get())
+        (success := P.abi.Bool()).set(app.state.admins[acc.address()].delete()),
+        P.Assert(success.get()),
     )
+
+
+@app.external(authorize=B.Authorize.only_creator())
+def set_nft_app(app_id: P.abi.Uint64) -> P.Expr:
+    return P.Seq(app.state.nft_application.set(app_id.get()))
 
 
 @app.external(authorize=B.Authorize.only_creator())
@@ -43,10 +46,8 @@ def create_proposal(
     *,
     output: Proposal,
 ):
-    from .subroutines.validators import (
-        ensure_zero_payment,
-        ensure_is_admin_or_app_creator,
-    )
+    from .subroutines.validators import (ensure_is_admin_or_app_creator,
+                                         ensure_zero_payment)
 
     return P.Seq(
         (proposal_creator := P.abi.Address()).set(txn.get().sender()),
@@ -101,7 +102,8 @@ def vote_on_proposal(
     *,
     output: Proposal,
 ):
-    from .subroutines.validators import ensure_zero_payment, ensure_proposal_exists
+    from .subroutines.validators import (ensure_proposal_exists,
+                                         ensure_zero_payment)
 
     return P.Seq(
         P.Assert(
@@ -134,7 +136,9 @@ def vote_on_proposal(
             proposal_asset.asset_id() == asset_id.get(),
             comment="The proposal asset must match the proposal",
         ),
-        P.Assert(aura_balance.value() >= P.Int(1), comment="Must have at least 1 aura token"),
+        P.Assert(
+            aura_balance.value() >= P.Int(1), comment="Must have at least 1 aura token"
+        ),
         (
             proposal_asset_balance := P.AssetHolding.balance(
                 txn.get().sender(), proposal_asset.asset_id()
@@ -177,11 +181,9 @@ def vote_on_proposal(
 def close_proposal(
     txn: P.abi.PaymentTransaction, proposal_key: P.abi.String, *, output: Proposal
 ):
-    from .subroutines.validators import (
-        ensure_zero_payment,
-        ensure_is_admin_or_app_creator,
-        ensure_proposal_exists,
-    )
+    from .subroutines.validators import (ensure_is_admin_or_app_creator,
+                                         ensure_proposal_exists,
+                                         ensure_zero_payment)
 
     return P.Seq(
         ensure_zero_payment(txn),

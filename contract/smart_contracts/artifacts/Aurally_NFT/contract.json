@@ -2,6 +2,42 @@
     "name": "Aurally_NFT",
     "methods": [
         {
+            "name": "promote_to_admin",
+            "args": [
+                {
+                    "type": "address",
+                    "name": "address"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "reward_with_aura_tokens",
+            "args": [
+                {
+                    "type": "txn",
+                    "name": "txn"
+                },
+                {
+                    "type": "address",
+                    "name": "receiver_address"
+                },
+                {
+                    "type": "account",
+                    "name": "receiver_account"
+                },
+                {
+                    "type": "asset",
+                    "name": "aura"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "update_commission_percentage",
             "args": [
                 {
@@ -10,14 +46,14 @@
                 }
             ],
             "returns": {
-                "type": "uint8"
+                "type": "void"
             }
         },
         {
             "name": "update_aura_rewards",
             "args": [],
             "returns": {
-                "type": "(uint64,uint64,uint64)"
+                "type": "void"
             }
         },
         {
@@ -29,7 +65,7 @@
                 }
             ],
             "returns": {
-                "type": "uint64"
+                "type": "void"
             }
         },
         {

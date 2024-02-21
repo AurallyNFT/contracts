@@ -9,10 +9,51 @@ from beaker.localnet import LocalAccount
 from smart_contracts.nfts import contract as nft_contract
 
 
-def test_update_commission_percentage(nft_app_client: ApplicationClient):
-    result = nft_app_client.call(nft_contract.update_commission_percentage, amt=20)
-    print(result.return_value)
-    assert result.return_value == 20
+@pytest.mark.dependency()
+def test_promote_to_admin(
+    nft_app_client: ApplicationClient,
+    test_account: LocalAccount,
+    creator_account: LocalAccount,
+):
+    nft_app_client.call(
+        nft_contract.promote_to_admin,
+        address=test_account.address,
+        sender=creator_account.address,
+        boxes=[
+            (nft_app_client.app_id, encoding.decode_address(test_account.address)),
+        ],
+    )
+
+
+@pytest.mark.dependency()
+def test_reward_with_aura_tokens(
+    test_account: LocalAccount,
+    nft_app_client: ApplicationClient,
+    aura_index: int,
+    algod_client: AlgodClient,
+):
+    sp = algod_client.suggested_params()
+    txn = transaction.AssetTransferTxn(
+        sender=test_account.address,
+        receiver=test_account.address,
+        sp=sp,
+        amt=0,
+        index=aura_index,
+    )
+    txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=txn, signer=test_account.signer
+    )
+    nft_app_client.call(
+        nft_contract.reward_with_aura_tokens,
+        txn=txn,
+        receiver_address=test_account.address,
+        receiver_account=test_account.address,
+        aura=aura_index,
+        boxes=[
+            (nft_app_client.app_id, b"aura"),
+            (nft_app_client.app_id, encoding.decode_address(test_account.address)),
+        ],
+    )
 
 
 @pytest.mark.dependency()
@@ -36,6 +77,7 @@ def test_register_creator(
             (nft_app_client.app_id, encoding.decode_address(txn.txn.sender)),
         ],
     )
+    print(aura_index, result.return_value, test_account.address)
     assert list(result.return_value)[0] == test_account.address
 
 

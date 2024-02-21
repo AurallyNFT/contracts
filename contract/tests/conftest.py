@@ -25,6 +25,11 @@ def test_account(test_accounts: List[LocalAccount]) -> LocalAccount:
     return test_accounts[0]
 
 
+@pytest.fixture(scope="session")
+def creator_account(test_accounts: List[LocalAccount]) -> LocalAccount:
+    return test_accounts[1]
+
+
 @pytest.fixture(autouse=True, scope="session")
 def environment_fixture() -> None:
     env_path = Path(__file__).parent.parent.parent / ".env.localnet"
@@ -44,15 +49,13 @@ def algod_client() -> AlgodClient:
 
 
 @pytest.fixture(scope="session")
-def nft_app_client(test_accounts: List[LocalAccount]) -> ApplicationClient:
+def nft_app_client(creator_account: LocalAccount) -> ApplicationClient:
     build_contract("Aurally_NFT", "NFT")
-
-    app_creator_account = test_accounts[1]
 
     client = ApplicationClient(
         app=nft_contract.app,
-        signer=app_creator_account.signer,
-        sender=app_creator_account.address,
+        signer=creator_account.signer,
+        sender=creator_account.address,
         client=localnet.get_algod_client(),
     )
     client.create()

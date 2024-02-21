@@ -1,99 +1,83 @@
 #pragma version 8
 intcblock 0 1 65536 10 786 1000 784 785
-bytecblock 0x 0x00 0x151f7c75 0x617572615f726577617264 0x6e6574776f726b5f646966666963756c7479 0x068101 0x65706f63685f6e66745f7472616e73616374696f6e73 0x61757261 0x617572615f626173655f726577617264 0x636f6d6d697373696f6e5f70657263656e74616765 0x65706f63685f7461726765745f7472616e73616374696f6e 0x746f74616c5f617572616c6c795f746f6b656e73 0x6d696e5f6368617267655f7072696365 0x72657761726461626c655f746f6b656e735f737570706c79 0x746f74616c5f6e66745f7472616e73616374696f6e73 0x000461757261 0x6d696e5f617572616c5f726577617264 0x6d696e5f646966666963756c7479 0x746f74616c5f7461726765745f6e66745f73616c6573 0x736f756e64
+bytecblock 0x 0x00 0x151f7c75 0x617572615f726577617264 0x068101 0x65706f63685f6e66745f7472616e73616374696f6e73 0x6e6574776f726b5f646966666963756c7479 0x61757261 0x746f74616c5f617572616c6c795f746f6b656e73 0x746f74616c5f6e66745f7472616e73616374696f6e73 0x617572615f626173655f726577617264 0x636f6d6d697373696f6e5f70657263656e74616765 0x636f6e74726163745f61646d696e 0x65706f63685f7461726765745f7472616e73616374696f6e 0x6d696e5f6368617267655f7072696365 0x72657761726461626c655f746f6b656e735f737570706c79 0x000461757261 0x6d696e5f617572616c5f726577617264 0x6d696e5f646966666963756c7479 0x746f74616c5f7461726765745f6e66745f73616c6573 0x736f756e64
 txn NumAppArgs
 intc_0 // 0
 ==
+bnz main_l38
+txna ApplicationArgs 0
+pushbytes 0x11e1477f // "promote_to_admin(address)void"
+==
+bnz main_l37
+txna ApplicationArgs 0
+pushbytes 0xbafa4eb4 // "reward_with_aura_tokens(txn,address,account,asset)void"
+==
+bnz main_l36
+txna ApplicationArgs 0
+pushbytes 0x03b15594 // "update_commission_percentage(uint8)void"
+==
+bnz main_l35
+txna ApplicationArgs 0
+pushbytes 0xa6e7e062 // "update_aura_rewards()void"
+==
 bnz main_l34
 txna ApplicationArgs 0
-pushbytes 0xb6a09ff0 // "update_commission_percentage(uint8)uint8"
+pushbytes 0xb3b815fa // "update_target_nft_transactions(uint64)void"
 ==
 bnz main_l33
 txna ApplicationArgs 0
-pushbytes 0x3f68badb // "update_aura_rewards()(uint64,uint64,uint64)"
+pushbytes 0x3f802278 // "withdraw_profits(uint64,account)void"
 ==
 bnz main_l32
 txna ApplicationArgs 0
-pushbytes 0x2ba0c243 // "update_target_nft_transactions(uint64)uint64"
+pushbytes 0xb956782f // "update_min_charge_price(uint64)void"
 ==
 bnz main_l31
 txna ApplicationArgs 0
-pushbytes 0x3f802278 // "withdraw_profits(uint64,account)void"
+pushbytes 0xc19cff5c // "create_aura_tokens()(uint64,string,uint64,bool)"
 ==
 bnz main_l30
 txna ApplicationArgs 0
-pushbytes 0xb956782f // "update_min_charge_price(uint64)void"
+pushbytes 0x7dc33deb // "claim_aura_percentage(account)(uint64,string,uint64,bool)"
 ==
 bnz main_l29
 txna ApplicationArgs 0
-pushbytes 0xc19cff5c // "create_aura_tokens()(uint64,string,uint64,bool)"
+pushbytes 0x365d9c5b // "register_creator(txn)(address,uint64,uint64)"
 ==
 bnz main_l28
 txna ApplicationArgs 0
-pushbytes 0x7dc33deb // "claim_aura_percentage(account)(uint64,string,uint64,bool)"
+pushbytes 0xef4af010 // "create_sound_nft(pay,string,string,string,string,string,uint64,string,string,uint64,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,address,bool,bool)"
 ==
 bnz main_l27
 txna ApplicationArgs 0
-pushbytes 0x365d9c5b // "register_creator(txn)(address,uint64,uint64)"
+pushbytes 0xa4218c93 // "create_art_nft(pay,string,string,string,string,string,string,uint64,asset,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
 ==
 bnz main_l26
 txna ApplicationArgs 0
-pushbytes 0xef4af010 // "create_sound_nft(pay,string,string,string,string,string,uint64,string,string,uint64,string,uint64,asset,account)(uint64,string,uint64,string,string,string,uint64,string,string,uint64,string,address,bool,bool)"
+pushbytes 0x6259859c // "claim_created_art(axfer,string,account,asset)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
 ==
 bnz main_l25
 txna ApplicationArgs 0
-pushbytes 0xa4218c93 // "create_art_nft(pay,string,string,string,string,string,string,uint64,asset,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
+pushbytes 0x823cad1f // "create_art_auction(pay,string,string,uint64,uint64,uint64,string)(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
 ==
 bnz main_l24
 txna ApplicationArgs 0
-pushbytes 0x6259859c // "claim_created_art(axfer,string,account,asset)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
+pushbytes 0x9febf9df // "bid_on_art_auction(string,pay,account,axfer,axfer)(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
 ==
 bnz main_l23
 txna ApplicationArgs 0
-pushbytes 0x823cad1f // "create_art_auction(pay,string,string,uint64,uint64,uint64,string)(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
+pushbytes 0xf9d3bd4e // "complete_art_auction(axfer,asset,string,account,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
 ==
 bnz main_l22
 txna ApplicationArgs 0
-pushbytes 0x9febf9df // "bid_on_art_auction(string,pay,account,axfer,axfer)(string,address,string,string,uint64,uint64,uint64,string,uint64,address,bool)"
+pushbytes 0x488753ee // "place_art_on_sale(axfer,string,uint64)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
 ==
 bnz main_l21
 txna ApplicationArgs 0
-pushbytes 0xf9d3bd4e // "complete_art_auction(axfer,asset,string,account,account)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
-==
-bnz main_l20
-txna ApplicationArgs 0
-pushbytes 0x488753ee // "place_art_on_sale(axfer,string,uint64)(uint64,string,string,string,string,string,uint64,uint64,address,address,bool,bool,bool)"
-==
-bnz main_l19
-txna ApplicationArgs 0
 pushbytes 0x2db3e347 // "purchase_nft(pay,axfer,string,string,account,asset,asset,account,axfer)void"
 ==
-bnz main_l18
+bnz main_l20
 err
-main_l18:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub purchasenftcaster_57
-intc_1 // 1
-return
-main_l19:
-txn OnCompletion
-intc_0 // NoOp
-==
-txn ApplicationID
-intc_0 // 0
-!=
-&&
-assert
-callsub placeartonsalecaster_56
-intc_1 // 1
-return
 main_l20:
 txn OnCompletion
 intc_0 // NoOp
@@ -103,7 +87,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub completeartauctioncaster_55
+callsub purchasenftcaster_58
 intc_1 // 1
 return
 main_l21:
@@ -115,7 +99,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub bidonartauctioncaster_54
+callsub placeartonsalecaster_57
 intc_1 // 1
 return
 main_l22:
@@ -127,7 +111,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createartauctioncaster_53
+callsub completeartauctioncaster_56
 intc_1 // 1
 return
 main_l23:
@@ -139,7 +123,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub claimcreatedartcaster_52
+callsub bidonartauctioncaster_55
 intc_1 // 1
 return
 main_l24:
@@ -151,7 +135,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createartnftcaster_51
+callsub createartauctioncaster_54
 intc_1 // 1
 return
 main_l25:
@@ -163,7 +147,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createsoundnftcaster_50
+callsub claimcreatedartcaster_53
 intc_1 // 1
 return
 main_l26:
@@ -175,7 +159,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub registercreatorcaster_35
+callsub createartnftcaster_52
 intc_1 // 1
 return
 main_l27:
@@ -187,7 +171,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub claimaurapercentagecaster_29
+callsub createsoundnftcaster_51
 intc_1 // 1
 return
 main_l28:
@@ -199,7 +183,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub createauratokenscaster_28
+callsub registercreatorcaster_34
 intc_1 // 1
 return
 main_l29:
@@ -211,7 +195,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updateminchargepricecaster_26
+callsub claimaurapercentagecaster_28
 intc_1 // 1
 return
 main_l30:
@@ -223,7 +207,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub withdrawprofitscaster_25
+callsub createauratokenscaster_27
 intc_1 // 1
 return
 main_l31:
@@ -235,7 +219,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updatetargetnfttransactionscaster_24
+callsub updateminchargepricecaster_25
 intc_1 // 1
 return
 main_l32:
@@ -247,7 +231,7 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updateaurarewardscaster_23
+callsub withdrawprofitscaster_24
 intc_1 // 1
 return
 main_l33:
@@ -259,39 +243,63 @@ intc_0 // 0
 !=
 &&
 assert
-callsub updatecommissionpercentagecaster_19
+callsub updatetargetnfttransactionscaster_23
 intc_1 // 1
 return
 main_l34:
 txn OnCompletion
 intc_0 // NoOp
 ==
-bnz main_l40
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub updateaurarewardscaster_22
+intc_1 // 1
+return
+main_l35:
 txn OnCompletion
-pushint 4 // UpdateApplication
+intc_0 // NoOp
 ==
-bnz main_l39
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub updatecommissionpercentagecaster_21
+intc_1 // 1
+return
+main_l36:
 txn OnCompletion
-pushint 5 // DeleteApplication
+intc_0 // NoOp
 ==
-bnz main_l38
-err
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub rewardwithauratokenscaster_20
+intc_1 // 1
+return
+main_l37:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub promotetoadmincaster_19
+intc_1 // 1
+return
 main_l38:
-txn ApplicationID
-intc_0 // 0
-!=
-assert
-callsub delete_2
-intc_1 // 1
-return
-main_l39:
-txn ApplicationID
-intc_0 // 0
-!=
-assert
-callsub update_1
-intc_1 // 1
-return
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l40
+err
 main_l40:
 txn ApplicationID
 intc_0 // 0
@@ -304,87 +312,100 @@ return
 // create
 create_0:
 proto 0 0
-bytec 8 // "aura_base_reward"
+bytec 10 // "aura_base_reward"
 intc_3 // 10
 app_global_put
 bytec_3 // "aura_reward"
 intc_3 // 10
 app_global_put
-bytec 9 // "commission_percentage"
+bytec 11 // "commission_percentage"
 intc_3 // 10
 app_global_put
-bytec 6 // "epoch_nft_transactions"
+bytec 12 // "contract_admin"
+bytec_0 // ""
+app_global_put
+bytec 5 // "epoch_nft_transactions"
 intc_0 // 0
 app_global_put
-bytec 10 // "epoch_target_transaction"
+bytec 13 // "epoch_target_transaction"
 pushint 500 // 500
 app_global_put
-bytec 16 // "min_aural_reward"
+bytec 17 // "min_aural_reward"
 intc_3 // 10
 app_global_put
-bytec 12 // "min_charge_price"
+bytec 14 // "min_charge_price"
 intc_1 // 1
 app_global_put
-bytec 17 // "min_difficulty"
+bytec 18 // "min_difficulty"
 intc_3 // 10
 app_global_put
-bytec 4 // "network_difficulty"
+bytec 6 // "network_difficulty"
 intc_3 // 10
 app_global_put
-bytec 13 // "rewardable_tokens_supply"
+bytec 15 // "rewardable_tokens_supply"
 pushint 80000000000000 // 80000000000000
 app_global_put
 intc_0 // 0
-bytec 11 // "total_aurally_tokens"
+bytec 8 // "total_aurally_tokens"
 app_global_get_ex
 store 1
 store 0
 load 1
 !
 assert
-bytec 11 // "total_aurally_tokens"
+bytec 8 // "total_aurally_tokens"
 pushint 100000000000000 // 100000000000000
 app_global_put
-bytec 14 // "total_nft_transactions"
+bytec 9 // "total_nft_transactions"
 intc_0 // 0
 app_global_put
-bytec 18 // "total_target_nft_sales"
+bytec 19 // "total_target_nft_sales"
 pushint 1600000000 // 1600000000
 app_global_put
 retsub
 
-// update
-update_1:
-proto 0 0
+// promote_to_admin
+promotetoadmin_1:
+proto 1 0
 txn Sender
 global CreatorAddress
 ==
 // unauthorized
 assert
-intc_1 // 1
-return
+bytec 12 // "contract_admin"
+frame_dig -1
+app_global_put
+retsub
 
-// delete
-delete_2:
-proto 0 0
-txn Sender
-global CreatorAddress
+// reward_with_aura_tokens
+rewardwithauratokens_2:
+proto 4 0
+bytec 12 // "contract_admin"
+app_global_get
+frame_dig -4
+gtxns Sender
 ==
-// unauthorized
+// Only contract_admins are allowed to perform this action
 assert
-intc_1 // 1
-return
+frame_dig -3
+frame_dig -2
+txnas Accounts
+==
+// The receiver address must be the address of the receiver_account
+assert
+frame_dig -3
+callsub rewardwithauratokens_35
+retsub
 
 // update_commission_percentage
 updatecommissionpercentage_3:
-proto 1 1
-intc_0 // 0
+proto 1 0
 txn Sender
 global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 9 // "commission_percentage"
+bytec 11 // "commission_percentage"
 frame_dig -1
 app_global_put
 frame_dig -1
@@ -392,60 +413,29 @@ pushint 100 // 100
 <=
 // The commission_percentage must be less that 100%
 assert
-bytec 9 // "commission_percentage"
-app_global_get
-frame_bury 0
-frame_dig 0
-pushint 256 // 256
-<
-assert
 retsub
 
 // update_aura_rewards
 updateaurarewards_4:
-proto 0 1
-bytec_0 // ""
-intc_0 // 0
-dupn 4
-bytec_0 // ""
-dup
-callsub calculateandupdatereward_22
-bytec_3 // "aura_reward"
-app_global_get
-frame_bury 1
-bytec 8 // "aura_base_reward"
-app_global_get
-frame_bury 2
-bytec 4 // "network_difficulty"
-app_global_get
-frame_bury 3
-frame_dig 2
-itob
-frame_dig 1
-itob
-concat
-frame_dig 3
-itob
-concat
-frame_bury 0
+proto 0 0
+callsub calculateandupdatereward_41
 retsub
 
 // update_target_nft_transactions
 updatetargetnfttransactions_5:
-proto 1 1
-intc_0 // 0
+proto 1 0
 txn Sender
 global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 10 // "epoch_target_transaction"
+bytec 13 // "epoch_target_transaction"
 frame_dig -1
 app_global_put
-callsub calculateandupdatereward_22
-bytec 10 // "epoch_target_transaction"
-app_global_get
-frame_bury 0
+bytec 9 // "total_nft_transactions"
+intc_0 // 0
+app_global_put
+callsub calculateandupdatereward_41
 retsub
 
 // withdraw_profits
@@ -477,7 +467,7 @@ global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 12 // "min_charge_price"
+bytec 14 // "min_charge_price"
 frame_dig -1
 app_global_put
 retsub
@@ -493,7 +483,7 @@ global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 15 // 0x000461757261
+bytec 16 // 0x000461757261
 frame_bury 1
 pushbytes 0x0003415552 // 0x0003415552
 frame_bury 2
@@ -502,35 +492,35 @@ frame_bury 3
 frame_dig 1
 extract 2 0
 box_len
-store 3
-store 2
-load 3
+store 5
+store 4
+load 5
 !
 bz createauratokens_8_l2
-bytec 11 // "total_aurally_tokens"
+bytec 8 // "total_aurally_tokens"
 app_global_get
 frame_bury 4
 frame_dig 1
 frame_dig 4
 frame_dig 2
 frame_dig 3
-callsub bootstraptoken_27
+callsub bootstraptoken_26
 frame_dig 1
 extract 2 0
 box_len
-store 5
-store 4
-load 5
+store 7
+store 6
+load 7
 assert
 createauratokens_8_l2:
 frame_dig 1
 extract 2 0
 box_get
-store 7
-store 6
-load 7
+store 9
+store 8
+load 9
 assert
-load 6
+load 8
 frame_bury 0
 retsub
 
@@ -548,21 +538,21 @@ global CreatorAddress
 ==
 // unauthorized
 assert
-bytec 15 // 0x000461757261
+bytec 16 // 0x000461757261
 frame_bury 1
 bytec 7 // "aura"
 box_get
-store 11
-store 10
-load 11
+store 13
+store 12
+load 13
 assert
-load 10
+load 12
 frame_bury 2
 frame_dig 2
 intc_0 // 0
 extract_uint64
 frame_bury 3
-bytec 13 // "rewardable_tokens_supply"
+bytec 15 // "rewardable_tokens_supply"
 app_global_get
 frame_bury 4
 itxn_begin
@@ -573,7 +563,7 @@ itxn_field XferAsset
 frame_dig -1
 txnas Accounts
 itxn_field AssetReceiver
-bytec 11 // "total_aurally_tokens"
+bytec 8 // "total_aurally_tokens"
 app_global_get
 frame_dig 4
 -
@@ -615,11 +605,11 @@ box_put
 frame_dig 1
 extract 2 0
 box_get
-store 13
-store 12
-load 13
+store 15
+store 14
+load 15
 assert
-load 12
+load 14
 frame_bury 0
 retsub
 
@@ -630,22 +620,22 @@ bytec_0 // ""
 frame_dig -1
 gtxns Sender
 box_len
-store 15
-store 14
-load 15
+store 17
+store 16
+load 17
 !
 bz registercreator_10_l2
 frame_dig -1
-callsub createnftowner_31
+callsub createnftowner_30
 registercreator_10_l2:
 frame_dig -1
 gtxns Sender
 box_get
-store 17
-store 16
-load 17
+store 19
+store 18
+load 19
 assert
-load 16
+load 18
 frame_bury 0
 retsub
 
@@ -662,9 +652,9 @@ dup
 bytec_0 // ""
 dup
 intc_0 // 0
-store 18
+store 20
 createsoundnft_11_l1:
-load 18
+load 20
 intc 5 // 1000
 global MinTxnFee
 /
@@ -675,23 +665,21 @@ pushint 6 // appl
 itxn_field TypeEnum
 pushint 5 // DeleteApplication
 itxn_field OnCompletion
-bytec 5 // 0x068101
+bytec 4 // 0x068101
 itxn_field ApprovalProgram
-bytec 5 // 0x068101
+bytec 4 // 0x068101
 itxn_field ClearStateProgram
 itxn_submit
-load 18
+load 20
 intc_1 // 1
 +
-store 18
+store 20
 b createsoundnft_11_l1
 createsoundnft_11_l3:
-frame_dig -14
-callsub ensurezeropayment_41
 frame_dig -2
-callsub ensureassetisaura_43
+callsub ensureassetisaura_44
 frame_dig -14
-callsub ensuresenderisregisteredcreative_40
+callsub ensuresenderisregisteredcreative_42
 frame_dig -1
 txnas Accounts
 frame_dig -14
@@ -702,9 +690,9 @@ assert
 frame_dig -12
 extract 2 0
 box_len
-store 20
-store 19
-load 20
+store 22
+store 21
+load 22
 !
 // An asset with this key already exists
 assert
@@ -905,19 +893,19 @@ extract 2 0
 frame_dig 5
 box_put
 frame_dig 1
-callsub incrementcreatornftcount_32
-callsub increaseappnfttransactioncount_30
+callsub incrementcreatornftcount_31
+callsub increaseappnfttransactioncount_29
 frame_dig 1
-callsub rewardwithauratokens_36
-callsub calculateandupdatereward_22
+callsub rewardwithauratokens_35
+callsub calculateandupdatereward_41
 frame_dig -12
 extract 2 0
 box_get
-store 22
-store 21
-load 22
+store 24
+store 23
+load 24
 assert
-load 21
+load 23
 frame_bury 0
 retsub
 
@@ -949,9 +937,9 @@ pushint 6 // appl
 itxn_field TypeEnum
 pushint 5 // DeleteApplication
 itxn_field OnCompletion
-bytec 5 // 0x068101
+bytec 4 // 0x068101
 itxn_field ApprovalProgram
-bytec 5 // 0x068101
+bytec 4 // 0x068101
 itxn_field ClearStateProgram
 itxn_submit
 load 31
@@ -961,11 +949,9 @@ store 31
 b createartnft_12_l1
 createartnft_12_l3:
 frame_dig -10
-callsub ensurezeropayment_41
-frame_dig -10
-callsub ensuresenderisregisteredcreative_40
+callsub ensuresenderisregisteredcreative_42
 frame_dig -2
-callsub ensureassetisaura_43
+callsub ensureassetisaura_44
 frame_dig -1
 txnas Accounts
 frame_dig -10
@@ -1150,11 +1136,11 @@ extract 2 0
 frame_dig 8
 box_put
 frame_dig 1
-callsub incrementcreatornftcount_32
-callsub increaseappnfttransactioncount_30
+callsub incrementcreatornftcount_31
+callsub increaseappnfttransactioncount_29
 frame_dig 1
-callsub rewardwithauratokens_36
-callsub calculateandupdatereward_22
+callsub rewardwithauratokens_35
+callsub calculateandupdatereward_41
 frame_dig -9
 extract 2 0
 box_get
@@ -1183,7 +1169,7 @@ dupn 5
 bytec_0 // ""
 dup
 frame_dig -3
-callsub ensureartnftexists_47
+callsub ensureartnftexists_48
 frame_dig -3
 extract 2 0
 box_get
@@ -1294,7 +1280,7 @@ frame_bury 15
 frame_dig 2
 frame_dig 15
 frame_dig 10
-callsub transferassetfromcontract_37
+callsub transferassetfromcontract_36
 frame_dig -4
 gtxns Sender
 frame_bury 11
@@ -1433,7 +1419,7 @@ frame_dig 3
 extract 2 0
 frame_dig 1
 box_put
-callsub calculateandupdatereward_22
+callsub calculateandupdatereward_41
 frame_dig 3
 extract 2 0
 box_get
@@ -1473,15 +1459,13 @@ load 43
 !
 // An auction with this key already exists
 assert
-frame_dig -7
-callsub ensurezeropayment_41
 frame_dig -3
 frame_dig -2
 <
 // End date must be greater that start date
 assert
 frame_dig -5
-callsub ensurecanmarketart_49
+callsub ensurecanmarketart_50
 frame_dig -5
 extract 2 0
 box_get
@@ -1705,8 +1689,8 @@ frame_dig -1
 frame_dig -4
 frame_dig -3
 frame_dig -2
-callsub newartauction_33
-callsub calculateandupdatereward_22
+callsub newartauction_32
+callsub calculateandupdatereward_41
 frame_dig -6
 extract 2 0
 box_get
@@ -1733,7 +1717,7 @@ bytec_0 // ""
 intc_0 // 0
 bytec_0 // ""
 frame_dig -5
-callsub ensureartauctionexists_45
+callsub ensureartauctionexists_46
 frame_dig -4
 gtxns Receiver
 global CurrentApplicationAddress
@@ -1851,7 +1835,7 @@ frame_bury 11
 frame_dig -3
 frame_dig 3
 frame_dig 11
-callsub refundlastbidder_38
+callsub refundlastbidder_37
 b bidonartauction_15_l5
 bidonartauction_15_l4:
 frame_dig -4
@@ -1864,8 +1848,8 @@ b bidonartauction_15_l2
 bidonartauction_15_l5:
 frame_dig -4
 frame_dig -5
-callsub recordauctionbid_34
-callsub calculateandupdatereward_22
+callsub recordauctionbid_33
+callsub calculateandupdatereward_41
 frame_dig -5
 extract 2 0
 box_get
@@ -1900,7 +1884,7 @@ dupn 2
 bytec_0 // ""
 dupn 2
 frame_dig -3
-callsub ensureartauctionexists_45
+callsub ensureartauctionexists_46
 frame_dig -3
 extract 2 0
 box_get
@@ -2206,16 +2190,16 @@ frame_bury 27
 frame_dig 5
 frame_dig 4
 frame_dig 27
-callsub paypriceminuscommission_39
+callsub paypriceminuscommission_38
 frame_dig 5
 intc_0 // 0
 >
 bz completeartauction_16_l2
-callsub increaseappnfttransactioncount_30
+callsub increaseappnfttransactioncount_29
 completeartauction_16_l2:
 frame_dig 6
-callsub rewardwithauratokens_36
-callsub calculateandupdatereward_22
+callsub rewardwithauratokens_35
+callsub calculateandupdatereward_41
 frame_dig 2
 extract 2 0
 box_get
@@ -2243,9 +2227,9 @@ dupn 4
 bytec_0 // ""
 dup
 frame_dig -3
-callsub ensureassetreceiverisapplication_48
+callsub ensureassetreceiverisapplication_49
 frame_dig -2
-callsub ensurecanmarketart_49
+callsub ensurecanmarketart_50
 frame_dig -2
 extract 2 0
 box_get
@@ -2457,7 +2441,7 @@ frame_dig 2
 ==
 // The asset being transferred is not the same as the specified asset_key
 assert
-callsub calculateandupdatereward_22
+callsub calculateandupdatereward_41
 frame_dig 3
 extract 2 0
 box_get
@@ -2504,18 +2488,18 @@ global MinTxnFee
 <
 bnz purchasenft_18_l7
 frame_dig -6
-callsub ensurevalidnfttype_42
+callsub ensurevalidnfttype_43
 frame_dig -3
-callsub ensureassetisaura_43
+callsub ensureassetisaura_44
 frame_dig -1
-callsub ensuretxnisauraoptin_44
+callsub ensuretxnisauraoptin_45
 frame_dig -6
 extract 2 0
-bytec 19 // "sound"
+bytec 20 // "sound"
 ==
 bnz purchasenft_18_l6
 frame_dig -7
-callsub ensureartnftexists_47
+callsub ensureartnftexists_48
 frame_dig -7
 extract 2 0
 box_get
@@ -2777,7 +2761,7 @@ frame_bury 34
 frame_dig 1
 frame_dig 2
 frame_dig 34
-callsub paypriceminuscommission_39
+callsub paypriceminuscommission_38
 itxn_begin
 pushint 4 // axfer
 itxn_field TypeEnum
@@ -2795,11 +2779,11 @@ frame_dig 1
 intc_0 // 0
 >
 bz purchasenft_18_l8
-callsub increaseappnfttransactioncount_30
+callsub increaseappnfttransactioncount_29
 b purchasenft_18_l8
 purchasenft_18_l6:
 frame_dig -7
-callsub ensuresoundnftexists_46
+callsub ensuresoundnftexists_47
 frame_dig -7
 extract 2 0
 box_get
@@ -3076,9 +3060,9 @@ pushint 6 // appl
 itxn_field TypeEnum
 pushint 5 // DeleteApplication
 itxn_field OnCompletion
-bytec 5 // 0x068101
+bytec 4 // 0x068101
 itxn_field ApprovalProgram
-bytec 5 // 0x068101
+bytec 4 // 0x068101
 itxn_field ClearStateProgram
 itxn_submit
 load 76
@@ -3087,184 +3071,80 @@ intc_1 // 1
 store 76
 b purchasenft_18_l1
 purchasenft_18_l8:
-callsub calculateandupdatereward_22
+callsub calculateandupdatereward_41
 frame_dig 32
-callsub rewardwithauratokens_36
+callsub rewardwithauratokens_35
+retsub
+
+// promote_to_admin_caster
+promotetoadmincaster_19:
+proto 0 0
+bytec_0 // ""
+txna ApplicationArgs 1
+frame_bury 0
+frame_dig 0
+callsub promotetoadmin_1
+retsub
+
+// reward_with_aura_tokens_caster
+rewardwithauratokenscaster_20:
+proto 0 0
+intc_0 // 0
+bytec_0 // ""
+intc_0 // 0
+dup
+txna ApplicationArgs 1
+frame_bury 1
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+frame_bury 2
+txna ApplicationArgs 3
+intc_0 // 0
+getbyte
+frame_bury 3
+txn GroupIndex
+intc_1 // 1
+-
+frame_bury 0
+frame_dig 0
+frame_dig 1
+frame_dig 2
+frame_dig 3
+callsub rewardwithauratokens_2
 retsub
 
 // update_commission_percentage_caster
-updatecommissionpercentagecaster_19:
+updatecommissionpercentagecaster_21:
 proto 0 0
 intc_0 // 0
-dup
 txna ApplicationArgs 1
 intc_0 // 0
 getbyte
-frame_bury 1
-frame_dig 1
+frame_bury 0
+frame_dig 0
 callsub updatecommissionpercentage_3
-frame_bury 0
-bytec_2 // 0x151f7c75
-bytec_1 // 0x00
-intc_0 // 0
-frame_dig 0
-setbyte
-concat
-log
-retsub
-
-// calculate_and_update_network_difficulty
-calculateandupdatenetworkdifficulty_20:
-proto 0 0
-intc_0 // 0
-dupn 5
-bytec 17 // "min_difficulty"
-app_global_get
-frame_bury 2
-bytec 6 // "epoch_nft_transactions"
-app_global_get
-frame_bury 3
-bytec 10 // "epoch_target_transaction"
-app_global_get
-frame_bury 4
-bytec 4 // "network_difficulty"
-app_global_get
-frame_bury 5
-frame_dig 3
-frame_dig 4
->
-bnz calculateandupdatenetworkdifficulty_20_l5
-frame_dig 4
-frame_dig 3
--
-frame_bury 0
-intc_1 // 1
-frame_dig 0
-frame_dig 4
-/
--
-frame_dig 5
-*
-frame_bury 1
-calculateandupdatenetworkdifficulty_20_l2:
-frame_dig 1
-frame_dig 2
->
-bnz calculateandupdatenetworkdifficulty_20_l4
-bytec 4 // "network_difficulty"
-frame_dig 2
-app_global_put
-b calculateandupdatenetworkdifficulty_20_l6
-calculateandupdatenetworkdifficulty_20_l4:
-bytec 4 // "network_difficulty"
-frame_dig 1
-app_global_put
-b calculateandupdatenetworkdifficulty_20_l6
-calculateandupdatenetworkdifficulty_20_l5:
-frame_dig 3
-frame_dig 4
--
-frame_bury 0
-intc_1 // 1
-frame_dig 0
-frame_dig 4
-/
-+
-frame_dig 5
-*
-frame_bury 1
-b calculateandupdatenetworkdifficulty_20_l2
-calculateandupdatenetworkdifficulty_20_l6:
-bytec 6 // "epoch_nft_transactions"
-intc_0 // 0
-app_global_put
-retsub
-
-// calculate_and_update_base_reward
-calculateandupdatebasereward_21:
-proto 0 0
-intc_0 // 0
-dupn 2
-bytec 13 // "rewardable_tokens_supply"
-app_global_get
-frame_bury 1
-bytec 18 // "total_target_nft_sales"
-app_global_get
-frame_bury 2
-frame_dig 1
-frame_dig 2
-/
-frame_bury 0
-bytec 8 // "aura_base_reward"
-frame_dig 0
-app_global_put
-retsub
-
-// calculate_and_update_reward
-calculateandupdatereward_22:
-proto 0 0
-intc_0 // 0
-dupn 2
-callsub calculateandupdatenetworkdifficulty_20
-callsub calculateandupdatebasereward_21
-bytec 8 // "aura_base_reward"
-app_global_get
-frame_bury 0
-bytec 4 // "network_difficulty"
-app_global_get
-frame_bury 1
-frame_dig 0
-frame_dig 1
-/
-frame_bury 2
-frame_dig 2
-intc_0 // 0
->
-bnz calculateandupdatereward_22_l2
-bytec_3 // "aura_reward"
-bytec 16 // "min_aural_reward"
-app_global_get
-app_global_put
-b calculateandupdatereward_22_l3
-calculateandupdatereward_22_l2:
-bytec_3 // "aura_reward"
-frame_dig 2
-app_global_put
-calculateandupdatereward_22_l3:
 retsub
 
 // update_aura_rewards_caster
-updateaurarewardscaster_23:
+updateaurarewardscaster_22:
 proto 0 0
-bytec_0 // ""
 callsub updateaurarewards_4
-frame_bury 0
-bytec_2 // 0x151f7c75
-frame_dig 0
-concat
-log
 retsub
 
 // update_target_nft_transactions_caster
-updatetargetnfttransactionscaster_24:
+updatetargetnfttransactionscaster_23:
 proto 0 0
 intc_0 // 0
-dup
 txna ApplicationArgs 1
 btoi
-frame_bury 1
-frame_dig 1
-callsub updatetargetnfttransactions_5
 frame_bury 0
-bytec_2 // 0x151f7c75
 frame_dig 0
-itob
-concat
-log
+callsub updatetargetnfttransactions_5
 retsub
 
 // withdraw_profits_caster
-withdrawprofitscaster_25:
+withdrawprofitscaster_24:
 proto 0 0
 intc_0 // 0
 dup
@@ -3281,7 +3161,7 @@ callsub withdrawprofits_6
 retsub
 
 // update_min_charge_price_caster
-updateminchargepricecaster_26:
+updateminchargepricecaster_25:
 proto 0 0
 intc_0 // 0
 txna ApplicationArgs 1
@@ -3292,7 +3172,7 @@ callsub updateminchargeprice_7
 retsub
 
 // bootstrap_token
-bootstraptoken_27:
+bootstraptoken_26:
 proto 4 0
 intc_0 // 0
 dup
@@ -3304,9 +3184,9 @@ dup
 frame_dig -4
 extract 2 0
 box_len
-store 9
-store 8
-load 9
+store 11
+store 10
+load 11
 !
 // Aura tokens already exist
 assert
@@ -3375,7 +3255,7 @@ box_put
 retsub
 
 // create_aura_tokens_caster
-createauratokenscaster_28:
+createauratokenscaster_27:
 proto 0 0
 bytec_0 // ""
 callsub createauratokens_8
@@ -3387,7 +3267,7 @@ log
 retsub
 
 // claim_aura_percentage_caster
-claimaurapercentagecaster_29:
+claimaurapercentagecaster_28:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3405,16 +3285,16 @@ log
 retsub
 
 // increase_app_nft_transaction_count
-increaseappnfttransactioncount_30:
+increaseappnfttransactioncount_29:
 proto 0 0
-bytec 6 // "epoch_nft_transactions"
-bytec 6 // "epoch_nft_transactions"
+bytec 5 // "epoch_nft_transactions"
+bytec 5 // "epoch_nft_transactions"
 app_global_get
 intc_1 // 1
 +
 app_global_put
-bytec 14 // "total_nft_transactions"
-bytec 14 // "total_nft_transactions"
+bytec 9 // "total_nft_transactions"
+bytec 9 // "total_nft_transactions"
 app_global_get
 intc_1 // 1
 +
@@ -3422,7 +3302,7 @@ app_global_put
 retsub
 
 // create_nft_owner
-createnftowner_31:
+createnftowner_30:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -3474,7 +3354,7 @@ box_put
 retsub
 
 // increment_creator_nft_count
-incrementcreatornftcount_32:
+incrementcreatornftcount_31:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -3483,11 +3363,11 @@ bytec_0 // ""
 dup
 frame_dig -1
 box_get
-store 24
-store 23
-load 24
+store 26
+store 25
+load 26
 assert
-load 23
+load 25
 frame_bury 0
 frame_dig 0
 pushint 32 // 32
@@ -3518,7 +3398,7 @@ box_put
 retsub
 
 // new_art_auction
-newartauction_33:
+newartauction_32:
 proto 8 0
 bytec_0 // ""
 intc_0 // 0
@@ -3664,7 +3544,7 @@ box_put
 retsub
 
 // record_auction_bid
-recordauctionbid_34:
+recordauctionbid_33:
 proto 2 0
 bytec_0 // ""
 dupn 4
@@ -3863,7 +3743,7 @@ box_put
 retsub
 
 // register_creator_caster
-registercreatorcaster_35:
+registercreatorcaster_34:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -3881,7 +3761,7 @@ log
 retsub
 
 // reward_with_aura_tokens
-rewardwithauratokens_36:
+rewardwithauratokens_35:
 proto 1 0
 bytec_0 // ""
 dup
@@ -3892,16 +3772,16 @@ intc_0 // 0
 dup
 bytec_0 // ""
 dup
-bytec 15 // 0x000461757261
+bytec 16 // 0x000461757261
 frame_bury 0
 frame_dig 0
 extract 2 0
 box_get
-store 26
-store 25
-load 26
+store 3
+store 2
+load 3
 assert
-load 25
+load 2
 frame_bury 1
 frame_dig 1
 intc_0 // 0
@@ -3921,7 +3801,7 @@ frame_dig 3
 bytec_3 // "aura_reward"
 app_global_get
 >
-bnz rewardwithauratokens_36_l2
+bnz rewardwithauratokens_35_l2
 pushbytes 0x001b4e6f206d6f7265207472616e73616374696f6e2072657761726473 // 0x001b4e6f206d6f7265207472616e73616374696f6e2072657761726473
 frame_bury 5
 itxn_begin
@@ -3937,8 +3817,8 @@ frame_dig 5
 extract 2 0
 itxn_field Note
 itxn_submit
-b rewardwithauratokens_36_l3
-rewardwithauratokens_36_l2:
+b rewardwithauratokens_35_l3
+rewardwithauratokens_35_l2:
 pushbytes 0x0017596f7572205472616e73616374696f6e20526577617264 // 0x0017596f7572205472616e73616374696f6e20526577617264
 frame_bury 5
 itxn_begin
@@ -3955,7 +3835,7 @@ frame_dig 5
 extract 2 0
 itxn_field Note
 itxn_submit
-rewardwithauratokens_36_l3:
+rewardwithauratokens_35_l3:
 frame_dig 3
 bytec_3 // "aura_reward"
 app_global_get
@@ -3995,7 +3875,7 @@ box_put
 retsub
 
 // transfer_asset_from_contract
-transferassetfromcontract_37:
+transferassetfromcontract_36:
 proto 3 0
 itxn_begin
 pushint 4 // axfer
@@ -4010,7 +3890,7 @@ itxn_submit
 retsub
 
 // refund_last_bidder
-refundlastbidder_38:
+refundlastbidder_37:
 proto 3 0
 itxn_begin
 intc_1 // pay
@@ -4027,17 +3907,17 @@ itxn_submit
 retsub
 
 // pay_price_minus_commission
-paypriceminuscommission_39:
+paypriceminuscommission_38:
 proto 3 0
 intc_0 // 0
 frame_dig -3
-bytec 12 // "min_charge_price"
+bytec 14 // "min_charge_price"
 app_global_get
 <=
-bnz paypriceminuscommission_39_l2
+bnz paypriceminuscommission_38_l2
 frame_dig -3
 pushint 100 // 100
-bytec 9 // "commission_percentage"
+bytec 11 // "commission_percentage"
 app_global_get
 -
 *
@@ -4055,8 +3935,8 @@ frame_dig -1
 extract 2 0
 itxn_field Note
 itxn_submit
-b paypriceminuscommission_39_l3
-paypriceminuscommission_39_l2:
+b paypriceminuscommission_38_l3
+paypriceminuscommission_38_l2:
 itxn_begin
 intc_1 // pay
 itxn_field TypeEnum
@@ -4068,11 +3948,131 @@ frame_dig -1
 extract 2 0
 itxn_field Note
 itxn_submit
-paypriceminuscommission_39_l3:
+paypriceminuscommission_38_l3:
+retsub
+
+// calculate_and_update_network_difficulty
+calculateandupdatenetworkdifficulty_39:
+proto 0 0
+intc_0 // 0
+dupn 5
+bytec 18 // "min_difficulty"
+app_global_get
+frame_bury 2
+bytec 5 // "epoch_nft_transactions"
+app_global_get
+frame_bury 3
+bytec 13 // "epoch_target_transaction"
+app_global_get
+frame_bury 4
+bytec 6 // "network_difficulty"
+app_global_get
+frame_bury 5
+frame_dig 3
+frame_dig 4
+>
+bnz calculateandupdatenetworkdifficulty_39_l5
+frame_dig 4
+frame_dig 3
+-
+frame_bury 0
+intc_1 // 1
+frame_dig 0
+frame_dig 4
+/
+-
+frame_dig 5
+*
+frame_bury 1
+calculateandupdatenetworkdifficulty_39_l2:
+frame_dig 1
+frame_dig 2
+>
+bnz calculateandupdatenetworkdifficulty_39_l4
+bytec 6 // "network_difficulty"
+frame_dig 2
+app_global_put
+b calculateandupdatenetworkdifficulty_39_l6
+calculateandupdatenetworkdifficulty_39_l4:
+bytec 6 // "network_difficulty"
+frame_dig 1
+app_global_put
+b calculateandupdatenetworkdifficulty_39_l6
+calculateandupdatenetworkdifficulty_39_l5:
+frame_dig 3
+frame_dig 4
+-
+frame_bury 0
+intc_1 // 1
+frame_dig 0
+frame_dig 4
+/
++
+frame_dig 5
+*
+frame_bury 1
+b calculateandupdatenetworkdifficulty_39_l2
+calculateandupdatenetworkdifficulty_39_l6:
+bytec 5 // "epoch_nft_transactions"
+intc_0 // 0
+app_global_put
+retsub
+
+// calculate_and_update_base_reward
+calculateandupdatebasereward_40:
+proto 0 0
+intc_0 // 0
+dupn 2
+bytec 15 // "rewardable_tokens_supply"
+app_global_get
+frame_bury 1
+bytec 19 // "total_target_nft_sales"
+app_global_get
+frame_bury 2
+frame_dig 1
+frame_dig 2
+/
+frame_bury 0
+bytec 10 // "aura_base_reward"
+frame_dig 0
+app_global_put
+retsub
+
+// calculate_and_update_reward
+calculateandupdatereward_41:
+proto 0 0
+intc_0 // 0
+dupn 2
+callsub calculateandupdatenetworkdifficulty_39
+callsub calculateandupdatebasereward_40
+bytec 10 // "aura_base_reward"
+app_global_get
+frame_bury 0
+bytec 6 // "network_difficulty"
+app_global_get
+frame_bury 1
+frame_dig 0
+frame_dig 1
+/
+frame_bury 2
+frame_dig 2
+intc_0 // 0
+>
+bnz calculateandupdatereward_41_l2
+bytec_3 // "aura_reward"
+bytec 17 // "min_aural_reward"
+app_global_get
+app_global_put
+b calculateandupdatereward_41_l3
+calculateandupdatereward_41_l2:
+bytec_3 // "aura_reward"
+frame_dig 2
+app_global_put
+calculateandupdatereward_41_l3:
 retsub
 
 // ensure_sender_is_registered_creative
-ensuresenderisregisteredcreative_40:
+ensuresenderisregisteredcreative_42:
 proto 1 0
 frame_dig -1
 gtxns Sender
@@ -4084,19 +4084,8 @@ load 28
 assert
 retsub
 
-// ensure_zero_payment
-ensurezeropayment_41:
-proto 1 0
-frame_dig -1
-gtxns Amount
-intc_0 // 0
-==
-// Payment amount must be 0
-assert
-retsub
-
 // ensure_valid_nft_type
-ensurevalidnfttype_42:
+ensurevalidnfttype_43:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -4104,7 +4093,7 @@ pushbytes 0x617274 // "art"
 ==
 frame_dig -1
 extract 2 0
-bytec 19 // "sound"
+bytec 20 // "sound"
 ==
 ||
 // asset_type can only be `art` or `sound`
@@ -4112,7 +4101,7 @@ assert
 retsub
 
 // ensure_asset_is_aura
-ensureassetisaura_43:
+ensureassetisaura_44:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -4137,7 +4126,7 @@ assert
 retsub
 
 // ensure_txn_is_aura_optin
-ensuretxnisauraoptin_44:
+ensuretxnisauraoptin_45:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
@@ -4162,7 +4151,7 @@ assert
 retsub
 
 // ensure_art_auction_exists
-ensureartauctionexists_45:
+ensureartauctionexists_46:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -4175,7 +4164,7 @@ assert
 retsub
 
 // ensure_sound_nft_exists
-ensuresoundnftexists_46:
+ensuresoundnftexists_47:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -4188,7 +4177,7 @@ assert
 retsub
 
 // ensure_art_nft_exists
-ensureartnftexists_47:
+ensureartnftexists_48:
 proto 1 0
 frame_dig -1
 extract 2 0
@@ -4201,7 +4190,7 @@ assert
 retsub
 
 // ensure_asset_receiver_is_application
-ensureassetreceiverisapplication_48:
+ensureassetreceiverisapplication_49:
 proto 1 0
 frame_dig -1
 gtxns AssetReceiver
@@ -4212,13 +4201,13 @@ assert
 retsub
 
 // ensure_can_market_art
-ensurecanmarketart_49:
+ensurecanmarketart_50:
 proto 1 0
 bytec_0 // ""
 intc_0 // 0
 dup
 frame_dig -1
-callsub ensureartnftexists_47
+callsub ensureartnftexists_48
 frame_dig -1
 extract 2 0
 box_get
@@ -4247,7 +4236,7 @@ assert
 retsub
 
 // create_sound_nft_caster
-createsoundnftcaster_50:
+createsoundnftcaster_51:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -4325,7 +4314,7 @@ log
 retsub
 
 // create_art_nft_caster
-createartnftcaster_51:
+createartnftcaster_52:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -4384,7 +4373,7 @@ log
 retsub
 
 // claim_created_art_caster
-claimcreatedartcaster_52:
+claimcreatedartcaster_53:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -4423,7 +4412,7 @@ log
 retsub
 
 // create_art_auction_caster
-createartauctioncaster_53:
+createartauctioncaster_54:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -4472,7 +4461,7 @@ log
 retsub
 
 // bid_on_art_auction_caster
-bidonartauctioncaster_54:
+bidonartauctioncaster_55:
 proto 0 0
 bytec_0 // ""
 dup
@@ -4525,7 +4514,7 @@ log
 retsub
 
 // complete_art_auction_caster
-completeartauctioncaster_55:
+completeartauctioncaster_56:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -4570,7 +4559,7 @@ log
 retsub
 
 // place_art_on_sale_caster
-placeartonsalecaster_56:
+placeartonsalecaster_57:
 proto 0 0
 bytec_0 // ""
 intc_0 // 0
@@ -4602,7 +4591,7 @@ log
 retsub
 
 // purchase_nft_caster
-purchasenftcaster_57:
+purchasenftcaster_58:
 proto 0 0
 intc_0 // 0
 dup
