@@ -68,4 +68,3 @@ class AurallyToken(P.abi.NamedTuple):
     asset_id: P.abi.Field[P.abi.Uint64]
     asset_key: P.abi.Field[P.abi.String]
     asset_total: P.abi.Field[P.abi.Uint64]
-    claimed: P.abi.Field[P.abi.Bool]

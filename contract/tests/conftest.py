@@ -2,8 +2,9 @@ import os
 from pathlib import Path
 from typing import List
 
+import algosdk
 import pytest
-from algokit_utils import get_algod_client, is_localnet
+from algokit_utils import Account, get_algod_client, is_localnet
 from algosdk.v2client.algod import AlgodClient
 from beaker import localnet
 from beaker.client import ApplicationClient
@@ -88,3 +89,35 @@ def aura_index(nft_app_client: ApplicationClient) -> int:
     )
     assert list(result.return_value)[1] == "aura"
     return list(result.return_value)[0]
+
+
+@pytest.fixture(scope="session")
+def live_account() -> Account:
+    mnemonics = os.environ.get("DEPLOYER_MNEMONIC")
+    if mnemonics is None:
+        raise ValueError("DEPLOYER_MNEMONIC environment variable not set")
+
+    account = Account(
+        private_key=algosdk.mnemonic.to_private_key(mnemonics),
+        address="6NN46NIZ3SN5B6LPQTEXFHW6A3J562IHTCKUINYHUYXEHSDAGFHAZ7A3DM",
+    )
+    return account
+
+
+@pytest.fixture(scope="session")
+def live_client(live_account: Account) -> ApplicationClient:
+    build_contract("Aurally_NFT", "NFT")
+    algod_client = AlgodClient(
+        algod_token="",
+        algod_address="https://testnet-api.algonode.cloud",
+        # algod_address="https://mainnet-api.algonode.cloud",
+    )
+    client = ApplicationClient(
+        client=algod_client,
+        signer=live_account.signer,
+        sender=live_account.address,
+        # app_id=1581977710,
+        app=nft_contract.app,
+        app_id=602473956,
+    )
+    return client

@@ -1,12 +1,17 @@
+import os
 from datetime import datetime, timedelta
 from typing import List, Tuple
 
+import algosdk
 import pytest
+from algokit_utils import Account
 from algosdk import atomic_transaction_composer, encoding, transaction
 from algosdk.v2client.algod import AlgodClient
 from beaker.client import ApplicationClient
 from beaker.localnet import LocalAccount
 from smart_contracts.nfts import contract as nft_contract
+
+from contract.tests.utils import build_contract
 
 
 @pytest.mark.dependency()
@@ -46,8 +51,7 @@ def test_reward_with_aura_tokens(
     nft_app_client.call(
         nft_contract.reward_with_aura_tokens,
         txn=txn,
-        receiver_address=test_account.address,
-        receiver_account=test_account.address,
+        receiver=test_account.address,
         aura=aura_index,
         boxes=[
             (nft_app_client.app_id, b"aura"),
@@ -421,4 +425,77 @@ def test_update_aura_rewards(
 ):
     nft_app_client.call(
         nft_contract.update_aura_rewards,
+    )
+
+
+def test_withdraw_profits(
+    nft_app_client: ApplicationClient,
+    creator_account: LocalAccount,
+):
+    nft_app_client.call(
+        nft_contract.withdraw_profits,
+        amt=20,
+        to=creator_account.address,
+        sender=creator_account.address,
+    )
+
+
+def test_withdraw_auras(
+    nft_app_client: ApplicationClient, creator_account: LocalAccount, aura_index: int
+):
+    nft_app_client.call(
+        nft_contract.transfer_auras,
+        amount=20,
+        receiver=creator_account.address,
+        aura=aura_index,
+        boxes=[(nft_app_client.app_id, b"aura")],
+    )
+
+
+@pytest.fixture(scope="session")
+def live_aura_index(live_client: ApplicationClient) -> int:
+    result = live_client.call(
+        nft_contract.create_aura_tokens,
+        boxes=[(live_client.app_id, "aura".encode())],
+    )
+    assert list(result.return_value)[1] == "aura"
+    return list(result.return_value)[0]
+
+
+@pytest.mark.skip(reason="I know it works")
+def test_update_contract(live_client: ApplicationClient):
+    res = live_client.update()
+    print(res)
+
+
+# @pytest.mark.dependency()
+def test_live_register_creator(
+    live_client: ApplicationClient, live_account: LocalAccount, live_aura_index: int
+) -> None:
+    sp = live_client.client.suggested_params()
+    opt_txn = transaction.AssetOptInTxn(
+        sp=sp, sender=live_account.address, index=live_aura_index
+    )
+    txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=opt_txn, signer=live_account.signer
+    )
+    result = live_client.call(
+        nft_contract.register_creator,
+        txn=txn,
+        boxes=[
+            (live_client.app_id, encoding.decode_address(txn.txn.sender)),
+        ],
+    )
+    assert list(result.return_value)[0] == live_account.address
+
+
+def test_live_withdraw_auras(
+    live_client: ApplicationClient, live_account: Account, live_aura_index: int
+):
+    live_client.call(
+        nft_contract.transfer_auras,
+        amount=20,
+        receiver=live_account.address,
+        aura=live_aura_index,
+        boxes=[(live_client.app_id, b"aura")],
     )

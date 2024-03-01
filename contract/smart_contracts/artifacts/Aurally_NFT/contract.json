@@ -2,6 +2,13 @@
     "name": "Aurally_NFT",
     "methods": [
         {
+            "name": "update",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
             "name": "promote_to_admin",
             "args": [
                 {
@@ -21,12 +28,8 @@
                     "name": "txn"
                 },
                 {
-                    "type": "address",
-                    "name": "receiver_address"
-                },
-                {
                     "type": "account",
-                    "name": "receiver_account"
+                    "name": "receiver"
                 },
                 {
                     "type": "asset",
@@ -100,19 +103,27 @@
             "name": "create_aura_tokens",
             "args": [],
             "returns": {
-                "type": "(uint64,string,uint64,bool)"
+                "type": "(uint64,string,uint64)"
             }
         },
         {
-            "name": "claim_aura_percentage",
+            "name": "transfer_auras",
             "args": [
                 {
                     "type": "account",
-                    "name": "percent_receiver"
+                    "name": "receiver"
+                },
+                {
+                    "type": "uint64",
+                    "name": "amount"
+                },
+                {
+                    "type": "asset",
+                    "name": "aura"
                 }
             ],
             "returns": {
-                "type": "(uint64,string,uint64,bool)"
+                "type": "void"
             }
         },
         {

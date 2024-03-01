@@ -13,7 +13,6 @@ def reward_with_aura_tokens(receiver: P.abi.Address):
         ),
         (aura_asset_id := P.abi.Uint64()).set(aura_asset.asset_id),
         (aura_asset_total := P.abi.Uint64()).set(aura_asset.asset_total),
-        (claimed := P.abi.Bool()).set(aura_asset.claimed),
         (note := P.abi.String()).set(""),
         P.If(
             aura_asset_total.get() > app.state.aura_reward.get(),
@@ -45,7 +44,7 @@ def reward_with_aura_tokens(receiver: P.abi.Address):
         ),
         # Update Asset Total
         aura_asset_total.set(aura_asset_total.get() - app.state.aura_reward.get()),
-        aura_asset.set(aura_asset_id, aura_asset_key, aura_asset_total, claimed),
+        aura_asset.set(aura_asset_id, aura_asset_key, aura_asset_total),
         app.state.registered_asa[aura_asset_key.get()].set(aura_asset),
     )
 

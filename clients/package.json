@@ -1,0 +1,17 @@
+{
+  "name": "clients",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@algorandfoundation/algokit-utils": "^5.5.0",
+    "@types/node": "^20.11.22",
+    "algosdk": "^2.7.0"
+  }
+}

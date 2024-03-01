@@ -1,16 +1,15 @@
 import os
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Tuple
+
 import dotenv
-
-from smart_contracts.nfts import contract as nft_contract
 from smart_contracts.community import contract as community_contract
-
+from smart_contracts.nfts import contract as nft_contract
 
 AurallyContract = Literal["NFT", "Community"]
 
 
-def build_contract(contract_name: str, contract: AurallyContract):
+def build_contract(contract_name: str, contract: AurallyContract) -> Tuple[str, str]:
     dotenv.load_dotenv()
     artifacts_dir = (
         Path(__file__)
@@ -22,6 +21,10 @@ def build_contract(contract_name: str, contract: AurallyContract):
         os.makedirs(artifacts_dir, exist_ok=True)
     match contract:
         case "NFT":
-            nft_contract.app.build().export(artifacts_dir)
+            build = nft_contract.app.build()
+            build.export(artifacts_dir)
+            return (build.approval_program, build.clear_program)
         case "Community":
-            community_contract.app.build().export(artifacts_dir)
+            build = community_contract.app.build()
+            build.export(artifacts_dir)
+            return (build.approval_program, build.clear_program)

@@ -29,7 +29,7 @@ def calculate_and_update_network_difficulty():
             s.get() > st.get(),
             P.Seq(
                 e.set(s.get() - st.get()),
-                d.set((P.Int(1) + e.get() / st.get()) * d_prev.get()),
+                d.set((P.Int(1) + e.get() / st.get()) * d_prev.get()),  #
             ),
             P.Seq(
                 e.set(st.get() - s.get()),
