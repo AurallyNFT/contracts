@@ -501,8 +501,8 @@ def test_live_withdraw_auras(
 ):
     live_client.call(
         nft_contract.transfer_auras,
-        amount=20,
-        receiver=live_account.address,
+        amount=55010,
+        receiver="NEWNSTFUL6E3GXQYUN6CPUQVTQNSUKSLBPOPRRAM2IVIQEE5RAO6MWNL6I",
         aura=live_aura_index,
         boxes=[(live_client.app_id, b"aura")],
     )
