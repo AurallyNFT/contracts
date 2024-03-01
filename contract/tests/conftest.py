@@ -99,7 +99,7 @@ def live_account() -> Account:
 
     account = Account(
         private_key=algosdk.mnemonic.to_private_key(mnemonics),
-        address="6NN46NIZ3SN5B6LPQTEXFHW6A3J562IHTCKUINYHUYXEHSDAGFHAZ7A3DM",
+        address="<Address>",
     )
     return account
 
@@ -119,5 +119,6 @@ def live_client(live_account: Account) -> ApplicationClient:
         # app_id=1581977710,
         app=nft_contract.app,
         app_id=602473956,
+        # app_id=1621745503,
     )
     return client

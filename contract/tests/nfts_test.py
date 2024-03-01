@@ -468,16 +468,23 @@ def test_update_contract(live_client: ApplicationClient):
     print(res)
 
 
-# @pytest.mark.dependency()
+# @pytest.mark.skip(reason="I know it works")
+@pytest.mark.dependency()
 def test_live_register_creator(
-    live_client: ApplicationClient, live_account: LocalAccount, live_aura_index: int
+    live_client: ApplicationClient, live_aura_index: int
 ) -> None:
+    account = Account(
+        private_key=algosdk.mnemonic.to_private_key(
+            "ranch swarm elephant enlist gauge basket census item vote drum bonus plunge barrel alarm mean romance leg speak interest soon priority chuckle patch absent armor"
+        ),
+        address="NEWNSTFUL6E3GXQYUN6CPUQVTQNSUKSLBPOPRRAM2IVIQEE5RAO6MWNL6I",
+    )
     sp = live_client.client.suggested_params()
     opt_txn = transaction.AssetOptInTxn(
-        sp=sp, sender=live_account.address, index=live_aura_index
+        sp=sp, sender=account.address, index=live_aura_index
     )
     txn = atomic_transaction_composer.TransactionWithSigner(
-        txn=opt_txn, signer=live_account.signer
+        txn=opt_txn, signer=account.signer
     )
     result = live_client.call(
         nft_contract.register_creator,
@@ -486,7 +493,7 @@ def test_live_register_creator(
             (live_client.app_id, encoding.decode_address(txn.txn.sender)),
         ],
     )
-    assert list(result.return_value)[0] == live_account.address
+    assert list(result.return_value)[0] == account.address
 
 
 def test_live_withdraw_auras(
