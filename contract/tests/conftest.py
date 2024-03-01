@@ -109,8 +109,8 @@ def live_client(live_account: Account) -> ApplicationClient:
     build_contract("Aurally_NFT", "NFT")
     algod_client = AlgodClient(
         algod_token="",
-        algod_address="https://testnet-api.algonode.cloud",
-        # algod_address="https://mainnet-api.algonode.cloud",
+        # algod_address="https://testnet-api.algonode.cloud",
+        algod_address="https://mainnet-api.algonode.cloud",
     )
     client = ApplicationClient(
         client=algod_client,
@@ -118,7 +118,7 @@ def live_client(live_account: Account) -> ApplicationClient:
         sender=live_account.address,
         # app_id=1581977710,
         app=nft_contract.app,
-        app_id=602473956,
-        # app_id=1621745503,
+        # app_id=602473956,
+        app_id=1621745503,
     )
     return client
