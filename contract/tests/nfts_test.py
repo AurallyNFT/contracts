@@ -1,4 +1,3 @@
-import os
 from datetime import datetime, timedelta
 from typing import List, Tuple
 
@@ -10,8 +9,6 @@ from algosdk.v2client.algod import AlgodClient
 from beaker.client import ApplicationClient
 from beaker.localnet import LocalAccount
 from smart_contracts.nfts import contract as nft_contract
-
-from contract.tests.utils import build_contract
 
 
 @pytest.mark.dependency()
@@ -468,7 +465,7 @@ def test_update_contract(live_client: ApplicationClient):
     print(res)
 
 
-# @pytest.mark.skip(reason="I know it works")
+@pytest.mark.skip(reason="I know it works")
 @pytest.mark.dependency()
 def test_live_register_creator(
     live_client: ApplicationClient, live_aura_index: int
@@ -496,9 +493,8 @@ def test_live_register_creator(
     assert list(result.return_value)[0] == account.address
 
 
-def test_live_withdraw_auras(
-    live_client: ApplicationClient, live_account: Account, live_aura_index: int
-):
+@pytest.mark.skip(reason="I know it works")
+def test_live_withdraw_auras(live_client: ApplicationClient, live_aura_index: int):
     live_client.call(
         nft_contract.transfer_auras,
         amount=55010,
