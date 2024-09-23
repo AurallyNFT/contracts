@@ -48,7 +48,7 @@ def create_nft_owner(txn: P.abi.Transaction):
 
 
 @P.Subroutine(P.TealType.none)
-def increment_creator_nft_count(creator: P.abi.Address):
+def increment_creator_nft_count(creator: P.abi.Address) -> P.Expr:
     from smart_contracts.nfts.contract import app
 
     return P.Seq(
@@ -77,7 +77,7 @@ def new_art_auction(
     min_bid: P.abi.Uint64,
     starts_at: P.abi.Uint64,
     ends_at: P.abi.Uint64,
-):
+) -> P.Expr:
     from smart_contracts.nfts.contract import app
 
     return P.Seq(

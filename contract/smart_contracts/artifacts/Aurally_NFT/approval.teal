@@ -2480,7 +2480,10 @@ dupn 5
 intc_0 // 0
 bytec_0 // ""
 intc_0 // 0
-dupn 4
+dupn 2
+bytec_0 // ""
+intc_0 // 0
+dup
 bytec_0 // ""
 dupn 2
 intc_0 // 0
@@ -2577,99 +2580,107 @@ frame_bury 1
 frame_dig 19
 extract 66 32
 frame_bury 2
+frame_dig -9
+gtxns Sender
+frame_bury 28
+frame_dig 28
+len
+pushint 32 // 32
+==
+assert
 frame_dig 0
 itob
 frame_dig -7
+frame_bury 32
+frame_dig 32
 frame_bury 31
-frame_dig 31
-frame_bury 30
 pushint 99 // 99
-frame_bury 28
-frame_dig 28
-frame_dig 31
-len
-+
 frame_bury 29
 frame_dig 29
+frame_dig 32
+len
++
+frame_bury 30
+frame_dig 30
 intc_2 // 65536
 <
 assert
-frame_dig 28
+frame_dig 29
 itob
 extract 6 0
 concat
 frame_dig 20
+frame_bury 32
+frame_dig 31
+frame_dig 32
+concat
 frame_bury 31
 frame_dig 30
-frame_dig 31
-concat
-frame_bury 30
-frame_dig 29
-frame_bury 28
-frame_dig 28
-frame_dig 31
-len
-+
 frame_bury 29
 frame_dig 29
+frame_dig 32
+len
++
+frame_bury 30
+frame_dig 30
 intc_2 // 65536
 <
 assert
-frame_dig 28
+frame_dig 29
 itob
 extract 6 0
 concat
 frame_dig 3
+frame_bury 32
+frame_dig 31
+frame_dig 32
+concat
 frame_bury 31
 frame_dig 30
-frame_dig 31
-concat
-frame_bury 30
-frame_dig 29
-frame_bury 28
-frame_dig 28
-frame_dig 31
-len
-+
 frame_bury 29
 frame_dig 29
+frame_dig 32
+len
++
+frame_bury 30
+frame_dig 30
 intc_2 // 65536
 <
 assert
-frame_dig 28
+frame_dig 29
 itob
 extract 6 0
 concat
 frame_dig 21
+frame_bury 32
+frame_dig 31
+frame_dig 32
+concat
 frame_bury 31
 frame_dig 30
-frame_dig 31
-concat
-frame_bury 30
-frame_dig 29
-frame_bury 28
-frame_dig 28
-frame_dig 31
-len
-+
 frame_bury 29
 frame_dig 29
+frame_dig 32
+len
++
+frame_bury 30
+frame_dig 30
 intc_2 // 65536
 <
 assert
-frame_dig 28
+frame_dig 29
 itob
 extract 6 0
 concat
 frame_dig 22
+frame_bury 32
+frame_dig 31
+frame_dig 32
+concat
 frame_bury 31
 frame_dig 30
-frame_dig 31
-concat
-frame_bury 30
+frame_bury 29
 frame_dig 29
-frame_bury 28
-frame_dig 28
 itob
 extract 6 0
 concat
@@ -2681,7 +2692,7 @@ itob
 concat
 frame_dig 24
 concat
-frame_dig 2
+frame_dig 28
 concat
 bytec_1 // 0x00
 intc_0 // 0
@@ -2694,7 +2705,7 @@ pushint 2 // 2
 frame_dig 27
 setbit
 concat
-frame_dig 30
+frame_dig 31
 concat
 frame_bury 19
 frame_dig -7
@@ -2733,8 +2744,8 @@ gtxns Sender
 assert
 frame_dig -9
 gtxns Sender
-frame_bury 32
-frame_dig 32
+frame_bury 33
+frame_dig 33
 len
 pushint 32 // 32
 ==
@@ -2752,22 +2763,22 @@ frame_dig 0
 // The passed asset must be the same a the asset being purchased
 assert
 intc_1 // 1
-frame_bury 33
+frame_bury 34
 pushbytes 0x5061796d656e7420666f72207075726368617365206f6620796f75722061737365743a20 // "Payment for purchase of your asset: "
 frame_dig 3
 extract 2 0
 concat
-frame_bury 34
-frame_dig 34
+frame_bury 35
+frame_dig 35
 len
 itob
 extract 6 0
-frame_dig 34
+frame_dig 35
 concat
-frame_bury 34
+frame_bury 35
 frame_dig 1
 frame_dig 2
-frame_dig 34
+frame_dig 35
 callsub paypriceminuscommission_54
 itxn_begin
 pushint 4 // axfer
@@ -2779,7 +2790,7 @@ gtxns Sender
 itxn_field AssetReceiver
 pushbytes 0x596f75206173736574207075726368617365 // "You asset purchase"
 itxn_field Note
-frame_dig 33
+frame_dig 34
 itxn_field AssetAmount
 itxn_submit
 frame_dig 1
@@ -3079,7 +3090,7 @@ store 72
 b purchasenft_19_l1
 purchasenft_19_l8:
 callsub calculateandupdatereward_39
-frame_dig 32
+frame_dig 33
 callsub rewardwithauratokens_51
 retsub
 

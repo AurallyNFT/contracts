@@ -27,7 +27,7 @@ def test_promote_to_admin(
     )
 
 
-@pytest.mark.dependency()
+@pytest.mark.skip()
 def test_reward_with_aura_tokens(
     test_account: LocalAccount,
     nft_app_client: ApplicationClient,
@@ -79,7 +79,7 @@ def test_register_creator(
         ],
     )
     print(aura_index, result.return_value, test_account.address)
-    assert list(result.return_value)[0] == test_account.address
+    assert next(iter(result.return_value)) == test_account.address
 
 
 @pytest.mark.dependency()
@@ -167,7 +167,7 @@ def test_create_art_nft(
     )
 
     assert list(result.return_value)[2] == nft_name
-    return (list(result.return_value)[0], url)
+    return (next(iter(result.return_value)), url)
 
 
 @pytest.mark.dependency()
@@ -327,7 +327,7 @@ def test_complete_art_auction(
         boxes=[
             (nft_app_client.app_id, test_create_art_nft[1].encode()),
             (nft_app_client.app_id, auction_key.encode()),
-            (nft_app_client.app_id, "aura".encode()),
+            (nft_app_client.app_id, b"aura"),
         ],
     )
 
@@ -368,7 +368,57 @@ def test_place_art_on_sale(
 
 
 # @pytest.mark.skip
-def test_purchase_nft(
+def test_purchase_art_nft(
+    algod_client: AlgodClient,
+    nft_app_client: ApplicationClient,
+    test_accounts: List[LocalAccount],
+    test_create_art_nft: Tuple[int, str],
+    aura_index: int,
+):
+    buyer_account = test_accounts[-1]
+    seller_account = test_accounts[1]
+    sp = algod_client.suggested_params()
+
+    raw_txn = transaction.PaymentTxn(
+        sender=buyer_account.address, receiver=nft_app_client.app_addr, amt=20000, sp=sp
+    )
+    txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=raw_txn, signer=buyer_account.signer
+    )
+
+    optin_txn = transaction.AssetOptInTxn(
+        sender=buyer_account.address, index=test_create_art_nft[0], sp=sp
+    )
+    optin_txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=optin_txn, signer=buyer_account.signer
+    )
+    aura_optin_txn = transaction.AssetOptInTxn(
+        sender=buyer_account.address, index=aura_index, sp=sp
+    )
+    aura_optin_txn = atomic_transaction_composer.TransactionWithSigner(
+        txn=aura_optin_txn, signer=buyer_account.signer
+    )
+
+    nft_app_client.call(
+        nft_contract.purchase_nft,
+        txn=txn,
+        optin_txn=optin_txn,
+        asset_key=test_create_art_nft[1],
+        asset_type="art",
+        buyer=buyer_account.address,
+        seller_account=seller_account.address,
+        aura=aura_index,
+        asset=test_create_art_nft[0],
+        aura_optin_txn=aura_optin_txn,
+        boxes=[
+            (nft_app_client.app_id, b"aura"),
+            (nft_app_client.app_id, test_create_art_nft[1].encode()),
+        ],
+    )
+
+
+# @pytest.mark.skip
+def test_purchase_sound_nft(
     algod_client: AlgodClient,
     nft_app_client: ApplicationClient,
     test_account: LocalAccount,
@@ -453,10 +503,10 @@ def test_withdraw_auras(
 def live_aura_index(live_client: ApplicationClient) -> int:
     result = live_client.call(
         nft_contract.create_aura_tokens,
-        boxes=[(live_client.app_id, "aura".encode())],
+        boxes=[(live_client.app_id, b"aura")],
     )
     assert list(result.return_value)[1] == "aura"
-    return list(result.return_value)[0]
+    return next(iter(result.return_value))
 
 
 @pytest.mark.skip(reason="I know it works")

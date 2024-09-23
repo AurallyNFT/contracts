@@ -1,9 +1,13 @@
 import pyteal as P
 from beaker.lib.storage import BoxMapping
 from beaker.state import GlobalStateValue
-from smart_contracts.nfts.boxes import (ArtAuctionItem, ArtNFT,
-                                        AurallyCreative, AurallyToken,
-                                        SoundNFT)
+from smart_contracts.nfts.boxes import (
+    ArtAuctionItem,
+    ArtNFT,
+    AurallyCreative,
+    AurallyToken,
+    SoundNFT,
+)
 
 # Todo: NFT Sales above 1 algos are the only ones that are charged
 # Idea: Create an asa for each proposal, when a person votes on a proposal, they get the asa and it's frozen

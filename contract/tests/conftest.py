@@ -13,6 +13,7 @@ from beaker.localnet import LocalAccount
 from dotenv import load_dotenv
 from smart_contracts.community import contract as community_contract
 from smart_contracts.nfts import contract as nft_contract
+
 from tests.utils import build_contract
 
 
@@ -85,10 +86,12 @@ def community_app_client(test_accounts: List[LocalAccount]) -> ApplicationClient
 def aura_index(nft_app_client: ApplicationClient) -> int:
     result = nft_app_client.call(
         nft_contract.create_aura_tokens,
-        boxes=[(nft_app_client.app_id, "aura".encode())],
+        boxes=[(nft_app_client.app_id, b"aura")],
     )
     assert list(result.return_value)[1] == "aura"
-    return list(result.return_value)[0]
+    aura_id = next(iter(result.return_value))
+    print(aura_id)
+    return aura_id
 
 
 @pytest.fixture(scope="session")
@@ -99,7 +102,6 @@ def live_account() -> Account:
 
     account = Account(
         private_key=algosdk.mnemonic.to_private_key(mnemonics),
-        address="<Address>",
     )
     return account
 
@@ -109,8 +111,8 @@ def live_client(live_account: Account) -> ApplicationClient:
     build_contract("Aurally_NFT", "NFT")
     algod_client = AlgodClient(
         algod_token="",
-        # algod_address="https://testnet-api.algonode.cloud",
-        algod_address="https://mainnet-api.algonode.cloud",
+        algod_address="https://testnet-api.algonode.cloud",
+        # algod_address="https://mainnet-api.algonode.cloud",
     )
     client = ApplicationClient(
         client=algod_client,
@@ -118,7 +120,7 @@ def live_client(live_account: Account) -> ApplicationClient:
         sender=live_account.address,
         # app_id=1581977710,
         app=nft_contract.app,
-        # app_id=602473956,
-        app_id=1621745503,
+        app_id=602473956,
+        # app_id=1621745503,
     )
     return client
