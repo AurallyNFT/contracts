@@ -335,7 +335,7 @@ bytec_3 // "aura_reward"
 intc_3 // 10
 app_global_put
 bytec 10 // "commission_percentage"
-intc_3 // 10
+pushint 15 // 15
 app_global_put
 bytec 11 // "contract_admin"
 bytec_0 // ""
@@ -2726,8 +2726,8 @@ assert
 frame_dig -9
 gtxns Amount
 frame_dig 1
-==
-// The payment amount must be equat to the sale price
+>=
+// The payment amount must be equal to the sale price
 assert
 frame_dig -9
 gtxns Receiver

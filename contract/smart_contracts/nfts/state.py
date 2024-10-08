@@ -20,7 +20,7 @@ class AppState:
     art_auctions = BoxMapping(P.abi.String, ArtAuctionItem)
     registered_asa = BoxMapping(P.abi.String, AurallyToken)
     contract_admin = GlobalStateValue(P.TealType.bytes)
-    commission_percentage = GlobalStateValue(P.TealType.uint64, default=P.Int(10))
+    commission_percentage = GlobalStateValue(P.TealType.uint64, default=P.Int(15))
 
     epoch_nft_transactions = GlobalStateValue(P.TealType.uint64, default=P.Int(0))
     epoch_target_transaction = GlobalStateValue(

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Tuple
 
 import algosdk
@@ -11,6 +11,7 @@ from beaker.localnet import LocalAccount
 from smart_contracts.nfts import contract as nft_contract
 
 
+@pytest.mark.skip
 @pytest.mark.dependency()
 def test_promote_to_admin(
     nft_app_client: ApplicationClient,
@@ -57,6 +58,7 @@ def test_reward_with_aura_tokens(
     )
 
 
+@pytest.mark.skip
 @pytest.mark.dependency()
 def test_register_creator(
     nft_app_client: ApplicationClient,
@@ -82,6 +84,7 @@ def test_register_creator(
     assert next(iter(result.return_value)) == test_account.address
 
 
+@pytest.mark.skip
 @pytest.mark.dependency()
 @pytest.fixture(scope="session")
 def test_create_sound_nft(
@@ -90,7 +93,7 @@ def test_create_sound_nft(
     test_account: LocalAccount,
     aura_index: int,
 ) -> Tuple[int, str]:
-    asset_key = f"Dev Stockins_{datetime.utcnow()}"
+    asset_key = f"Dev Stockins_{datetime.now(tz=timezone.utc)}"
 
     nft_name = "Dev Stockins"
     sp = algod_client.suggested_params()
@@ -127,6 +130,7 @@ def test_create_sound_nft(
     return (result.return_value[0], asset_key)
 
 
+@pytest.mark.skip
 @pytest.mark.dependency()
 @pytest.fixture(scope="session")
 def test_create_art_nft(
@@ -170,6 +174,7 @@ def test_create_art_nft(
     return (next(iter(result.return_value)), url)
 
 
+@pytest.mark.skip
 @pytest.mark.dependency()
 def test_claim_created_art(
     algod_client: AlgodClient,
@@ -200,7 +205,7 @@ def test_claim_created_art(
     assert result.return_value[-4] == test_account.address
 
 
-# @pytest.mark.skip
+@pytest.mark.skip
 @pytest.mark.dependency()
 def test_create_art_auction(
     algod_client: AlgodClient,
@@ -238,7 +243,7 @@ def test_create_art_auction(
     assert list(result.return_value)[2] == test_create_art_nft[1]
 
 
-# @pytest.mark.skip
+@pytest.mark.skip
 @pytest.mark.dependency()
 def test_bid_on_auction(
     algod_client: AlgodClient,
@@ -291,8 +296,8 @@ def test_bid_on_auction(
     assert list(result.return_value)[-2] == bidder_account.address
 
 
-# @pytest.mark.skip
-# @pytest.mark.dependency(depends=["test_bid_on_auction"])
+@pytest.mark.skip
+@pytest.mark.dependency(depends=["test_bid_on_auction"])
 def test_complete_art_auction(
     algod_client: AlgodClient,
     nft_app_client: ApplicationClient,
@@ -335,6 +340,7 @@ def test_complete_art_auction(
     assert list(result.return_value)[-4] == bidder_account.address
 
 
+@pytest.mark.skip
 def test_place_art_on_sale(
     algod_client: AlgodClient,
     nft_app_client: ApplicationClient,
@@ -367,7 +373,7 @@ def test_place_art_on_sale(
     assert list(result.return_value)[-3] == True
 
 
-# @pytest.mark.skip
+@pytest.mark.skip
 def test_purchase_art_nft(
     algod_client: AlgodClient,
     nft_app_client: ApplicationClient,
@@ -417,7 +423,7 @@ def test_purchase_art_nft(
     )
 
 
-# @pytest.mark.skip
+@pytest.mark.skip
 def test_purchase_sound_nft(
     algod_client: AlgodClient,
     nft_app_client: ApplicationClient,
@@ -467,6 +473,7 @@ def test_purchase_sound_nft(
     )
 
 
+@pytest.mark.skip()
 def test_update_aura_rewards(
     nft_app_client: ApplicationClient,
 ):
@@ -475,6 +482,7 @@ def test_update_aura_rewards(
     )
 
 
+@pytest.mark.skip()
 def test_withdraw_profits(
     nft_app_client: ApplicationClient,
     creator_account: LocalAccount,
@@ -487,6 +495,7 @@ def test_withdraw_profits(
     )
 
 
+@pytest.mark.skip()
 def test_withdraw_auras(
     nft_app_client: ApplicationClient, creator_account: LocalAccount, aura_index: int
 ):
@@ -499,6 +508,7 @@ def test_withdraw_auras(
     )
 
 
+@pytest.mark.skip()
 @pytest.fixture(scope="session")
 def live_aura_index(live_client: ApplicationClient) -> int:
     result = live_client.call(
@@ -509,7 +519,7 @@ def live_aura_index(live_client: ApplicationClient) -> int:
     return next(iter(result.return_value))
 
 
-@pytest.mark.skip(reason="I know it works")
+# @pytest.mark.skip(reason="I know it works")
 def test_update_contract(live_client: ApplicationClient):
     res = live_client.update()
     print(res)

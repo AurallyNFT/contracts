@@ -4,6 +4,8 @@ import algokit_utils
 from algosdk.v2client.algod import AlgodClient
 from algosdk.v2client.indexer import IndexerClient
 
+from contract.smart_contracts.artifacts.Aurally_NFT.client import Deploy, UpdateArgs
+
 logger = logging.getLogger(__name__)
 
 
@@ -24,6 +26,7 @@ def deploy(
     )
     is_mainnet = algokit_utils.is_mainnet(algod_client)
     app_client.deploy(
+        update_args=Deploy[UpdateArgs](args=UpdateArgs()),
         on_schema_break=(
             algokit_utils.OnSchemaBreak.AppendApp
             if is_mainnet

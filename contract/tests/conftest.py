@@ -34,7 +34,7 @@ def creator_account(test_accounts: List[LocalAccount]) -> LocalAccount:
 
 @pytest.fixture(autouse=True, scope="session")
 def environment_fixture() -> None:
-    env_path = Path(__file__).parent.parent.parent / ".env.localnet"
+    env_path = Path(__file__).parent.parent.parent / ".env.testnet"
     load_dotenv(env_path)
     print(env_path)
     print(os.environ.get("ALGOD_SERVER") or None)
@@ -103,6 +103,7 @@ def live_account() -> Account:
     account = Account(
         private_key=algosdk.mnemonic.to_private_key(mnemonics),
     )
+    print(account.address)
     return account
 
 
