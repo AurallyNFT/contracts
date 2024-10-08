@@ -521,6 +521,7 @@ def live_aura_index(live_client: ApplicationClient) -> int:
 
 # @pytest.mark.skip(reason="I know it works")
 def test_update_contract(live_client: ApplicationClient):
+    live_client.call(nft_contract.update_commission_percentage, amt=15)
     res = live_client.update()
     print(res)
 

@@ -119,7 +119,6 @@ def live_client(live_account: Account) -> ApplicationClient:
         client=algod_client,
         signer=live_account.signer,
         sender=live_account.address,
-        # app_id=1581977710,
         app=nft_contract.app,
         app_id=602473956,
         # app_id=1621745503,
