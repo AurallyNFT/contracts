@@ -519,7 +519,7 @@ def live_aura_index(live_client: ApplicationClient) -> int:
     return next(iter(result.return_value))
 
 
-# @pytest.mark.skip(reason="I know it works")
+@pytest.mark.skip(reason="I know it works")
 def test_update_contract(live_client: ApplicationClient):
     live_client.call(nft_contract.update_commission_percentage, amt=15)
     res = live_client.update()
@@ -558,8 +558,36 @@ def test_live_register_creator(
 def test_live_withdraw_auras(live_client: ApplicationClient, live_aura_index: int):
     live_client.call(
         nft_contract.transfer_auras,
-        amount=55010,
+        amount=510,
         receiver="NEWNSTFUL6E3GXQYUN6CPUQVTQNSUKSLBPOPRRAM2IVIQEE5RAO6MWNL6I",
         aura=live_aura_index,
         boxes=[(live_client.app_id, b"aura")],
     )
+
+
+def test_transfer(live_account: Account):
+    algod_client = AlgodClient(
+        algod_token="",
+        algod_address="https://algonodetestnet.aurally.xyz",
+    )
+    print(algod_client.algod_address)
+    sp = algod_client.suggested_params()
+    raw_txn = transaction.PaymentTxn(
+        sender=live_account.address,
+        receiver="NEWNSTFUL6E3GXQYUN6CPUQVTQNSUKSLBPOPRRAM2IVIQEE5RAO6MWNL6I",
+        amt=0,
+        sp=sp,
+    )
+    txn = raw_txn.sign(live_account.private_key)
+    txn_id = algod_client.send_transaction(txn)
+    algosdk.transaction.wait_for_confirmation(
+        algod_client=algod_client, txid=txn_id
+    )
+    #
+    # live_client.call(
+    #     nft_contract.transfer_auras,
+    #     amount=510,
+    #     receiver="NEWNSTFUL6E3GXQYUN6CPUQVTQNSUKSLBPOPRRAM2IVIQEE5RAO6MWNL6I",
+    #     aura=live_aura_index,
+    #     boxes=[(live_client.app_id, b"aura")],
+    # )

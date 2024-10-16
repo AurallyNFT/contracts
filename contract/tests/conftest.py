@@ -108,11 +108,23 @@ def live_account() -> Account:
 
 
 @pytest.fixture(scope="session")
+def live_algod_client() -> AlgodClient:
+    algod_client = AlgodClient(
+        algod_token="",
+        algod_address="https://algonodetestnet.aurally.xyz",
+        # algod_address="https://testnet-api.algonode.cloud",
+        # algod_address="https://mainnet-api.algonode.cloud",
+    )
+    return algod_client
+
+
+@pytest.fixture(scope="session")
 def live_client(live_account: Account) -> ApplicationClient:
     build_contract("Aurally_NFT", "NFT")
     algod_client = AlgodClient(
         algod_token="",
-        algod_address="https://testnet-api.algonode.cloud",
+        algod_address="https://algonodetestnet.aurally.xyz",
+        # algod_address="https://testnet-api.algonode.cloud",
         # algod_address="https://mainnet-api.algonode.cloud",
     )
     client = ApplicationClient(
